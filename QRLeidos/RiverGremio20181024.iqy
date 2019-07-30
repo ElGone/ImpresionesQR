@@ -1,0 +1,16 @@
+WEB
+1
+https://fundacionriver.sharepoint.com/sites/QRPrensa/_vti_bin/owssvr.dll?XMLDATA=1&List={DC4EB540-657A-438E-A8D7-82B4C137BECF}&View=4663A392-5E32-4C62-90FB-9DCEDA0A754A&RowLimit=0&RootFolder=undefined
+
+Selection={DC4EB540-657A-438E-A8D7-82B4C137BECF}-4663A392-5E32-4C62-90FB-9DCEDA0A754A
+EditWebPage=
+Formatting=None
+PreFormattedTextToColumns=True
+ConsecutiveDelimitersAsOne=True
+SingleBlockTextImport=False
+DisableDateRecognition=False
+DisableRedirections=False
+SharePointApplication=https://fundacionriver.sharepoint.com/sites/QRPrensa/_vti_bin
+SharePointListView=4663A392-5E32-4C62-90FB-9DCEDA0A754A
+SharePointListName={DC4EB540-657A-438E-A8D7-82B4C137BECF}
+RootFolder=undefined
