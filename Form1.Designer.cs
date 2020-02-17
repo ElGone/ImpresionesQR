@@ -165,7 +165,6 @@
             this.txtValor.Font = new System.Drawing.Font("Britannic Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtValor.Location = new System.Drawing.Point(328, 12);
             this.txtValor.Name = "txtValor";
-            this.txtValor.ReadOnly = true;
             this.txtValor.Size = new System.Drawing.Size(393, 22);
             this.txtValor.TabIndex = 2;
             this.txtValor.Text = "http://www.cariverplate.com.ar/previa-river-plate-vs-chacarita-superliga-2018";
@@ -742,7 +741,7 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(191, 30);
             this.button6.TabIndex = 416;
-            this.button6.Text = "Eventos";
+            this.button6.Text = "Eventoss";
             this.button6.UseVisualStyleBackColor = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
@@ -753,7 +752,7 @@
             this.groupBox2.Controls.Add(this.dgvEventos);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.groupBox2.Location = new System.Drawing.Point(218, 47);
+            this.groupBox2.Location = new System.Drawing.Point(218, 36);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(328, 393);
             this.groupBox2.TabIndex = 417;
@@ -1105,7 +1104,7 @@
             this.medios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.medios.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.medios.ForeColor = System.Drawing.Color.White;
-            this.medios.Location = new System.Drawing.Point(552, 47);
+            this.medios.Location = new System.Drawing.Point(557, 36);
             this.medios.Name = "medios";
             this.medios.Size = new System.Drawing.Size(278, 393);
             this.medios.TabIndex = 436;
@@ -1161,7 +1160,7 @@
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvMedios.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvMedios.EnableHeadersVisualStyles = false;
-            this.dgvMedios.Location = new System.Drawing.Point(7, 13);
+            this.dgvMedios.Location = new System.Drawing.Point(6, 12);
             this.dgvMedios.Name = "dgvMedios";
             this.dgvMedios.ReadOnly = true;
             this.dgvMedios.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1221,6 +1220,7 @@
             // txtLetras
             // 
             this.txtLetras.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLetras.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtLetras.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLetras.Location = new System.Drawing.Point(514, 155);
             this.txtLetras.MaxLength = 27;
@@ -1287,6 +1287,7 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(209, 514);
             this.panel3.TabIndex = 441;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint_1);
             // 
             // Form1
             // 

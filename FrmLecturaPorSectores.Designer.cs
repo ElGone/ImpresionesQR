@@ -32,7 +32,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvCabinas = new System.Windows.Forms.DataGridView();
-            this.button4 = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,6 +42,7 @@
             this.Fila = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Asiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCabinas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,20 +91,6 @@
             this.dgvCabinas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCabinas.Size = new System.Drawing.Size(1069, 313);
             this.dgvCabinas.TabIndex = 27;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Location = new System.Drawing.Point(926, 344);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(165, 30);
-            this.button4.TabIndex = 374;
-            this.button4.Text = "Salida";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // dataGridViewTextBoxColumn8
             // 
@@ -168,6 +154,20 @@
             this.dataGridViewTextBoxColumn10.HeaderText = "Id_Impresiones";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             this.dataGridViewTextBoxColumn10.Width = 50;
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.Color.White;
+            this.button4.Location = new System.Drawing.Point(926, 344);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(165, 30);
+            this.button4.TabIndex = 374;
+            this.button4.Text = "Salida";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // FrmLecturaPorSectores
             // 

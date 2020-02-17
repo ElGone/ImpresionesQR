@@ -66,7 +66,7 @@ namespace ImpresionQR
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            new Importar().importarExcel_Lectura(dgvDatos, "Lecturas");
+        //    new Importar().importarExcel_Lectura(dgvDatos, "Lecturas");
         }
 
         private void dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)

@@ -31,6 +31,7 @@ namespace ImpresionQR
         {
          
             imprimiqr.Checked = true;
+            Id_eventos.Text = "";
 
 
 
@@ -236,9 +237,20 @@ namespace ImpresionQR
 
         private void button8_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(" Esta seguro que quiere cambiar la configuracion de las impresiones ?", "Imprimir registro", MessageBoxButtons.YesNo) == DialogResult.Yes)
+
+            if (Id_eventos.Text == "")
             {
-                new Importar().Guardo_Configuracion_Impresion(txtfontcampeonato.Text, txtsizecampeonato.Text, txtfontrival.Text, txtsizerival.Text, txtfontmedio.Text, txtsizemedio.Text, txtfontfecha.Text, txtsizefecha.Text, txtRival.Text, Convert.ToInt32(Id_eventos.Text), txtfontubicacion.Text, txtsizeubicacion.Text,negritacampeonato, negritamedio, negritarival, negritafecha, negritaubicacion, txtfontnombre.Text, txtsizenombre.Text, negritanombre) ;
+                MessageBox.Show("Falta Seleccionar un Evento");
+                
+            }
+
+            else
+            {
+                if (MessageBox.Show(" Esta seguro que quiere cambiar la configuracion de las impresiones ?", "Imprimir registro", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    new Importar().Guardo_Configuracion_Impresion(txtfontcampeonato.Text, txtsizecampeonato.Text, txtfontrival.Text, txtsizerival.Text, txtfontmedio.Text, txtsizemedio.Text, txtfontfecha.Text, txtsizefecha.Text, txtRival.Text, Convert.ToInt32(Id_eventos.Text), txtfontubicacion.Text, txtsizeubicacion.Text, negritacampeonato, negritamedio, negritarival, negritafecha, negritaubicacion, txtfontnombre.Text, txtsizenombre.Text, negritanombre);
+
+                }
             }
         }
 

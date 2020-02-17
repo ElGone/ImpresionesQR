@@ -286,7 +286,7 @@
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvCabinas.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvCabinas.EnableHeadersVisualStyles = false;
-            this.dgvCabinas.Location = new System.Drawing.Point(225, 340);
+            this.dgvCabinas.Location = new System.Drawing.Point(229, 341);
             this.dgvCabinas.Name = "dgvCabinas";
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
@@ -502,7 +502,7 @@
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvPupitre.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvPupitre.EnableHeadersVisualStyles = false;
-            this.dgvPupitre.Location = new System.Drawing.Point(225, 340);
+            this.dgvPupitre.Location = new System.Drawing.Point(223, 341);
             this.dgvPupitre.Name = "dgvPupitre";
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
@@ -623,7 +623,7 @@
             dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvMovil.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvMovil.EnableHeadersVisualStyles = false;
-            this.dgvMovil.Location = new System.Drawing.Point(223, 340);
+            this.dgvMovil.Location = new System.Drawing.Point(225, 341);
             this.dgvMovil.Name = "dgvMovil";
             dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
@@ -895,7 +895,7 @@
             this.groupBox1.Controls.Add(this.dgvEventos);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.groupBox1.Location = new System.Drawing.Point(471, 103);
+            this.groupBox1.Location = new System.Drawing.Point(598, 54);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(339, 458);
             this.groupBox1.TabIndex = 415;
@@ -975,7 +975,7 @@
             this.dataGridViewImageColumn1.HeaderText = "";
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.ReadOnly = true;
-            this.dataGridViewImageColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewImageColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewImageColumn1.Width = 30;
             // 
             // dataGridViewTextBoxColumn12
@@ -1227,6 +1227,7 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(209, 724);
             this.panel3.TabIndex = 442;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // imprimiqr
             // 
@@ -1354,14 +1355,6 @@
         private System.Windows.Forms.TextBox txtidevento;
         private System.Windows.Forms.Label Id_eventos;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FecPartido;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Idevento;
-        private System.Windows.Forms.DataGridViewTextBoxColumn estadoevento;
-        private System.Windows.Forms.DataGridViewTextBoxColumn desestadoevento;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id_Rivals;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button15;
         private System.Drawing.Printing.PrintDocument printDocument3;
@@ -1404,5 +1397,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn credencial;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn letras;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FecPartido;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Idevento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn estadoevento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn desestadoevento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id_Rivals;
     }
 }

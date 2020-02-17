@@ -25,7 +25,7 @@ namespace ImpresionQR
 
         private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if ((int)e.KeyChar == (int)Keys.Enter)
+           if ((int)e.KeyChar == (int)Keys.Enter)
             {
                 string miusuario;
                 Usuarios d = new Usuarios();
@@ -42,15 +42,14 @@ namespace ImpresionQR
                 else
                 {
 
-                    conectar = Conexion.ObtenerConexion();
+                   
 
                     DateTime mihora = DateTime.Now;
                     string lahora = mihora.ToString("yyyy-MM-dd hh:mm:ss");
-
-                                                        
+                                                                           
 
                     new Evento().Traigo_Desde_Hasta_Credenciales();
-
+                   
                     FrmPrincipal frm = new FrmPrincipal(miusuario.ToString(), txtUsuario.Text);
                     this.Hide();
                     frm.ShowDialog();
@@ -71,6 +70,11 @@ namespace ImpresionQR
         private void txtUsuario_TextChanged(object sender, EventArgs e)
         {
 
+
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
 
         }
 
@@ -135,7 +139,7 @@ namespace ImpresionQR
 
 
                 new Evento().Traigo_Desde_Hasta_Credenciales();
-
+                conectar.Close();
                 FrmPrincipal frm = new FrmPrincipal(miusuario.ToString(), txtUsuario.Text);
                 this.Hide();
                 frm.ShowDialog();

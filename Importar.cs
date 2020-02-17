@@ -8,9 +8,8 @@ using System.Data;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Drawing;
-
-
-
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
 
 namespace ImpresionQR
 {
@@ -28,46 +27,7 @@ namespace ImpresionQR
 
 
 
-        public void importarExcel(DataGridView dgv, String nombreHoja, Button importar )
-        {
-            string ruta = "";
-            try
-            {
-
-                OpenFileDialog openfile1 = new OpenFileDialog();
-                openfile1.Filter = "Excel Files | *.xlsx";
-                openfile1.Title = "Seleccione el archivo a Importar";
-                if (openfile1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-
-                    if (openfile1.FileName.Equals("") == false)
-                    {
-                        ruta = openfile1.FileName;
-                    }
-
-                }
-
-                conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;data source=" + ruta + ";Extended Properties='Excel 8.0;HDR=Yes'");
-                MyDataAdapter = new OleDbDataAdapter("Select * From [" + nombreHoja + "$]", conn);
-                dt = new DataTable();
-                MyDataAdapter.Fill(dt);
-                dgv.DataSource = dt;
-                importar.Enabled = true;
-
-
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-
-            }
-
-        }   
-
-
-
-        public void importarExcelSeguridad(DataGridView dgv, Button importar, String nombreHoja)
+        public void ImportarExcelNuevo(DataGridView dgv, String nombreHoja, Button importar)
         {
             string ruta = "";
             try
@@ -103,15 +63,17 @@ namespace ImpresionQR
             }
 
         }
+               
+     
 
 
-        public void Importar_Cabinas(DataGridView dgvDatos, DataGridView dgvCabinas, string torneo, string  evento, Button imprimir, Button imprimir_nuevos, Button imprimir_fiesta )
+        public void Importar_Cabinas(DataGridView dgvDatos, DataGridView dgvCabinas, string torneo, string evento, Button imprimir, Button imprimir_nuevos, Button imprimir_fiesta)
         {
 
 
-            
+
             string cabina, medio;
-            int credencial=0;
+            int credencial = 0;
 
 
             DateTime mihora = DateTime.Now;
@@ -127,7 +89,8 @@ namespace ImpresionQR
                 credencial = dr.GetInt32(0);
             }
             dr.Close();
-                 
+            conectar.Close();
+
 
 
 
@@ -139,38 +102,38 @@ namespace ImpresionQR
                     cabina = Convert.ToString(row.Cells[0].Value);
                     medio = Convert.ToString(row.Cells[1].Value);
 
-                   
+
 
                     dgvCabinas.Rows.Add();
                     dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
                     dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
                     dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
-                    dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio ;
+                    dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
                     dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = cabina;
                     dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = 1;
                     dgvCabinas.Rows[FrmPrincipal.contirow].Cells[8].Value = credencial;
 
                     conectar = Conexion.ObtenerConexion();
-                    cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio  + "' COLLATE utf8_spanish_ci", conectar);
+                    cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
                     dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
                         dgvCabinas.Rows[FrmPrincipal.contirow].Cells[10].Value = dr.GetString(2);
                     }
                     dr.Close();
-
+                    conectar.Close();
 
 
                     FrmPrincipal.contirow++;
                     credencial++;
 
-                                       
-                    
-                }
-                
-                              
 
-                               
+
+                }
+
+
+
+
 
             }
 
@@ -187,27 +150,27 @@ namespace ImpresionQR
 
 
             string medio, fila, asiento;
-            int credencial = 0, sigo=1;
-           
-             
+            int credencial = 0, sigo = 1;
+
+
             DateTime mihora = DateTime.Now;
             string lahora = mihora.ToString("yyyy-MM-dd");
-            
-            int result= 0;
+
+            int result = 0;
             fila = "1";
             FrmPrincipal.contirow = 0;
 
             conectar = Conexion.ObtenerConexion();
             cmd = new MySqlCommand("SELECT Credencial_Pupitres  FROM setup", conectar);
             dr = cmd.ExecuteReader();
-           
+
 
             while (dr.Read())
             {
                 credencial = dr.GetInt32(0);
             }
             dr.Close();
-
+            conectar.Close();
 
 
             foreach (DataGridViewRow row in dgvDatos.Rows)
@@ -219,7 +182,7 @@ namespace ImpresionQR
 
                     if (asiento != "")
                     {
-
+                        conectar = Conexion.ObtenerConexion();
                         cmd1 = new MySqlCommand("SELECT Fila, Asiento  FROM anuales Where  Fila=1 AND Asiento=" + asiento, conectar);
                         dr1 = cmd1.ExecuteReader();
                         while (dr1.Read())
@@ -227,55 +190,57 @@ namespace ImpresionQR
                             sigo = 2;
                         }
                         dr1.Close();
+                        conectar.Close();
 
 
 
-                  //      if (sigo == 1)
-                   //     {
+                        //      if (sigo == 1)
+                        //     {
 
-                            dgvPupitre.Rows.Add();
-                            dgvPupitre.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
-                            dgvPupitre.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
-                            dgvPupitre.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
-                            dgvPupitre.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
-                            dgvPupitre.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
-                            dgvPupitre.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
-                            dgvPupitre.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
-                            dgvPupitre.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
+                        dgvPupitre.Rows.Add();
+                        dgvPupitre.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
+                        dgvPupitre.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
+                        dgvPupitre.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
+                        dgvPupitre.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
+                        dgvPupitre.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
+                        dgvPupitre.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
+                        dgvPupitre.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
+                        dgvPupitre.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
 
-                            conectar = Conexion.ObtenerConexion();
-                            cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
-                            dr = cmd.ExecuteReader();
-                            while (dr.Read())
-                            {
+                        conectar = Conexion.ObtenerConexion();
+                        cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
+                        dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
                             dgvPupitre.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
-                            }
-                            dr.Close();
+                        }
+                        dr.Close();
+                        conectar.Close();
 
 
 
 
-                            FrmPrincipal.contirow++;
-                            credencial++;
-                     //   }
-                    //    else
-                      //  {
-                      //      sigo = 1;
-                      //  }
+                        FrmPrincipal.contirow++;
+                        credencial++;
+                        //   }
+                        //    else
+                        //  {
+                        //      sigo = 1;
+                        //  }
 
                     }
                 }
-               
-
-            
-
-                
 
 
 
-                }
 
-           
+
+
+
+
+            }
+
+
 
         }
 
@@ -286,11 +251,11 @@ namespace ImpresionQR
 
 
             string medio, fila, asiento;
-            int credencial = 0, sigo=1;
+            int credencial = 0, sigo = 1;
 
             DateTime mihora = DateTime.Now;
             string lahora = mihora.ToString("yyyy-MM-dd");
-            
+
             int result;
             fila = "2";
 
@@ -304,6 +269,7 @@ namespace ImpresionQR
                 credencial = dr.GetInt32(0);
             }
             dr.Close();
+            conectar.Close();
 
 
 
@@ -317,7 +283,7 @@ namespace ImpresionQR
                     if (asiento != "")
                     {
 
-
+                        conectar = Conexion.ObtenerConexion();
                         cmd1 = new MySqlCommand("SELECT Fila, Asiento  FROM anuales Where  Fila=2 AND Asiento=" + asiento, conectar);
                         dr1 = cmd1.ExecuteReader();
                         while (dr1.Read())
@@ -325,42 +291,43 @@ namespace ImpresionQR
                             sigo = 2;
                         }
                         dr1.Close();
+                        conectar.Close();
 
 
+                        //      if (sigo == 1)
+                        //      {
 
-                  //      if (sigo == 1)
-                  //      {
+                        dgvCabinas.Rows.Add();
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
 
-                            dgvCabinas.Rows.Add();
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
-
-                            conectar = Conexion.ObtenerConexion();
-                            cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
-                            dr = cmd.ExecuteReader();
-                            while (dr.Read())
-                            {
-                             dgvCabinas.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
-                            }
-                            dr.Close();
+                        conectar = Conexion.ObtenerConexion();
+                        cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
+                        dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
+                        }
+                        dr.Close();
+                        conectar.Close();
 
                         FrmPrincipal.contirow++;
-                            credencial++;
-                    //    }
-                    //    else
-                    //    {
-                    //        sigo = 1;
-                   //     }
+                        credencial++;
+                        //    }
+                        //    else
+                        //    {
+                        //        sigo = 1;
+                        //     }
                     }
                 }
 
-                  
+
 
 
 
@@ -383,13 +350,13 @@ namespace ImpresionQR
 
 
             string medio, fila, asiento;
-            int credencial = 0,sigo=1;
+            int credencial = 0, sigo = 1;
 
 
 
             DateTime mihora = DateTime.Now;
             string lahora = mihora.ToString("yyyy-MM-dd");
-            
+
             int result;
             fila = "3";
             FrmPrincipal.contirow = 0;
@@ -404,6 +371,8 @@ namespace ImpresionQR
                 credencial = dr.GetInt32(0);
             }
             dr.Close();
+            conectar.Close();
+
 
 
 
@@ -413,10 +382,10 @@ namespace ImpresionQR
                 {
                     asiento = Convert.ToString(row.Cells[0].Value);
                     medio = Convert.ToString(row.Cells[1].Value);
-                    
+
                     if (asiento != "")
                     {
-
+                        conectar = Conexion.ObtenerConexion();
                         cmd1 = new MySqlCommand("SELECT Fila, Asiento  FROM anuales Where  Fila=3 AND Asiento=" + asiento, conectar);
                         dr1 = cmd1.ExecuteReader();
                         while (dr1.Read())
@@ -424,46 +393,47 @@ namespace ImpresionQR
                             sigo = 2;
                         }
                         dr1.Close();
+                        conectar.Close();
 
 
+                        //   if (sigo == 1)
+                        //    {
 
-                     //   if (sigo == 1)
-                    //    {
 
+                        dgvCabinas.Rows.Add();
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
 
-                            dgvCabinas.Rows.Add();
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
-
-                            conectar = Conexion.ObtenerConexion();
-                            cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
-                            dr = cmd.ExecuteReader();
-                            while (dr.Read())
-                            {
-                                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
-                            }
-                            dr.Close();
+                        conectar = Conexion.ObtenerConexion();
+                        cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
+                        dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
+                        }
+                        dr.Close();
+                        conectar.Close();
 
                         FrmPrincipal.contirow++;
-                            credencial++;
+                        credencial++;
 
-                      //  }
-                     //   else
-                    //    {
-                      //      sigo = 1;
-                     //   }
+                        //  }
+                        //   else
+                        //    {
+                        //      sigo = 1;
+                        //   }
                     }
 
                 }
 
 
-                
+
 
 
 
@@ -472,7 +442,7 @@ namespace ImpresionQR
             }
 
 
-          
+
             conectar.Close();
 
         }
@@ -483,11 +453,11 @@ namespace ImpresionQR
 
 
             string medio, fila, asiento;
-            int credencial = 0, sigo=1;
+            int credencial = 0, sigo = 1;
 
             DateTime mihora = DateTime.Now;
             string lahora = mihora.ToString("yyyy-MM-dd");
-            
+
             int result;
             fila = "4";
 
@@ -501,6 +471,7 @@ namespace ImpresionQR
                 credencial = dr.GetInt32(0);
             }
             dr.Close();
+            conectar.Close();
 
 
 
@@ -513,6 +484,7 @@ namespace ImpresionQR
 
                     if (asiento != "")
                     {
+                        conectar = Conexion.ObtenerConexion();
                         cmd1 = new MySqlCommand("SELECT Fila, Asiento  FROM anuales Where  Fila=4 AND Asiento=" + asiento, conectar);
                         dr1 = cmd1.ExecuteReader();
                         while (dr1.Read())
@@ -520,44 +492,45 @@ namespace ImpresionQR
                             sigo = 2;
                         }
                         dr1.Close();
+                        conectar.Close();
 
 
+                        //     if (sigo == 1)
+                        //   {
 
-                   //     if (sigo == 1)
-                     //   {
+                        dgvCabinas.Rows.Add();
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
 
-                            dgvCabinas.Rows.Add();
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
-
-                            conectar = Conexion.ObtenerConexion();
-                            cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
-                            dr = cmd.ExecuteReader();
-                            while (dr.Read())
-                            {
-                                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
-                            }
-                            dr.Close();
+                        conectar = Conexion.ObtenerConexion();
+                        cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
+                        dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
+                        }
+                        dr.Close();
+                        conectar.Close();
 
                         FrmPrincipal.contirow++;
-                            credencial++;
+                        credencial++;
 
-                       // }
-                      //  else
-                     //   {
-                     //       sigo = 1;
-                      //  }
+                        // }
+                        //  else
+                        //   {
+                        //       sigo = 1;
+                        //  }
                     }
                 }
 
 
-            
+
 
 
 
@@ -579,13 +552,13 @@ namespace ImpresionQR
 
 
             string medio, fila, asiento;
-            int credencial = 0, sigo=1;
-           
+            int credencial = 0, sigo = 1;
+
 
 
             DateTime mihora = DateTime.Now;
             string lahora = mihora.ToString("yyyy-MM-dd");
-            
+
             int result;
             fila = "5";
             FrmPrincipal.contirow = 0;
@@ -600,6 +573,7 @@ namespace ImpresionQR
                 credencial = dr.GetInt32(0);
             }
             dr.Close();
+            conectar.Close();
 
 
 
@@ -614,7 +588,7 @@ namespace ImpresionQR
                     if (asiento != "")
                     {
 
-
+                        conectar = Conexion.ObtenerConexion();
                         cmd1 = new MySqlCommand("SELECT Fila, Asiento  FROM anuales Where  Fila=5 AND Asiento=" + asiento, conectar);
                         dr1 = cmd1.ExecuteReader();
                         while (dr1.Read())
@@ -622,40 +596,41 @@ namespace ImpresionQR
                             sigo = 2;
                         }
                         dr1.Close();
+                        conectar.Close();
 
 
+                        //   if (sigo == 1)
+                        //   {
 
-                     //   if (sigo == 1)
-                     //   {
+                        dgvCabinas.Rows.Add();
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
 
-                            dgvCabinas.Rows.Add();
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
-                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
-
-                            conectar = Conexion.ObtenerConexion();
-                            cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
-                            dr = cmd.ExecuteReader();
-                            while (dr.Read())
-                            {
-                                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
-                            }
-                            dr.Close();
+                        conectar = Conexion.ObtenerConexion();
+                        cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
+                        dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
+                        }
+                        dr.Close();
+                        conectar.Close();
 
                         FrmPrincipal.contirow++;
-                            credencial++;
-                        
-            
+                        credencial++;
+
+
                     }
                 }
 
 
-            
+
 
 
 
@@ -664,7 +639,7 @@ namespace ImpresionQR
             }
 
 
-           
+
             conectar.Close();
 
         }
@@ -675,7 +650,7 @@ namespace ImpresionQR
 
 
             string medio, fila, asiento;
-            int credencial = 0, sigo=1;
+            int credencial = 0, sigo = 1;
 
             DateTime mihora = DateTime.Now;
             string lahora = mihora.ToString("yyyy-MM-dd");
@@ -692,6 +667,7 @@ namespace ImpresionQR
                 credencial = dr.GetInt32(0);
             }
             dr.Close();
+            conectar.Close();
 
 
 
@@ -705,7 +681,7 @@ namespace ImpresionQR
                     if (asiento != "")
                     {
 
-
+                        conectar = Conexion.ObtenerConexion();
                         cmd1 = new MySqlCommand("SELECT Fila, Asiento  FROM anuales Where  Fila=6 AND Asiento=" + asiento, conectar);
                         dr1 = cmd1.ExecuteReader();
                         while (dr1.Read())
@@ -713,11 +689,111 @@ namespace ImpresionQR
                             sigo = 2;
                         }
                         dr1.Close();
+                        conectar.Close();
+
+
+                        //        if (sigo == 1)
+                        //        {
+
+                        dgvCabinas.Rows.Add();
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
+                        dgvCabinas.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
+
+                        conectar = Conexion.ObtenerConexion();
+                        cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
+                        dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            dgvCabinas.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
+                        }
+                        dr.Close();
+                        conectar.Close();
+
+                        FrmPrincipal.contirow++;
+                        credencial++;
+
+
+                        //      }
+                        //      else
+                        //    {
+                        //         sigo = 1;
+                        //     }
+                    }
+                }
 
 
 
-                //        if (sigo == 1)
-                //        {
+
+
+
+
+            }
+
+
+
+            conectar.Close();
+
+        }
+
+
+        public void Importar_Pupitres_Fila7(DataGridView dgvDatos, DataGridView dgvCabinas, string torneo, string evento, Button imprimir, Button imprimir_nuevos, Button imprimir_fiesta)
+        {
+
+
+            string medio, fila, asiento;
+            int credencial = 0, sigo = 1, cont = 0;
+
+            DateTime mihora = DateTime.Now;
+            string lahora = mihora.ToString("yyyy-MM-dd");
+
+            int result;
+            fila = "7";
+
+
+
+            conectar = Conexion.ObtenerConexion();
+            cmd = new MySqlCommand("SELECT Credencial_Pupitres  FROM setup", conectar);
+            dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                credencial = dr.GetInt32(0);
+            }
+            dr.Close();
+            conectar.Close();
+
+
+            foreach (DataGridViewRow row in dgvDatos.Rows)
+            {
+
+                if (cont > 26)
+                {
+                    if (int.TryParse(Convert.ToString(row.Cells[0].Value), out result))
+                    {
+                        asiento = Convert.ToString(row.Cells[0].Value);
+                        medio = Convert.ToString(row.Cells[1].Value);
+
+                        if (asiento != "")
+                        {
+
+                            conectar = Conexion.ObtenerConexion();
+                            cmd1 = new MySqlCommand("SELECT Fila, Asiento  FROM anuales Where  Fila=7 AND Asiento=" + asiento, conectar);
+                            dr1 = cmd1.ExecuteReader();
+                            while (dr1.Read())
+                            {
+                                sigo = 2;
+                            }
+                            dr1.Close();
+                            conectar.Close();
+
+
+                            //       if (sigo == 1)
+                            //       {
 
                             dgvCabinas.Rows.Add();
                             dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
@@ -737,120 +813,22 @@ namespace ImpresionQR
                                 dgvCabinas.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
                             }
                             dr.Close();
+                            conectar.Close();
 
-                        FrmPrincipal.contirow++;
+                            FrmPrincipal.contirow++;
                             credencial++;
 
 
-                  //      }
-                  //      else
-                    //    {
-                   //         sigo = 1;
-                   //     }
-                    }
-                }
-
-                     
-
-
-
-
-
-            }
-
-
-           
-            conectar.Close();
-
-        }
-
-
-        public void Importar_Pupitres_Fila7(DataGridView dgvDatos, DataGridView dgvCabinas, string torneo, string evento, Button imprimir, Button imprimir_nuevos, Button imprimir_fiesta)
-        {
-
-
-            string medio, fila, asiento;
-            int credencial = 0, sigo=1, cont=0;
-
-            DateTime mihora = DateTime.Now;
-            string lahora = mihora.ToString("yyyy-MM-dd");
-            
-            int result;
-            fila = "7";
-
-
-
-            conectar = Conexion.ObtenerConexion();
-            cmd = new MySqlCommand("SELECT Credencial_Pupitres  FROM setup", conectar);
-            dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                credencial = dr.GetInt32(0);
-            }
-            dr.Close();
-            
-
-
-            foreach (DataGridViewRow row in dgvDatos.Rows)
-            {
-
-                if (cont > 26)
-                {
-                    if (int.TryParse(Convert.ToString(row.Cells[0].Value), out result))
-                    {
-                        asiento = Convert.ToString(row.Cells[0].Value);
-                        medio = Convert.ToString(row.Cells[1].Value);
-
-                        if (asiento != "")
-                        {
-
-
-                            cmd1 = new MySqlCommand("SELECT Fila, Asiento  FROM anuales Where  Fila=7 AND Asiento=" + asiento, conectar);
-                            dr1 = cmd1.ExecuteReader();
-                            while (dr1.Read())
-                            {
-                                sigo = 2;
-                            }
-                            dr1.Close();
-
-
-
-                     //       if (sigo == 1)
-                     //       {
-
-                                dgvCabinas.Rows.Add();
-                                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
-                                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
-                                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
-                                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = medio;
-                                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = fila;
-                                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = asiento;
-                                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = 1;
-                                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[9].Value = credencial;
-
-                                conectar = Conexion.ObtenerConexion();
-                                cmd = new MySqlCommand("SELECT Id_Medios, Nombre_Medio, Letras  FROM medios WHERE Nombre_Medio ='" + medio + "' COLLATE utf8_spanish_ci", conectar);
-                                dr = cmd.ExecuteReader();
-                                while (dr.Read())
-                                {
-                                    dgvCabinas.Rows[FrmPrincipal.contirow].Cells[11].Value = dr.GetString(2);
-                                }
-                                dr.Close();
-
-                            FrmPrincipal.contirow++;
-                                credencial++;
-
-
-                       //     }
-                       //     else
-                       //     {
-                       //         sigo = 1;
-                        //    }
+                            //     }
+                            //     else
+                            //     {
+                            //         sigo = 1;
+                            //    }
                         }
 
                     }
 
-                               
+
 
 
                 }
@@ -859,7 +837,7 @@ namespace ImpresionQR
             }
 
 
-            
+
             conectar.Close();
             imprimir.Enabled = true;
             imprimir_nuevos.Enabled = true;
@@ -883,7 +861,7 @@ namespace ImpresionQR
             DateTime mihora = DateTime.Now;
             string lahora = mihora.ToString("yyyy-MM-dd");
             int result;
-            
+
 
             FrmPrincipal.contirow = 0;
 
@@ -895,24 +873,25 @@ namespace ImpresionQR
                 credencial = dr.GetInt32(0);
             }
             dr.Close();
+            conectar.Close();
 
 
-            
+
 
 
             foreach (DataGridViewRow row in dgvDatos.Rows)
             {
 
-                 if (int.TryParse(Convert.ToString(row.Cells[0].Value), out result))
+                if (int.TryParse(Convert.ToString(row.Cells[0].Value), out result))
                 {
 
                 }
 
-                    else
+                else
 
                 {
 
-                   
+
                     medio = Convert.ToString(row.Cells[0].Value);
 
 
@@ -933,6 +912,7 @@ namespace ImpresionQR
                         dgvMovil.Rows[FrmPrincipal.contirow].Cells[9].Value = dr.GetString(2);
                     }
                     dr.Close();
+                    conectar.Close();
 
 
                     FrmPrincipal.contirow++;
@@ -945,7 +925,7 @@ namespace ImpresionQR
 
 
 
-           
+
 
             }
 
@@ -980,7 +960,7 @@ namespace ImpresionQR
                 credencial = dr.GetInt32(0);
             }
             dr.Close();
-
+            conectar.Close();
 
             foreach (DataGridViewRow row in dgvDatos.Rows)
             {
@@ -1014,6 +994,7 @@ namespace ImpresionQR
                         dgvMovil.Rows[FrmPrincipal.contirow].Cells[9].Value = dr.GetString(2);
                     }
                     dr.Close();
+                    conectar.Close();
 
                     FrmPrincipal.contirow++;
                     credencial++;
@@ -1023,7 +1004,7 @@ namespace ImpresionQR
 
 
 
-                
+
             }
 
             imprimir.Enabled = true;
@@ -1031,13 +1012,14 @@ namespace ImpresionQR
             imprimir_fiesta.Enabled = true;
             MessageBox.Show("Se cargaron los datos correctamente");
 
-        } 
+        }
 
         public void muestro_rivales(DataGridView dgvDatos, string criterio)
 
         {
             int contirow = 0;
             string ruta = "", escudos = "";
+            string miimagen;
 
 
             conectar = Conexion.ObtenerConexion_Analytics();
@@ -1052,26 +1034,26 @@ namespace ImpresionQR
             dr.Close();
 
             dgvDatos.Rows.Clear();
-     
 
 
-                cmd = new MySqlCommand(criterio , conectar);
-                dr = cmd.ExecuteReader();
 
-                while (dr.Read())
-                {
-                    ruta = escudos + dr.GetString(2);
-                    dgvDatos.Rows.Add();
-                    dgvDatos.Rows[contirow].Cells[0].Value = Image.FromFile(ruta);
-                    dgvDatos.Rows[contirow].Cells[1].Value = dr.GetString(1);
-                    dgvDatos.Rows[contirow].Cells[2].Value = dr.GetString(0);
-                    contirow++;
+            cmd = new MySqlCommand(criterio, conectar);
+            dr = cmd.ExecuteReader();
 
-                }
-                conectar.Close();
+            while (dr.Read())
+            {
+                ruta = escudos + dr.GetString(2);
+                dgvDatos.Rows.Add();
+                dgvDatos.Rows[contirow].Cells[0].Value = Image.FromFile(ruta);
+                dgvDatos.Rows[contirow].Cells[1].Value = dr.GetString(1);
+                dgvDatos.Rows[contirow].Cells[2].Value = dr.GetString(0);
+                contirow++;
 
             }
-        
+            conectar.Close();
+
+        }
+
 
         public void muestro_eventos(DataGridView dgvDatos, string criterio)
 
@@ -1090,17 +1072,17 @@ namespace ImpresionQR
             }
 
             dr.Close();
+            conectar1.Close();
 
-
-            dgvDatos.Rows.Clear();   
+            dgvDatos.Rows.Clear();
             conectar = Conexion.ObtenerConexion();
             cmd = new MySqlCommand(criterio, conectar);
             dr = cmd.ExecuteReader();
 
-            conectar1 = Conexion.ObtenerConexion_Analytics();
+
             while (dr.Read())
             {
-
+                conectar1 = Conexion.ObtenerConexion_Analytics();
                 elequipo = dr.GetInt32(7);
                 cmd1 = new MySqlCommand("Select Id_Equipo, Nombre_Equipo, Escudo From equipos  Where Id_Equipo=" + elequipo, conectar1);
                 dr1 = cmd1.ExecuteReader();
@@ -1112,7 +1094,7 @@ namespace ImpresionQR
                     dgvDatos.Rows[contirow].Cells[0].Value = Image.FromFile(ruta);
                     dgvDatos.Rows[contirow].Cells[1].Value = dr1.GetString(1);
                     mihora = Convert.ToDateTime(dr.GetString(3));
-                    lahora = mihora.ToString("yyyy-MM-dd"); 
+                    lahora = mihora.ToString("yyyy-MM-dd");
                     dgvDatos.Rows[contirow].Cells[2].Value = lahora;
                     dgvDatos.Rows[contirow].Cells[3].Value = dr.GetString(0);
                     dgvDatos.Rows[contirow].Cells[4].Value = dr1.GetString(0);
@@ -1120,21 +1102,22 @@ namespace ImpresionQR
                     dgvDatos.Rows[contirow].Cells[6].Value = dr.GetString(9);
                     dgvDatos.Rows[contirow].Cells[7].Value = dr.GetString(7);
                     contirow++;
-                   
+
                 }
                 dr1.Close();
-             }
+                conectar1.Close();
+            }
             conectar.Close();
-            conectar1.Close();
+
         }
 
 
 
 
-        public void traigo_escudo_rival(string rival, PictureBox imagen, PictureBox imagenriver, Label  nombrerival, Panel cuadro)
+        public void traigo_escudo_rival(string rival, PictureBox imagen, PictureBox imagenriver, Label nombrerival, Panel cuadro)
 
         {
-           
+
             string ruta = "", escudos = "";
 
 
@@ -1147,7 +1130,7 @@ namespace ImpresionQR
             }
 
             conectar.Close();
-                       
+
 
             conectar = Conexion.ObtenerConexion_Analytics();
             cmd = new MySqlCommand("SELECT Escudo_Full, Nombre_Equipo FROM equipos WHERE Id_Equipo=" + rival, conectar);
@@ -1157,10 +1140,10 @@ namespace ImpresionQR
             {
                 ruta = escudos + dr.GetString(0);
                 imagen.Image = Image.FromFile(ruta);
-                nombrerival.Text  = dr.GetString(1);
+                nombrerival.Text = dr.GetString(1);
                 imagen.Visible = true;
                 imagenriver.Visible = true;
-                cuadro.Visible = true;        
+                cuadro.Visible = true;
 
 
             }
@@ -1175,8 +1158,8 @@ namespace ImpresionQR
         {
 
 
-                 
-            
+
+
 
 
             DateTime mihora = DateTime.Now;
@@ -1190,31 +1173,31 @@ namespace ImpresionQR
 
             foreach (DataGridViewRow row in dgvDatos.Rows)
             {
-               
-                    apellido = Convert.ToString(row.Cells[0].Value);
-                    nombre = Convert.ToString(row.Cells[1].Value);
-                    cargo = Convert.ToString(row.Cells[2].Value);
-                    nivelacceso = Convert.ToString(row.Cells[3].Value);
-                 //   status = Convert.ToString(row.Cells[8].Value);
+
+                apellido = Convert.ToString(row.Cells[0].Value);
+                nombre = Convert.ToString(row.Cells[1].Value);
+                cargo = Convert.ToString(row.Cells[2].Value);
+                nivelacceso = Convert.ToString(row.Cells[3].Value);
+                //   status = Convert.ToString(row.Cells[8].Value);
 
 
-                    dgvCabinas.Rows.Add();
-                    dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
-                    dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
-                    dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
-                    dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = nombre;
-                    dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = apellido;
-                    dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = cargo;
-                    dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = nivelacceso;
-                  //  dgvCabinas.Rows[FrmPrincipal.contirow].Cells[7].Value = status;
-                    
-
-                    FrmPrincipal.contirow++;
-                    
+                dgvCabinas.Rows.Add();
+                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[0].Value = true;
+                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[1].Value = torneo;
+                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[2].Value = evento;
+                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[3].Value = nombre;
+                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[4].Value = apellido;
+                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[5].Value = cargo;
+                dgvCabinas.Rows[FrmPrincipal.contirow].Cells[6].Value = nivelacceso;
+                //  dgvCabinas.Rows[FrmPrincipal.contirow].Cells[7].Value = status;
 
 
+                FrmPrincipal.contirow++;
 
-                
+
+
+
+
 
 
 
@@ -1297,10 +1280,10 @@ namespace ImpresionQR
 
         }
 
-              
+
         public void ExportarDataGridViewExcel(DataGridView dgvDatos)
         {
-       
+
             SaveFileDialog fichero = new SaveFileDialog();
             fichero.Filter = "Excel (*.xls)|*.xls";
             if (fichero.ShowDialog() == DialogResult.OK)
@@ -1342,14 +1325,14 @@ namespace ImpresionQR
             }
         }
 
-        public void Guardo_Configuracion_Impresion(string txtfontcampeonato , string txtsizecampeonato , string txtfontrival, string txtsizerival, string txtfontmedio, string txtsizemedio, string txtfontfechan, string txtsizefechan, string evento, int Id_Evento, string txtfontubicacion, string txtsizeubicacion, CheckBox negritacampeonato, CheckBox negritamedio, CheckBox negritarival, CheckBox negritafecha, CheckBox negritaubicacion, string txtfontnombre, string txtsizenombre, CheckBox negritanombre)
+        public void Guardo_Configuracion_Impresion(string txtfontcampeonato, string txtsizecampeonato, string txtfontrival, string txtsizerival, string txtfontmedio, string txtsizemedio, string txtfontfechan, string txtsizefechan, string evento, int Id_Evento, string txtfontubicacion, string txtsizeubicacion, CheckBox negritacampeonato, CheckBox negritamedio, CheckBox negritarival, CheckBox negritafecha, CheckBox negritaubicacion, string txtfontnombre, string txtsizenombre, CheckBox negritanombre)
         {
 
 
-                    int ncampeonato = 2, nmedio = 2, nrival = 2, nfecha = 2, nubicacion = 2, nnombre= 2;
-                                
-                    
-                    
+            int ncampeonato = 2, nmedio = 2, nrival = 2, nfecha = 2, nubicacion = 2, nnombre = 2;
+
+
+
 
 
 
@@ -1415,10 +1398,10 @@ namespace ImpresionQR
             }
 
             conectar = Conexion.ObtenerConexion();
-                    cmd = new MySqlCommand("UPDATE eventos SET Nombre_Evento='" + evento + "', FuenteEvento='" + txtfontrival + "', SizeEvento=" + txtsizerival + ", CampeonatoFuente='" + txtfontcampeonato + "', CampeonatoSize=" + txtsizecampeonato + ", MedioFuente='" + txtfontmedio + "', MedioSize=" + txtsizemedio + ", FechaNFuente='" + txtfontfechan + "', FechaNSize=" + txtsizefechan + ", UbicacionFuente='" + txtfontubicacion + "', UbicacionSize=" + txtsizeubicacion + ", CampeonatoNegrita=" + ncampeonato + ", MedioNegrita=" + nmedio + ", FechaNNegrita=" + nfecha + ", RivalNegrita=" + nrival + ", UbicacionNegrita=" + nubicacion + ", RivalFuente='" + txtfontrival + "', RivalSize=" + txtsizerival + ", NombreFuente='" + txtfontnombre + "', NombreSize=" + txtsizenombre + ", NombreNegrita=" + nnombre + "  WHERE Id_Evento=" + Id_Evento , conectar);
-                    cmd.ExecuteNonQuery();
+            cmd = new MySqlCommand("UPDATE eventos SET Nombre_Evento='" + evento + "', FuenteEvento='" + txtfontrival + "', SizeEvento=" + txtsizerival + ", CampeonatoFuente='" + txtfontcampeonato + "', CampeonatoSize=" + txtsizecampeonato + ", MedioFuente='" + txtfontmedio + "', MedioSize=" + txtsizemedio + ", FechaNFuente='" + txtfontfechan + "', FechaNSize=" + txtsizefechan + ", UbicacionFuente='" + txtfontubicacion + "', UbicacionSize=" + txtsizeubicacion + ", CampeonatoNegrita=" + ncampeonato + ", MedioNegrita=" + nmedio + ", FechaNNegrita=" + nfecha + ", RivalNegrita=" + nrival + ", UbicacionNegrita=" + nubicacion + ", RivalFuente='" + txtfontrival + "', RivalSize=" + txtsizerival + ", NombreFuente='" + txtfontnombre + "', NombreSize=" + txtsizenombre + ", NombreNegrita=" + nnombre + "  WHERE Id_Evento=" + Id_Evento, conectar);
+            cmd.ExecuteNonQuery();
 
-                    conectar.Close();
+            conectar.Close();
 
             MessageBox.Show("Se Cargaron las Configuraciones de Impresion Correctamente");
 
@@ -1427,11 +1410,11 @@ namespace ImpresionQR
 
         }
 
-        public void Traigo_Configuracion_Impresiones(TextBox txtfontcampeonato, TextBox txtsizecampeonato, TextBox txtfontrival, TextBox txtsizerival, TextBox txtfontmedio, TextBox txtsizemedio, TextBox txtfontfechan, TextBox txtsizefechan, string Id_Evento, TextBox txtfontubicacion, TextBox txtsizeubicacion, CheckBox ncampeonato, CheckBox nrival, CheckBox nfecha, CheckBox nmedio, CheckBox nubicacion, TextBox txtCampeonato, TextBox txtRival, TextBox txtCanal, TextBox txtFecha, TextBox txtUbicacion, TextBox txtfontnombre, TextBox txtsizenombre,CheckBox nnombre, TextBox txtNombre )
+        public void Traigo_Configuracion_Impresiones(TextBox txtfontcampeonato, TextBox txtsizecampeonato, TextBox txtfontrival, TextBox txtsizerival, TextBox txtfontmedio, TextBox txtsizemedio, TextBox txtfontfechan, TextBox txtsizefechan, string Id_Evento, TextBox txtfontubicacion, TextBox txtsizeubicacion, CheckBox ncampeonato, CheckBox nrival, CheckBox nfecha, CheckBox nmedio, CheckBox nubicacion, TextBox txtCampeonato, TextBox txtRival, TextBox txtCanal, TextBox txtFecha, TextBox txtUbicacion, TextBox txtfontnombre, TextBox txtsizenombre, CheckBox nnombre, TextBox txtNombre)
         {
 
             conectar = Conexion.ObtenerConexion();
-            cmd = new MySqlCommand("SELECT CampeonatoFuente, CampeonatoSize, RivalFuente, RivalSize, MedioFuente, MedioSize, FechaNFuente, FechaNSize, UbicacionFuente, UbicacionSize, CampeonatoNegrita, MedioNegrita, FechaNNegrita, UbicacionNegrita, RivalNegrita, NombreFuente, NombreSize, NombreNegrita FROM eventos WHERE Id_Evento=" + Id_Evento , conectar);
+            cmd = new MySqlCommand("SELECT CampeonatoFuente, CampeonatoSize, RivalFuente, RivalSize, MedioFuente, MedioSize, FechaNFuente, FechaNSize, UbicacionFuente, UbicacionSize, CampeonatoNegrita, MedioNegrita, FechaNNegrita, UbicacionNegrita, RivalNegrita, NombreFuente, NombreSize, NombreNegrita FROM eventos WHERE Id_Evento=" + Id_Evento, conectar);
             dr = cmd.ExecuteReader();
 
             while (dr.Read())
@@ -1451,7 +1434,7 @@ namespace ImpresionQR
                 txtsizenombre.Text = dr.GetString(16);
 
 
-                if (dr.GetInt32(10)==1)
+                if (dr.GetInt32(10) == 1)
                 {
                     ncampeonato.Checked = true;
 
@@ -1486,12 +1469,12 @@ namespace ImpresionQR
 
                 }
 
-                txtCampeonato.Font = new Font (dr.GetString(0), dr.GetInt32(1));
+                txtCampeonato.Font = new Font(dr.GetString(0), dr.GetInt32(1));
                 txtRival.Font = new Font(dr.GetString(2), dr.GetInt32(3));
                 txtCanal.Font = new Font(dr.GetString(4), dr.GetInt32(5));
                 txtFecha.Font = new Font(dr.GetString(6), dr.GetInt32(7));
                 txtUbicacion.Font = new Font(dr.GetString(8), dr.GetInt32(9));
-                txtNombre.Font= new Font(dr.GetString(15), dr.GetInt32(16));
+                txtNombre.Font = new Font(dr.GetString(15), dr.GetInt32(16));
 
 
             }
@@ -1503,17 +1486,17 @@ namespace ImpresionQR
 
         public void Traigo_Configuracion_Evento(string Id_Evento)
         {
-                  
+
 
 
             conectar = Conexion.ObtenerConexion();
-            cmd = new MySqlCommand("SELECT FuenteEvento, SizeEvento, CampeonatoFuente, CampeonatoSize, CampeonatoNegrita, MedioFuente, MedioSize, MedioNegrita, FechaNFuente, FechaNSize, FechaNNegrita, UbicacionFuente, UbicacionSize, UbicacionNegrita, RivalFuente, RivalSize, RivalNegrita  From eventos Where Id_Evento=" + Id_Evento , conectar);
+            cmd = new MySqlCommand("SELECT FuenteEvento, SizeEvento, CampeonatoFuente, CampeonatoSize, CampeonatoNegrita, MedioFuente, MedioSize, MedioNegrita, FechaNFuente, FechaNSize, FechaNNegrita, UbicacionFuente, UbicacionSize, UbicacionNegrita, RivalFuente, RivalSize, RivalNegrita, NombreFuente, NombreSize, NombreNegrita  From eventos Where Id_Evento=" + Id_Evento, conectar);
             dr = cmd.ExecuteReader();
 
             while (dr.Read())
             {
                 FrmLogin.nomfuente = dr.GetString(0);
-                FrmLogin.sizefuente= Convert.ToUInt16(dr.GetString(1));
+                FrmLogin.sizefuente = Convert.ToUInt16(dr.GetString(1));
                 FrmLogin.nomfuentecampeonato = dr.GetString(2);
                 FrmLogin.sizecampeonato = dr.GetInt16(3);
                 FrmLogin.negritacampeonato = dr.GetInt16(4);
@@ -1529,6 +1512,9 @@ namespace ImpresionQR
                 FrmLogin.nomfuenterival = dr.GetString(14);
                 FrmLogin.sizerival = dr.GetInt16(15);
                 FrmLogin.negritarival = dr.GetInt16(16);
+                FrmLogin.nomfuentenombre = dr.GetString(17);
+                FrmLogin.sizenombre = dr.GetInt16(18);
+                FrmLogin.negritanombre = dr.GetInt16(19);
 
 
             }
@@ -1545,7 +1531,7 @@ namespace ImpresionQR
 
             while (dr.Read())
             {
-              
+
                 FrmLogin.nomfuentecampeonato = dr.GetString(0);
                 FrmLogin.sizecampeonato = Convert.ToInt32(dr.GetString(1));
                 FrmLogin.nomfuenterival = dr.GetString(2);
@@ -1565,7 +1551,7 @@ namespace ImpresionQR
         }
 
 
-        public void importarExcel_Lectura(DataGridView dgv, String nombreHoja)
+        public void importarExcel(DataGridView dgv, String nombreHoja, Button importar)
         {
             string ruta = "";
             try
@@ -1589,7 +1575,7 @@ namespace ImpresionQR
                 dt = new DataTable();
                 MyDataAdapter.Fill(dt);
                 dgv.DataSource = dt;
-               // importar.Enabled = true;
+                importar.Enabled = true;
 
 
             }
@@ -1600,6 +1586,9 @@ namespace ImpresionQR
 
             }
 
+
+          
+
         }
 
         public void Importar_Lecturas(DataGridView dgvDatos, System.Windows.Forms.ProgressBar progressBar, DataGridView dgvCabinas)
@@ -1607,7 +1596,7 @@ namespace ImpresionQR
 
 
             int contirow = 0;
-            
+
             progressBar.Maximum = dgvDatos.RowCount;
             progressBar.Step = 1;
 
@@ -1617,33 +1606,35 @@ namespace ImpresionQR
             foreach (DataGridViewRow row in dgvDatos.Rows)
             {
 
-                
+
                 cmd = new MySqlCommand("SELECT Id_Impresiones, Cabina, Asiento, Fila, Medio FROM impresiones  WHERE Id_Impresiones=" + Convert.ToString(row.Cells[3].Value), conectar);
                 dr = cmd.ExecuteReader();
 
                 while (dr.Read())
 
 
-                    dgvCabinas.Rows.Add();
-                    dgvCabinas.Rows[contirow].Cells[0].Value = Convert.ToString(row.Cells[0].Value);
-                    dgvCabinas.Rows[contirow].Cells[1].Value = Convert.ToString(row.Cells[1].Value);
-                    dgvCabinas.Rows[contirow].Cells[2].Value = Convert.ToString(row.Cells[2].Value);
-                    dgvCabinas.Rows[contirow].Cells[3].Value = Convert.ToString(row.Cells[3].Value);
-                    dgvCabinas.Rows[contirow].Cells[4].Value = Convert.ToString(row.Cells[4].Value);
-                    dgvCabinas.Rows[contirow].Cells[5].Value = Convert.ToString(row.Cells[5].Value);
-                    dgvCabinas.Rows[contirow].Cells[6].Value = Convert.ToString(dr.GetString(4));
-                    dgvCabinas.Rows[contirow].Cells[7].Value = Convert.ToString(dr.GetString(1));
-                    dgvCabinas.Rows[contirow].Cells[8].Value = Convert.ToString(dr.GetString(3));
-                    dgvCabinas.Rows[contirow].Cells[9].Value = Convert.ToString(dr.GetString(2));
+                dgvCabinas.Rows.Add();
+                dgvCabinas.Rows[contirow].Cells[0].Value = Convert.ToString(row.Cells[0].Value);
+                dgvCabinas.Rows[contirow].Cells[1].Value = Convert.ToString(row.Cells[1].Value);
+                dgvCabinas.Rows[contirow].Cells[2].Value = Convert.ToString(row.Cells[2].Value);
+                dgvCabinas.Rows[contirow].Cells[3].Value = Convert.ToString(row.Cells[3].Value);
+                dgvCabinas.Rows[contirow].Cells[4].Value = Convert.ToString(row.Cells[4].Value);
+                dgvCabinas.Rows[contirow].Cells[5].Value = Convert.ToString(row.Cells[5].Value);
+                dgvCabinas.Rows[contirow].Cells[6].Value = Convert.ToString(dr.GetString(4));
+                dgvCabinas.Rows[contirow].Cells[7].Value = Convert.ToString(dr.GetString(1));
+                dgvCabinas.Rows[contirow].Cells[8].Value = Convert.ToString(dr.GetString(3));
+                dgvCabinas.Rows[contirow].Cells[9].Value = Convert.ToString(dr.GetString(2));
 
-                    dr.Close();
-                    contirow++;
-               
-                    progressBar.PerformStep();
- 
+                dr.Close();
+
+                contirow++;
+
+                progressBar.PerformStep();
+
             }
+            conectar.Close();
 
-            
+
             MessageBox.Show("Se cargaron los datos correctamente");
 
         }
@@ -1662,23 +1653,24 @@ namespace ImpresionQR
 
             while (dr.Read())
 
-             { 
-                    dgvCabinas.Rows.Add();
-                    dgvCabinas.Rows[contirow].Cells[0].Value = Convert.ToString(dr.GetString(0));
-                    dgvCabinas.Rows[contirow].Cells[1].Value = Convert.ToString(dr.GetString(1));
-                    dgvCabinas.Rows[contirow].Cells[2].Value = Convert.ToString(dr.GetString(2));
-                    dgvCabinas.Rows[contirow].Cells[3].Value = Convert.ToString(dr.GetString(3));
-                    dgvCabinas.Rows[contirow].Cells[4].Value = Convert.ToString(dr.GetString(4));
-                    dgvCabinas.Rows[contirow].Cells[5].Value = Convert.ToString(dr.GetString(5));
-                    dgvCabinas.Rows[contirow].Cells[6].Value = Convert.ToString(dr.GetString(6));
-                    dgvCabinas.Rows[contirow].Cells[7].Value = Convert.ToString(dr.GetString(7));
-                    dgvCabinas.Rows[contirow].Cells[8].Value = Convert.ToString(dr.GetString(8));
-               
-                    contirow++;
+            {
+                dgvCabinas.Rows.Add();
+                dgvCabinas.Rows[contirow].Cells[0].Value = Convert.ToString(dr.GetString(0));
+                dgvCabinas.Rows[contirow].Cells[1].Value = Convert.ToString(dr.GetString(1));
+                dgvCabinas.Rows[contirow].Cells[2].Value = Convert.ToString(dr.GetString(2));
+                dgvCabinas.Rows[contirow].Cells[3].Value = Convert.ToString(dr.GetString(3));
+                dgvCabinas.Rows[contirow].Cells[4].Value = Convert.ToString(dr.GetString(4));
+                dgvCabinas.Rows[contirow].Cells[5].Value = Convert.ToString(dr.GetString(5));
+                dgvCabinas.Rows[contirow].Cells[6].Value = Convert.ToString(dr.GetString(6));
+                dgvCabinas.Rows[contirow].Cells[7].Value = Convert.ToString(dr.GetString(7));
+                dgvCabinas.Rows[contirow].Cells[8].Value = Convert.ToString(dr.GetString(8));
 
-                
+                contirow++;
 
-             }
+
+
+            }
+            conectar.Close();
 
 
             MessageBox.Show("Se cargaron los datos correctamente");
@@ -1688,128 +1680,16 @@ namespace ImpresionQR
 
 
 
-        public void importarExcelMedios(DataGridView dgv, String nombreHoja, Button importar)
-        {
-            string ruta = "";
-            try
-            {
+    
 
-                OpenFileDialog openfile1 = new OpenFileDialog();
-                openfile1.Filter = "Excel Files | *.xlsx";
-                openfile1.Title = "Seleccione el archivo a Importar";
-                if (openfile1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-
-                    if (openfile1.FileName.Equals("") == false)
-                    {
-                        ruta = openfile1.FileName;
-                    }
-
-                }
-
-                conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;data source=" + ruta + ";Extended Properties='Excel 8.0;HDR=Yes'");
-                MyDataAdapter = new OleDbDataAdapter("Select * From [" + nombreHoja + "$]", conn);
-                dt = new DataTable();
-                MyDataAdapter.Fill(dt);
-                dgv.DataSource = dt;
-                importar.Enabled = true;
-
-
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-
-            }
-
-        }
-
-
-
-        public void importarExcelDNI(DataGridView dgv, String nombreHoja, Button importar)
-        {
-            string ruta = "";
-            try
-            {
-
-                OpenFileDialog openfile1 = new OpenFileDialog();
-                openfile1.Filter = "Excel Files | *.xlsx";
-                openfile1.Title = "Seleccione el archivo a Importar";
-                if (openfile1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-
-                    if (openfile1.FileName.Equals("") == false)
-                    {
-                        ruta = openfile1.FileName;
-                    }
-
-                }
-
-                conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;data source=" + ruta + ";Extended Properties='Excel 8.0;HDR=Yes'");
-                MyDataAdapter = new OleDbDataAdapter("Select * From [" + nombreHoja + "$]", conn);
-                dt = new DataTable();
-                MyDataAdapter.Fill(dt);
-                dgv.DataSource = dt;
-                importar.Enabled = true;
-
-
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-
-            }
-
-        }
-
-
-        public void importarExcelTAGS(DataGridView dgv, String nombreHoja, Button importar)
-        {
-            string ruta = "";
-            try
-            {
-
-                OpenFileDialog openfile1 = new OpenFileDialog();
-                openfile1.Filter = "Excel Files | *.xlsx";
-                openfile1.Title = "Seleccione el archivo a Importar";
-                if (openfile1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-
-                    if (openfile1.FileName.Equals("") == false)
-                    {
-                        ruta = openfile1.FileName;
-                    }
-
-                }
-
-                conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;data source=" + ruta + ";Extended Properties='Excel 8.0;HDR=Yes'");
-                MyDataAdapter = new OleDbDataAdapter("Select * From [" + nombreHoja + "$]", conn);
-                dt = new DataTable();
-                MyDataAdapter.Fill(dt);
-                dgv.DataSource = dt;
-                importar.Enabled = true;
-
-
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-
-            }
-
-        }
-
-
+       
         public void Importar_Medios(DataGridView dgvDatos)
         {
 
 
-                      
-            int contirow=0;
-            string medios ;
+
+            int contirow = 0;
+            string medios;
 
 
             foreach (DataGridViewRow row in dgvDatos.Rows)
@@ -1830,19 +1710,19 @@ namespace ImpresionQR
                     conectar1 = Conexion.ObtenerConexion();
                     cmd1 = new MySqlCommand("Insert into medios(Nombre_Medio) values('" + medios + "')", conectar1);
                     cmd1.ExecuteNonQuery();
-                    conectar1.Close(); 
+                    conectar1.Close();
                 }
-                
-                 
-                 conectar.Close();
-                 contirow++;
-               
 
-              
+
+                conectar.Close();
+                contirow++;
+
+
+
 
             }
 
-        
+
             MessageBox.Show("Se cargaron los datos correctamente");
 
         }
@@ -1857,11 +1737,11 @@ namespace ImpresionQR
             string dni;
 
 
-            foreach (DataGridViewRow row in dgvDatos.Rows) 
+            foreach (DataGridViewRow row in dgvDatos.Rows)
             {
                 dni = Convert.ToString(dgvDatos.Rows[contirow].Cells[0].Value);
                 //medio = Convert.ToString(dgvDatos.Rows[contirow].Cells[1].Value);
-                
+
 
                 conectar = Conexion.ObtenerConexion();
                 cmd = new MySqlCommand("SELECT dni FROM dni_seguridad WHERE dni ='" + dni + "'", conectar);
@@ -1889,58 +1769,17 @@ namespace ImpresionQR
 
             }
 
-           MessageBox.Show("Se cargaron los datos correctamente");
-
-        }
-
-
-        public void Importar_TAGS(DataGridView dgvDatos)
-        {
-            int contirow = 0;
-            string tag, nombre;
-
-
-            foreach (DataGridViewRow row in dgvDatos.Rows)
-            {
-                tag = Convert.ToString(dgvDatos.Rows[contirow].Cells[1].Value);
-                nombre = "Tarjeta" + contirow;
-
-                conectar = Conexion.ObtenerConexion();
-                cmd = new MySqlCommand("SELECT Numero_Serie FROM tarjetas WHERE Numero_Serie ='" + tag + "'", conectar);
-                dr = cmd.ExecuteReader();
-                if (dr.Read())
-                {
-
-
-                }
-
-                else
-                {
-                    conectar1 = Conexion.ObtenerConexion();
-                    cmd1 = new MySqlCommand("Insert into tarjetas(Numero_Serie, Nombre_Tarjeta) values('" + tag + "', '" + nombre + "')", conectar1);
-                    cmd1.ExecuteNonQuery();
-                    conectar1.Close();
-                    contirow++;
-                }
-
-
-                conectar.Close();
-                
-
-
-
-
-            }
-
-
             MessageBox.Show("Se cargaron los datos correctamente");
 
         }
 
 
+     
+
+
         public void borrarbase()
         {
-            
+
             conectar = Conexion.ObtenerConexion();
             cmd = new MySqlCommand("DELETE FROM dni_seguridad", conectar);
             cmd.ExecuteNonQuery();
@@ -1950,6 +1789,172 @@ namespace ImpresionQR
 
         }
 
+        public string importarEscudo(TextBox miruta, PictureBox escudo)
+        {
 
+            string archivo = "", ruta;
+           
+
+
+
+
+            OpenFileDialog openfile1 = new OpenFileDialog();
+            openfile1.Filter = "Images(*.PNG; *.JPG; *.GIF)| *.PNG; *.JPG; *.GIF |" + "All files (*.*)|*.*";
+            openfile1.Title = "Seleccione el archivo a Importar";
+            if (openfile1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+               if (openfile1.FileName.Equals("") == false)
+               {
+                        ruta = Convert.ToString(openfile1.FileName);
+                        miruta.Text= Convert.ToString(openfile1.FileName);
+                        archivo = ruta.Substring(ruta.LastIndexOf("\\") + 1);
+                        escudo.Image= Image.FromFile(ruta);
+                        
+               }
+                
+
+
+
+            }
+            return archivo;
+
+
+        }
+
+        public string cargoequipo(string nombre, string pais, string escudo, int nacional, string ruta)
+        {
+            string escudo20="", destino="";
+
+            try
+            {
+
+                conectar = Conexion.ObtenerConexion_Analytics();
+                cmd = new MySqlCommand("Select Escudo_Blanco, Destino From setup", conectar);
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    escudo20 = dr.GetString(0);
+                    destino = dr.GetString(1) + escudo;
+                }
+
+
+                dr.Close();
+                conectar.Close();
+
+                System.IO.File.Copy(ruta, destino, true);
+               
+                conectar = Conexion.ObtenerConexion_Analytics();
+                cmd = new MySqlCommand("Insert into equipos(Nombre_Equipo, Pais, Escudo, Escudo_Full, Nacional) values('" + nombre + "', '" + pais + "', '" + escudo20 + "', '" + escudo + "'," + nacional + ")", conectar);
+                cmd.ExecuteNonQuery();
+                conectar.Close();
+
+                MessageBox.Show("Se ha cargado un nuevo Equipo con exito");
+
+
+            }
+            catch (Exception ex)
+
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            return nombre;
+        }
+
+        public static Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
+
+        }
+
+
+        public void Importar_Lecturas(DataGridView dgvDatos, string mifecha, string evento)
+        {
+
+            string fecha;
+            DateTime mihora;
+            
+            foreach (DataGridViewRow row in dgvDatos.Rows)
+            {
+                mihora = Convert.ToDateTime(mifecha);
+                fecha = mihora.ToString("yyyy-MM-dd");
+                
+                conectar = Conexion.ObtenerConexion();
+                cmd = new MySqlCommand("SELECT * FROM lecturas WHERE Evento ='" + evento + "' AND Fecha='" + fecha + "'" , conectar);
+                dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+
+
+                    if (MessageBox.Show("Ya se ha actualizado este evento. Esta seguro que quiere volver a actualizarlo ?", "Actualizar Evento", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        Actualizo_Lecturas(dgvDatos, fecha);
+                    }
+
+                }
+
+                else
+                {
+                    Actualizo_Lecturas(dgvDatos, fecha);
+                }
+
+
+                conectar.Close();
+                break;
+            }
+
+            
+
+        }
+
+        public void Actualizo_Lecturas(DataGridView dgvDatos, string fecha)
+        {
+            string evento, lectura, id, sector, hora, medio, asiento, fila, cabina;
+            int conti = 0;
+            foreach (DataGridViewRow row in dgvDatos.Rows)
+            {
+                evento = Convert.ToString(dgvDatos.Rows[conti].Cells[0].Value);
+                lectura = Convert.ToString(dgvDatos.Rows[conti].Cells[1].Value);
+                id = Convert.ToString(dgvDatos.Rows[conti].Cells[3].Value);
+                sector = Convert.ToString(dgvDatos.Rows[conti].Cells[4].Value);
+                hora = Convert.ToString(dgvDatos.Rows[conti].Cells[5].Value);
+                medio = Convert.ToString(dgvDatos.Rows[conti].Cells[6].Value);
+                cabina = Convert.ToString(dgvDatos.Rows[conti].Cells[7].Value);
+                fila = Convert.ToString(dgvDatos.Rows[conti].Cells[8].Value);
+                asiento = Convert.ToString(dgvDatos.Rows[conti].Cells[9].Value);
+
+
+
+
+                conectar = Conexion.ObtenerConexion();
+                cmd = new MySqlCommand("Insert into lecturas(Evento, Lectura, Fecha, Id_Impresiones, Sector, Hora, Medio, Asiento, Fila, Cabina) values('" + evento + "', '" + lectura + "', '" + fecha + "', " + id + ", '" + sector + "', '" + hora + "', '" + medio + "', " + asiento + ", " + fila + ", " + cabina + ")", conectar);
+                cmd.ExecuteNonQuery();
+                conectar.Close();
+                conti++;
+            }
+
+            MessageBox.Show("Se han cargado las Nuevas Lecturas con exito");
+
+        }
     }
 }

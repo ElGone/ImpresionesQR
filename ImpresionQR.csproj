@@ -128,11 +128,11 @@
     <Compile Include="FrmAbroEvento.Designer.cs">
       <DependentUpon>FrmAbroEvento.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmActualizoDNI.cs">
+    <Compile Include="FrmActualizoLecturas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmActualizoDNI.Designer.cs">
-      <DependentUpon>FrmActualizoDNI.cs</DependentUpon>
+    <Compile Include="FrmActualizoLecturas.Designer.cs">
+      <DependentUpon>FrmActualizoLecturas.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmActualizoMedios.cs">
       <SubType>Form</SubType>
@@ -140,41 +140,11 @@
     <Compile Include="FrmActualizoMedios.Designer.cs">
       <DependentUpon>FrmActualizoMedios.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmActualizoTags.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmActualizoTags.Designer.cs">
-      <DependentUpon>FrmActualizoTags.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmAltaManualSeguridad.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmAltaManualSeguridad.Designer.cs">
-      <DependentUpon>FrmAltaManualSeguridad.cs</DependentUpon>
-    </Compile>
     <Compile Include="FrmAltaMedios.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmAltaMedios.Designer.cs">
       <DependentUpon>FrmAltaMedios.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmAltaParadaCorreccion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmAltaParadaCorreccion.Designer.cs">
-      <DependentUpon>FrmAltaParadaCorreccion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmAltaRecorridos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmAltaRecorridos.Designer.cs">
-      <DependentUpon>FrmAltaRecorridos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmAltaTarjetas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmAltaTarjetas.Designer.cs">
-      <DependentUpon>FrmAltaTarjetas.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmAltaUsuarios.cs">
       <SubType>Form</SubType>
@@ -194,17 +164,11 @@
     <Compile Include="FrmCapturaDatos.Designer.cs">
       <DependentUpon>FrmCapturaDatos.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmCapturaDatosSeguridad.cs">
+    <Compile Include="FrmCargaEquipos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmCapturaDatosSeguridad.Designer.cs">
-      <DependentUpon>FrmCapturaDatosSeguridad.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmCarteraCompleta.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmCarteraCompleta.Designer.cs">
-      <DependentUpon>FrmCarteraCompleta.cs</DependentUpon>
+    <Compile Include="FrmCargaEquipos.Designer.cs">
+      <DependentUpon>FrmCargaEquipos.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmConsultas.cs">
       <SubType>Form</SubType>
@@ -217,12 +181,6 @@
     </Compile>
     <Compile Include="FrmDatosLugar.Designer.cs">
       <DependentUpon>FrmDatosLugar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmImportarSeguridad.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmImportarSeguridad.Designer.cs">
-      <DependentUpon>FrmImportarSeguridad.cs</DependentUpon>
     </Compile>
     <Compile Include="Frmjson.cs">
       <SubType>Form</SubType>
@@ -248,18 +206,6 @@
     <Compile Include="FrmLogin.Designer.cs">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmMapaSeguridad.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmMapaSeguridad.Designer.cs">
-      <DependentUpon>FrmMapaSeguridad.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmModificarTarjetas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmModificarTarjetas.Designer.cs">
-      <DependentUpon>FrmModificarTarjetas.cs</DependentUpon>
-    </Compile>
     <Compile Include="FrmModificarUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -272,23 +218,11 @@
     <Compile Include="FrmModificoEliminoeventos.Designer.cs">
       <DependentUpon>FrmModificoEliminoeventos.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmModificoRecorridos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmModificoRecorridos.Designer.cs">
-      <DependentUpon>FrmModificoRecorridos.cs</DependentUpon>
-    </Compile>
     <Compile Include="FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmPrincipal.Designer.cs">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmRecorridos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmRecorridos.Designer.cs">
-      <DependentUpon>FrmRecorridos.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmSQL.cs">
       <SubType>Form</SubType>
@@ -321,29 +255,14 @@
     <EmbeddedResource Include="FrmAbroEvento.resx">
       <DependentUpon>FrmAbroEvento.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmActualizoDNI.resx">
-      <DependentUpon>FrmActualizoDNI.cs</DependentUpon>
+    <EmbeddedResource Include="FrmActualizoLecturas.resx">
+      <DependentUpon>FrmActualizoLecturas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmActualizoMedios.resx">
       <DependentUpon>FrmActualizoMedios.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmActualizoTags.resx">
-      <DependentUpon>FrmActualizoTags.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmAltaManualSeguridad.resx">
-      <DependentUpon>FrmAltaManualSeguridad.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FrmAltaMedios.resx">
       <DependentUpon>FrmAltaMedios.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmAltaParadaCorreccion.resx">
-      <DependentUpon>FrmAltaParadaCorreccion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmAltaRecorridos.resx">
-      <DependentUpon>FrmAltaRecorridos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmAltaTarjetas.resx">
-      <DependentUpon>FrmAltaTarjetas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmAltaUsuarios.resx">
       <DependentUpon>FrmAltaUsuarios.cs</DependentUpon>
@@ -354,20 +273,14 @@
     <EmbeddedResource Include="FrmCapturaDatos.resx">
       <DependentUpon>FrmCapturaDatos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmCapturaDatosSeguridad.resx">
-      <DependentUpon>FrmCapturaDatosSeguridad.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmCarteraCompleta.resx">
-      <DependentUpon>FrmCarteraCompleta.cs</DependentUpon>
+    <EmbeddedResource Include="FrmCargaEquipos.resx">
+      <DependentUpon>FrmCargaEquipos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmConsultas.resx">
       <DependentUpon>FrmConsultas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmDatosLugar.resx">
       <DependentUpon>FrmDatosLugar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmImportarSeguridad.resx">
-      <DependentUpon>FrmImportarSeguridad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frmjson.resx">
       <DependentUpon>Frmjson.cs</DependentUpon>
@@ -381,26 +294,14 @@
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmMapaSeguridad.resx">
-      <DependentUpon>FrmMapaSeguridad.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmModificarTarjetas.resx">
-      <DependentUpon>FrmModificarTarjetas.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FrmModificarUsuarios.resx">
       <DependentUpon>FrmModificarUsuarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmModificoEliminoeventos.resx">
       <DependentUpon>FrmModificoEliminoeventos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmModificoRecorridos.resx">
-      <DependentUpon>FrmModificoRecorridos.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmRecorridos.resx">
-      <DependentUpon>FrmRecorridos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSQL.resx">
       <DependentUpon>FrmSQL.cs</DependentUpon>

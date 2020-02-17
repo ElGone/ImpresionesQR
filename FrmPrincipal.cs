@@ -105,12 +105,7 @@ namespace ImpresionQR
 
         private void recorridosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (FrmLogin.tipo_usuario == 2)
-            {
-                FrmRecorridos frm = new FrmRecorridos();
-                frm.ShowDialog();
-                this.Show();
-            }
+            
         }
 
         private void altaDeMediosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -125,42 +120,25 @@ namespace ImpresionQR
 
         private void actualizacionDeMediosToolStripMenuItem_Click(object sender, EventArgs e)
         { 
-            if (FrmLogin.tipo_usuario == 1)
-            {
+           
                 FrmActualizoMedios frm = new FrmActualizoMedios();
                 frm.ShowDialog();
                 this.Show();
-            }
+           
         }
 
         private void consulaQRDNIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (FrmLogin.tipo_usuario == 2)
-            {
-                FrmMapaSeguridad frm = new FrmMapaSeguridad();
-                frm.ShowDialog();
-                this.Show();
-            }
+           
         }
 
         private void importarDNIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (FrmLogin.tipo_usuario == 2)
-            {
-                FrmActualizoDNI frm = new FrmActualizoDNI();
-                frm.ShowDialog();
-                this.Show();
-            }
         }
 
         private void importarTagsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (FrmLogin.tipo_usuario == 2)
-            {
-                FrmActualizoTags frm = new FrmActualizoTags();
-                frm.ShowDialog();
-                this.Show();
-            }
+        
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -243,6 +221,22 @@ namespace ImpresionQR
 
         }
 
+        private void cargarEquiposToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmCargaEquipos frm = new FrmCargaEquipos();
+            frm.ShowDialog();
+            this.Show();
+        }
+
+        private void actualizacionDeLecturasPorEventoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+                FrmActualizoLecturas frm = new FrmActualizoLecturas();
+                frm.ShowDialog();
+                this.Show();
+            
+        }
+
         private void altasToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -287,9 +281,7 @@ namespace ImpresionQR
 
             else if ((FrmLogin.tipo_usuario == 2))
             {
-                FrmCapturaDatosSeguridad frm = new FrmCapturaDatosSeguridad();
-                frm.ShowDialog();
-                this.Show();
+               
             }
 
           

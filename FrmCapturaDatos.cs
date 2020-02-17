@@ -1545,6 +1545,8 @@ namespace ImpresionQR
 
         private void printDocument2_PrintPage(object sender, PrintPageEventArgs e)
         {
+
+
             Pen blackPen = new Pen(Color.Black, 3);
 
             StringFormat stringFormat = new StringFormat();
@@ -1585,6 +1587,7 @@ namespace ImpresionQR
                         credencial = dr.GetInt32(0);
                     }
                     dr.Close();
+                    conectar.Close();
 
 
                     while (buscocredencial == 2)
@@ -1748,6 +1751,33 @@ namespace ImpresionQR
                                 }
                                 else
                                 {
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect23, stringFormat);
+                                    if (Convert.ToString(row.Cells[7].Value) != "")
+                                    {
+                                        Rectangle rect6 = new Rectangle(170, 390, 420, 60);
+                                        e.Graphics.DrawRectangle(Pens.White, rect6);
+                                        e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect6, stringFormat);
+
+
+                                    }
+
+                                }
+                            }
+
+
+                            else
+
+
+                            {
+                                e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect23, stringFormat);
+                                if (Convert.ToString(row.Cells[7].Value) != "")
+                                {
+                                    Rectangle rect6 = new Rectangle(170, 390, 420, 60);
+                                    e.Graphics.DrawRectangle(Pens.White, rect6);
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect6, stringFormat);
+                                }
+                                else
+                                {
                                     e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect23, stringFormat);
                                     if (Convert.ToString(row.Cells[7].Value) != "")
                                     {
@@ -1759,43 +1789,32 @@ namespace ImpresionQR
                                     }
 
                                 }
+
+
+
+
+
+
                             }
 
                         }
 
+                                                                                                                           
 
 
+                        
 
 
+                        //credencia¡'//*/*/*--+
 
 
-
-
-
-                        if (Convert.ToString(row.Cells[6].Value) != "")
-                            {
-                                Rectangle rect23 = new Rectangle(170, 340, 390, 60);
-                                e.Graphics.DrawRectangle(Pens.White, rect23);
-                                e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font("Stencil", 21), Brushes.Black, rect23, stringFormat);
-                                if (Convert.ToString(row.Cells[7].Value) != "")
-                                {
-                                    Rectangle rect6 = new Rectangle(170, 390, 390, 60);
-                                    e.Graphics.DrawRectangle(Pens.White, rect6);
-                                    e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font("Stencil", 21), Brushes.Black, rect6, stringFormat);
-                                }
-
-
-                            }
-
-
-                        //credencial
 
 
                         Rectangle rect12 = new Rectangle(370, 420, 390, 40);
                         e.Graphics.DrawRectangle(Pens.White, rect12);
                         e.Graphics.DrawString("Nº " + Convert.ToString(credencial).PadLeft(3, '0'), new Font("Arial Black", 14), Brushes.Black, rect12, stringFormat);
 
-                        conectar = Conexion.ObtenerConexion();
+                           conectar = Conexion.ObtenerConexion();
                             Evento d = new Evento();
                             numero_evento = d.traigo_numero_evento();
 
@@ -1812,6 +1831,7 @@ namespace ImpresionQR
                             // Actualizo el numero de credencial
 
                             credencial++;
+                            conectar.Close();
                             conectar = Conexion.ObtenerConexion();
 
                             if (credencial > FrmLogin.credencial_hasta  )
@@ -1826,7 +1846,7 @@ namespace ImpresionQR
                                 cmd.ExecuteNonQuery();
                             }
 
-
+                        conectar.Close();
 
                             // QR
 
@@ -1900,6 +1920,7 @@ namespace ImpresionQR
                     credencial = dr.GetInt32(0);
                 }
                 dr.Close();
+                conectar.Close();
 
 
                 while (buscocredencial == 2)
@@ -2033,7 +2054,7 @@ namespace ImpresionQR
                             e.Graphics.DrawString("PUPITRE DE PRENSA", new Font(FrmLogin.nomfuenteubicacion, FrmLogin.sizeubicacion, FontStyle.Bold), Brushes.Black, rect44, stringFormat);
                             Rectangle rect78 = new Rectangle(200, 290, 390, 60);
                             e.Graphics.DrawRectangle(Pens.White, rect78);
-                            e.Graphics.DrawString("FILA Nº " + Convert.ToString(row.Cells[4].Value) + " ASIENTO Nº " + Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuenteubicacion, 21, FontStyle.Bold), Brushes.Black, rect78, stringFormat);
+                            e.Graphics.DrawString("FILA Nº " + Convert.ToString(row.Cells[4].Value) + " ASIENTO Nº " + Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuenteubicacion, FrmLogin.sizeubicacion, FontStyle.Bold), Brushes.Black, rect78, stringFormat);
                         }
                         else
                         {
@@ -2041,35 +2062,62 @@ namespace ImpresionQR
                             e.Graphics.DrawString("PUPITRE DE PRENSA", new Font(FrmLogin.nomfuenteubicacion, FrmLogin.sizeubicacion), Brushes.Black, rect44, stringFormat);
                             Rectangle rect78 = new Rectangle(200, 290, 390, 60);
                             e.Graphics.DrawRectangle(Pens.White, rect78);
-                            e.Graphics.DrawString("FILA Nº " + Convert.ToString(row.Cells[4].Value) + " ASIENTO Nº " + Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuenteubicacion, 21), Brushes.Black, rect78, stringFormat);
+                            e.Graphics.DrawString("FILA Nº " + Convert.ToString(row.Cells[4].Value) + " ASIENTO Nº " + Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuenteubicacion, FrmLogin.sizeubicacion), Brushes.Black, rect78, stringFormat);
                         }
 
-                        if (Convert.ToString(row.Cells[6].Value) != "")
+                        if (Convert.ToString(row.Cells[7].Value) != "")
                         {
                             Rectangle rect23 = new Rectangle(170, 340, 420, 60);
                             e.Graphics.DrawRectangle(Pens.White, rect23);
                             if (FrmLogin.negritanombre == 1)
                             {
-                                e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect23, stringFormat);
-                                if (Convert.ToString(row.Cells[7].Value) != "")
+                                e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect23, stringFormat);
+                                if (Convert.ToString(row.Cells[8].Value) != "")
                                 {
                                     Rectangle rect6 = new Rectangle(170, 390, 420, 60);
                                     e.Graphics.DrawRectangle(Pens.White, rect6);
-                                    e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect6, stringFormat);
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[8].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect6, stringFormat);
                                 }
                                 else
                                 {
-                                    e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect23, stringFormat);
-                                    if (Convert.ToString(row.Cells[7].Value) != "")
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect23, stringFormat);
+                                    if (Convert.ToString(row.Cells[8].Value) != "")
                                     {
                                         Rectangle rect6 = new Rectangle(170, 390, 420, 60);
                                         e.Graphics.DrawRectangle(Pens.White, rect6);
-                                        e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect6, stringFormat);
+                                        e.Graphics.DrawString(Convert.ToString(row.Cells[8].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect6, stringFormat);
 
 
                                     }
 
                                 }
+                            }
+
+                            else
+                            {
+
+                                e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect23, stringFormat);
+                                if (Convert.ToString(row.Cells[8].Value) != "")
+                                {
+                                    Rectangle rect6 = new Rectangle(170, 390, 420, 60);
+                                    e.Graphics.DrawRectangle(Pens.White, rect6);
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[8].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect6, stringFormat);
+                                }
+                                else
+                                {
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect23, stringFormat);
+                                    if (Convert.ToString(row.Cells[8].Value) != "")
+                                    {
+                                        Rectangle rect6 = new Rectangle(170, 390, 420, 60);
+                                        e.Graphics.DrawRectangle(Pens.White, rect6);
+                                        e.Graphics.DrawString(Convert.ToString(row.Cells[8].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect6, stringFormat);
+
+
+                                    }
+
+                                }
+
+
                             }
 
                         }
@@ -2086,9 +2134,9 @@ namespace ImpresionQR
                         Evento d = new Evento();
                         numero_evento = d.traigo_numero_evento();
 
-                        cmd = new MySqlCommand("Insert into impresiones(Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado, Usuario, Letras) values('" + row.Cells[1].Value + "', '" + row.Cells[2].Value + "', '" + row.Cells[3].Value + "', '" + cantidad_fija + "', '" + row.Cells[6].Value + "', '" + row.Cells[7].Value + "', '" + credencial + "', " + 0 + ", " + 0 + ", " + row.Cells[4].Value + ", '" + txtFecha.Text + "', " + tipo + ", " + numero_evento + ", 1, '" + FrmLogin.usu + "', '" + row.Cells[10].Value + "')", conectar);
+                        cmd = new MySqlCommand("Insert into impresiones(Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado, Usuario, Letras) values('" + row.Cells[1].Value + "', '" + row.Cells[2].Value + "', '" + row.Cells[3].Value + "', '" + cantidad_fija + "', '" + row.Cells[7].Value + "', '" + row.Cells[8].Value + "', '" + credencial + "', " + row.Cells[5].Value + ", " + row.Cells[4].Value + ", " + "0" + ", '" + txtFecha.Text + "', " + tipo + ", " + numero_evento + ", 1, '" + FrmLogin.usu + "', '" + row.Cells[11].Value + "')", conectar);
                         cmd.ExecuteNonQuery();
-
+                        conectar.Close();
 
                         if (cantidad == 0)
                         {
@@ -2113,14 +2161,14 @@ namespace ImpresionQR
                             cmd.ExecuteNonQuery();
                         }
 
-
+                        conectar.Close();
 
                         // QR
 
                         if (imprimiqr.Checked == true)
 
                         {
-                            cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(row.Cells[3].Value) + "*" + Convert.ToString(row.Cells[4].Value).PadLeft(2, '0') + "0000" + "^" + txturl.Text;
+                            cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(row.Cells[3].Value) + "*" + "00" + Convert.ToString(row.Cells[4].Value).PadLeft(2, '0') + Convert.ToString(row.Cells[5].Value).PadLeft(2, '0') + "^" + txturl.Text;
                             QrCode qrCode = new QrCode();
                             qrEncoder.TryEncode(cadena, out qrCode);
                             GraphicsRenderer renderer = new GraphicsRenderer(new FixedCodeSize(400, QuietZoneModules.Zero), Brushes.Black, Brushes.White);
@@ -2195,7 +2243,7 @@ namespace ImpresionQR
                     credencial = dr.GetInt32(0);
                 }
                 dr.Close();
-
+                conectar.Close();
 
                 while (buscocredencial == 2)
                 {
@@ -2320,33 +2368,63 @@ namespace ImpresionQR
 
 
 
-                        if (Convert.ToString(row.Cells[6].Value) != "")
+                        if (Convert.ToString(row.Cells[5].Value) != "")
                         {
                             Rectangle rect23 = new Rectangle(170, 340, 420, 60);
                             e.Graphics.DrawRectangle(Pens.White, rect23);
                             if (FrmLogin.negritanombre == 1)
                             {
-                                e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect23, stringFormat);
-                                if (Convert.ToString(row.Cells[7].Value) != "")
+                                e.Graphics.DrawString(Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect23, stringFormat);
+                                if (Convert.ToString(row.Cells[6].Value) != "")
                                 {
                                     Rectangle rect6 = new Rectangle(170, 390, 420, 60);
                                     e.Graphics.DrawRectangle(Pens.White, rect6);
-                                    e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect6, stringFormat);
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect6, stringFormat);
                                 }
                                 else
                                 {
-                                    e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect23, stringFormat);
-                                    if (Convert.ToString(row.Cells[7].Value) != "")
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect23, stringFormat);
+                                    if (Convert.ToString(row.Cells[6].Value) != "")
                                     {
                                         Rectangle rect6 = new Rectangle(170, 390, 420, 60);
                                         e.Graphics.DrawRectangle(Pens.White, rect6);
-                                        e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect6, stringFormat);
+                                        e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect6, stringFormat);
 
 
                                     }
 
                                 }
                             }
+
+                            else
+                            {
+
+                                e.Graphics.DrawString(Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect23, stringFormat);
+                                if (Convert.ToString(row.Cells[6].Value) != "")
+                                {
+                                    Rectangle rect6666 = new Rectangle(170, 390, 420, 60);
+                                    e.Graphics.DrawRectangle(Pens.White, rect6666);
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect6666, stringFormat);
+                                }
+                                else
+                                {
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect23, stringFormat);
+                                    if (Convert.ToString(row.Cells[6].Value) != "")
+                                    {
+                                        Rectangle rect6 = new Rectangle(170, 390, 420, 60);
+                                        e.Graphics.DrawRectangle(Pens.White, rect6);
+                                        e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect6, stringFormat);
+
+
+                                    }
+
+                                }
+
+
+                            }
+
+
+
 
                         }
 
@@ -2362,9 +2440,9 @@ namespace ImpresionQR
                         Evento d = new Evento();
                         numero_evento = d.traigo_numero_evento();
 
-                        cmd = new MySqlCommand("Insert into impresiones(Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado, Usuario, Letras) values('" + row.Cells[1].Value + "', '" + row.Cells[2].Value + "', '" + row.Cells[3].Value + "', '" + cantidad_fija + "', '" + row.Cells[6].Value + "', '" + row.Cells[7].Value + "', '" + credencial + "', " + 0 + ", " + 0 + ", " + row.Cells[4].Value + ", '" + txtFecha.Text + "', " + tipo + ", " + numero_evento + ", 1, '" + FrmLogin.usu + "', '" + row.Cells[9].Value + "')", conectar);
+                        cmd = new MySqlCommand("Insert into impresiones(Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado, Usuario, Letras) values('" + row.Cells[1].Value + "', '" + row.Cells[2].Value + "', '" + row.Cells[3].Value + "', '" + cantidad_fija + "', '" + row.Cells[5].Value + "', '" + row.Cells[6].Value + "', '" + credencial + "', " + 0 + ", " + 0 + ", " + "0" + ", '" + txtFecha.Text + "', " + tipo + ", " + numero_evento + ", 1, '" + FrmLogin.usu + "', '" + row.Cells[9].Value + "')", conectar);
                         cmd.ExecuteNonQuery();
-
+                        conectar.Close();
 
                         if (cantidad == 0)
                         {
@@ -2388,7 +2466,7 @@ namespace ImpresionQR
                             cmd = new MySqlCommand("UPDATE setup SET Credencial_Moviles =" + credencial, conectar);
                             cmd.ExecuteNonQuery();
                         }
-
+                        conectar.Close();
 
 
                         // QR
@@ -2396,7 +2474,7 @@ namespace ImpresionQR
                         if (imprimiqr.Checked == true)
 
                         {
-                            cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(row.Cells[3].Value) + "*" + Convert.ToString(row.Cells[4].Value).PadLeft(2, '0') + "0000" + "^" + txturl.Text;
+                            cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(row.Cells[3].Value) + "*" + "00" + "0000" + "^" + txturl.Text;
                             QrCode qrCode = new QrCode();
                             qrEncoder.TryEncode(cadena, out qrCode);
                             GraphicsRenderer renderer = new GraphicsRenderer(new FixedCodeSize(400, QuietZoneModules.Zero), Brushes.Black, Brushes.White);
@@ -2461,7 +2539,7 @@ namespace ImpresionQR
                     credencial = dr.GetInt32(0);
                 }
                 dr.Close();
-
+                conectar.Close();
 
                 while (buscocredencial == 2)
                 {
@@ -2584,33 +2662,65 @@ namespace ImpresionQR
 
 
 
-                        if (Convert.ToString(row.Cells[6].Value) != "")
+                        if (Convert.ToString(row.Cells[5].Value) != "")
                         {
                             Rectangle rect23 = new Rectangle(170, 340, 420, 60);
                             e.Graphics.DrawRectangle(Pens.White, rect23);
                             if (FrmLogin.negritanombre == 1)
                             {
-                                e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect23, stringFormat);
-                                if (Convert.ToString(row.Cells[7].Value) != "")
+                                
+                                   // new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold)
+                                e.Graphics.DrawString(Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect23, stringFormat);
+                                if (Convert.ToString(row.Cells[6].Value) != "")
                                 {
                                     Rectangle rect6 = new Rectangle(170, 390, 420, 60);
                                     e.Graphics.DrawRectangle(Pens.White, rect6);
-                                    e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect6, stringFormat);
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect6, stringFormat);
                                 }
                                 else
                                 {
-                                    e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect23, stringFormat);
-                                    if (Convert.ToString(row.Cells[7].Value) != "")
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect23, stringFormat);
+                                    if (Convert.ToString(row.Cells[6].Value) != "")
                                     {
                                         Rectangle rect6 = new Rectangle(170, 390, 420, 60);
                                         e.Graphics.DrawRectangle(Pens.White, rect6);
-                                        e.Graphics.DrawString(Convert.ToString(row.Cells[7].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect6, stringFormat);
+                                        e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre, FontStyle.Bold), Brushes.Black, rect6, stringFormat);
 
 
                                     }
 
                                 }
                             }
+
+
+                           else
+                            {
+                                e.Graphics.DrawString(Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect23, stringFormat);
+                                if (Convert.ToString(row.Cells[6].Value) != "")
+                                {
+                                    Rectangle rect6 = new Rectangle(170, 390, 420, 60);
+                                    e.Graphics.DrawRectangle(Pens.White, rect6);
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect6, stringFormat);
+                                }
+                                else
+                                {
+                                    e.Graphics.DrawString(Convert.ToString(row.Cells[5].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect23, stringFormat);
+                                    if (Convert.ToString(row.Cells[6].Value) != "")
+                                    {
+                                        Rectangle rect6 = new Rectangle(170, 390, 420, 60);
+                                        e.Graphics.DrawRectangle(Pens.White, rect6);
+                                        e.Graphics.DrawString(Convert.ToString(row.Cells[6].Value), new Font(FrmLogin.nomfuentenombre, FrmLogin.sizenombre), Brushes.Black, rect6, stringFormat);
+
+
+                                    }
+
+                                }
+
+
+
+                            }
+
+
 
                         }
 
@@ -2626,9 +2736,9 @@ namespace ImpresionQR
                         Evento d = new Evento();
                         numero_evento = d.traigo_numero_evento();
 
-                        cmd = new MySqlCommand("Insert into impresiones(Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado, Usuario, Letras) values('" + row.Cells[1].Value + "', '" + row.Cells[2].Value + "', '" + row.Cells[3].Value + "', '" + cantidad_fija + "', '" + row.Cells[5].Value + "', '" + row.Cells[6].Value + "', '" + credencial + "', " + 0 + ", " + 0 + ", " + row.Cells[4].Value + ", '" + txtFecha.Text + "', " + tipo + ", " + numero_evento + ", 1, '" + FrmLogin.usu + "', '" + row.Cells[9].Value + "')", conectar);
+                        cmd = new MySqlCommand("Insert into impresiones(Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado, Usuario, Letras) values('" + row.Cells[1].Value + "', '" + row.Cells[2].Value + "', '" + row.Cells[3].Value + "', '" + cantidad_fija + "', '" + row.Cells[5].Value + "', '" + row.Cells[6].Value + "', '" + credencial + "', " + 0 + ", " + 0 + ", " + 0 + ", '" + txtFecha.Text + "', " + tipo + ", " + numero_evento + ", 1, '" + FrmLogin.usu + "', '" + row.Cells[9].Value + "')", conectar);
                         cmd.ExecuteNonQuery();
-
+                        conectar.Close();
 
                         if (cantidad == 0)
                         {
@@ -2652,7 +2762,7 @@ namespace ImpresionQR
                             cmd = new MySqlCommand("UPDATE setup SET Credencial_TV =" + credencial, conectar);
                             cmd.ExecuteNonQuery();
                         }
-
+                        conectar.Close();
 
 
                         // QR
@@ -2660,7 +2770,7 @@ namespace ImpresionQR
                         if (imprimiqr.Checked == true)
 
                         {
-                            cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(row.Cells[3].Value) + "*" + Convert.ToString(row.Cells[4].Value).PadLeft(2, '0') + "0000" + "^" + txturl.Text;
+                            cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(row.Cells[3].Value) + "*" + "00" + "0000" + "^" + txturl.Text;
                             QrCode qrCode = new QrCode();
                             qrEncoder.TryEncode(cadena, out qrCode);
                             GraphicsRenderer renderer = new GraphicsRenderer(new FixedCodeSize(400, QuietZoneModules.Zero), Brushes.Black, Brushes.White);
@@ -4163,6 +4273,11 @@ namespace ImpresionQR
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
         {
 
         }

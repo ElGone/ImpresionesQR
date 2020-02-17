@@ -28,7 +28,7 @@ namespace ImpresionQR
           
            
             Evento d = new Evento();
-            d.Traigo_Datos_Lugar(boton, fdesde, tipo, txtevento, txttorneo, txtmedio, txtnombre, txtdni, txttipo, txtcabina, txtasiento, txtfila, url);
+            d.Traigo_Datos_Lugar(boton, fdesde, tipo, txtevento, txttorneo, txtmedio, txtnombre, txtdni, txttipo, txtcabina, txtasiento, txtfila, url, dgvLecturas);
 
         }
 

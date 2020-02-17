@@ -30,11 +30,7 @@ namespace ImpresionQR
 
         private void button1_Click(object sender, EventArgs e)
         {
-            FrmAltaTarjetas frm = new FrmAltaTarjetas();
-            frm.ShowDialog();
-            this.Show();
-            Recorridos d = new Recorridos();
-            d.traigo_datos_tarjetas(dgvtarjetas);
+            
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -65,21 +61,7 @@ namespace ImpresionQR
 
         private void button3_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in dgvtarjetas.Rows)
-            {
-
-                if (Convert.ToBoolean(row.Cells[0].Value) == true)
-
-                {
-
-                    FrmModificarTarjetas frm = new FrmModificarTarjetas(Convert.ToString(row.Cells[2].Value));
-                    frm.ShowDialog();
-                    this.Show();
-                    Recorridos d = new Recorridos();
-                    dgvtarjetas.Rows.Clear();
-                    d.traigo_datos_tarjetas(dgvtarjetas);
-                }
-            }
+           
         }
     }
 }

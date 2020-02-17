@@ -36,17 +36,16 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatos)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvDatos
             // 
-            this.dgvDatos.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvDatos.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.dgvDatos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvDatos.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -67,7 +66,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvDatos.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvDatos.EnableHeadersVisualStyles = false;
-            this.dgvDatos.Location = new System.Drawing.Point(254, 48);
+            this.dgvDatos.Location = new System.Drawing.Point(232, 3);
             this.dgvDatos.Margin = new System.Windows.Forms.Padding(4);
             this.dgvDatos.Name = "dgvDatos";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -80,8 +79,9 @@
             this.dgvDatos.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvDatos.RowHeadersVisible = false;
             this.dgvDatos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDatos.Size = new System.Drawing.Size(419, 376);
+            this.dgvDatos.Size = new System.Drawing.Size(459, 437);
             this.dgvDatos.TabIndex = 2;
+            this.dgvDatos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDatos_CellContentClick);
             // 
             // button1
             // 
@@ -89,9 +89,9 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(46, 116);
+            this.button1.Location = new System.Drawing.Point(3, 116);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(125, 30);
+            this.button1.Size = new System.Drawing.Size(221, 30);
             this.button1.TabIndex = 3;
             this.button1.Text = "Capturar Excel";
             this.button1.UseVisualStyleBackColor = false;
@@ -104,9 +104,9 @@
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(46, 152);
+            this.button2.Location = new System.Drawing.Point(3, 152);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(125, 30);
+            this.button2.Size = new System.Drawing.Size(221, 30);
             this.button2.TabIndex = 4;
             this.button2.Text = "Actualizar Medios";
             this.button2.UseVisualStyleBackColor = false;
@@ -119,9 +119,9 @@
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(46, 215);
+            this.button3.Location = new System.Drawing.Point(3, 215);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(125, 30);
+            this.button3.Size = new System.Drawing.Size(221, 30);
             this.button3.TabIndex = 5;
             this.button3.Text = "Salida";
             this.button3.UseVisualStyleBackColor = false;
@@ -138,26 +138,7 @@
             this.label5.Size = new System.Drawing.Size(88, 9);
             this.label5.TabIndex = 36;
             this.label5.Text = "Club Atletico River Plate";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(273, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(365, 35);
-            this.label1.TabIndex = 153;
-            this.label1.Text = "Actualización de Medios";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::ImpresionQR.Properties.Resources.River_Plate;
-            this.pictureBox1.Location = new System.Drawing.Point(72, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(83, 79);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 35;
-            this.pictureBox1.TabStop = false;
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // panel3
             // 
@@ -172,6 +153,18 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(229, 441);
             this.panel3.TabIndex = 443;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::ImpresionQR.Properties.Resources.River_Plate;
+            this.pictureBox1.Location = new System.Drawing.Point(72, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(83, 79);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 35;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // FrmActualizoMedios
             // 
@@ -180,18 +173,16 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(691, 440);
             this.Controls.Add(this.panel3);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvDatos);
             this.Name = "FrmActualizoMedios";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Actualizar Medios";
             this.Load += new System.EventHandler(this.FrmActualizoMedios_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -203,7 +194,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel3;
     }
 }

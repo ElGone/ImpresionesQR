@@ -215,6 +215,7 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(270, 453);
             this.panel3.TabIndex = 442;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // FrmAltaMedios
             // 

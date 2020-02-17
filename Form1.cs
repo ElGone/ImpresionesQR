@@ -1412,7 +1412,7 @@ namespace ImpresionQR
                     credencial = dr.GetInt32(0);
                 }
                 dr.Close();
-
+                conectar.Close();
 
                 while (buscocredencial == 2)
                 {
@@ -1593,7 +1593,7 @@ namespace ImpresionQR
 
                 Evento d = new Evento();
                 numero_evento = d.traigo_numero_evento();
-
+                conectar = Conexion.ObtenerConexion();
                 cmd = new MySqlCommand("Insert into impresiones(Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado, Usuario, Letras) values('" + txtCampeonato.Text + "', '" + txtRival.Text + "', '" + txtCanal.Text + "', '" + cantidad_fija + "', '" + txtNombre.Text + "', '" + txtDni.Text + "', '" + credencial + "', " + 0 + ", " + 0 + ", " + txtCabina.Text + ", '" + lahora + "', " + tipo + ", " + numero_evento + ", 1, '" + FrmLogin.usu + "','" + txtLetras.Text + "')", conectar);
                 cmd.ExecuteNonQuery();
 
@@ -1616,6 +1616,8 @@ namespace ImpresionQR
                     cmd = new MySqlCommand("UPDATE setup SET Credencial_Cabinas =" + credencial, conectar);
                     cmd.ExecuteNonQuery();
                 }
+
+                conectar.Close();
 
                 // QR
 
@@ -1681,7 +1683,7 @@ namespace ImpresionQR
                     credencial = dr.GetInt32(0);
                 }
                 dr.Close();
-
+                conectar.Close();
 
                 while (buscocredencial == 2)
                 {
@@ -1865,7 +1867,7 @@ namespace ImpresionQR
 
                 Evento d = new Evento();
                 numero_evento = d.traigo_numero_evento();
-                                
+                conectar = Conexion.ObtenerConexion();
                 cmd = new MySqlCommand("Insert into impresiones(Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado, Usuario, Letras) values('" + txtCampeonato.Text + "', '" + txtRival.Text + "', '" + txtCanal.Text + "', '" + cantidad_fija + "', '" + txtNombre.Text + "', '" + txtDni.Text + "', '" + credencial + "', " + txtAsiento.Text + ", " + txtFila.Text + ", " + 0 + ", '" + lahora + "', " + tipo + ", " + numero_evento + ", 1, '" + FrmLogin.usu + "', '" + txtLetras.Text + "')", conectar);
                 cmd.ExecuteNonQuery();
 
@@ -1889,13 +1891,15 @@ namespace ImpresionQR
                     cmd.ExecuteNonQuery();
                 }
 
+                conectar.Close();
+
                 // QR
 
 
                 if (imprimiqr.Checked == true)
                 {
                     numero_id = d.traigo_ultimo_Id();
-                    cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(txtCanal.Text) + "*" + Convert.ToString(txtCabina.Text).PadLeft(2, '0') + "0000" + "^" + txtValor.Text;
+                    cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(txtCanal.Text) + "*" + "00" + Convert.ToString(txtFila.Text).PadLeft(2, '0') + Convert.ToString(txtAsiento.Text).PadLeft(2, '0') + " ^" + txtValor.Text;
                     QrCode qrCode = new QrCode();
                     qrEncoder.TryEncode(cadena, out qrCode);
                     GraphicsRenderer renderer = new GraphicsRenderer(new FixedCodeSize(400, QuietZoneModules.Zero), Brushes.Black, Brushes.White);
@@ -1952,7 +1956,7 @@ namespace ImpresionQR
                     credencial = dr.GetInt32(0);
                 }
                 dr.Close();
-
+                conectar.Close();
 
                 while (buscocredencial == 2)
                 {
@@ -2130,8 +2134,8 @@ namespace ImpresionQR
 
                 Evento d = new Evento();
                 numero_evento = d.traigo_numero_evento();
+                conectar = Conexion.ObtenerConexion();
                 cmd = new MySqlCommand("Insert into impresiones(Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado, Usuario, Letras) values('" + txtCampeonato.Text + "', '" + txtRival.Text + "', '" + txtCanal.Text + "', '" + cantidad_fija + "', '" + txtNombre.Text + "', '" + txtDni.Text + "', '" + credencial + "', " + 0 + ", " + 0 + ", " + 0 + ", '" + lahora + "', " + tipo + ", " + numero_evento + ", 1, '" + FrmLogin.usu + "', '" + txtLetras.Text + "')", conectar);
-                
                 cmd.ExecuteNonQuery();
 
 
@@ -2153,14 +2157,14 @@ namespace ImpresionQR
                     cmd = new MySqlCommand("UPDATE setup SET Credencial_Moviles =" + credencial, conectar);
                     cmd.ExecuteNonQuery();
                 }
-
+                conectar.Close();
                 // QR
 
 
                 if (imprimiqr.Checked == true)
                 {
                     numero_id = d.traigo_ultimo_Id();
-                    cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(txtCanal.Text) + "*" + Convert.ToString(txtCabina.Text).PadLeft(2, '0') + "0000" + "^" + txtValor.Text;
+                    cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(txtCanal.Text) + "*" + "00" + "0000" + "^" + txtValor.Text;
                     QrCode qrCode = new QrCode();
                     qrEncoder.TryEncode(cadena, out qrCode);
                     GraphicsRenderer renderer = new GraphicsRenderer(new FixedCodeSize(400, QuietZoneModules.Zero), Brushes.Black, Brushes.White);
@@ -2218,7 +2222,7 @@ namespace ImpresionQR
                     credencial = dr.GetInt32(0);
                 }
                 dr.Close();
-
+                conectar.Close();
 
                 while (buscocredencial == 2)
                 {
@@ -2401,7 +2405,7 @@ namespace ImpresionQR
 
                 Evento d = new Evento();
                 numero_evento = d.traigo_numero_evento();
-
+                conectar = Conexion.ObtenerConexion();
                 cmd = new MySqlCommand("Insert into impresiones(Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado, Usuario, Letras) values('" + txtCampeonato.Text + "', '" + txtRival.Text + "', '" + txtCanal.Text + "', '" + cantidad_fija + "', '" + txtNombre.Text + "', '" + txtDni.Text + "', '" + credencial + "', " + 0 + ", " + 0 + ", " + 0 + ", '" + lahora + "', " + tipo + ", " + numero_evento + ", 1, '" + FrmLogin.usu + "', '" + txtLetras.Text + "')", conectar);
                 cmd.ExecuteNonQuery();
 
@@ -2425,13 +2429,16 @@ namespace ImpresionQR
                     cmd.ExecuteNonQuery();
                 }
 
+
+                conectar.Close();
+
                 // QR
 
 
                 if (imprimiqr.Checked == true)
                 {
                     numero_id = d.traigo_ultimo_Id();
-                    cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(txtCanal.Text) + "*" + Convert.ToString(txtCabina.Text).PadLeft(2, '0') + "0000" + "^" + txtValor.Text;
+                    cadena = Convert.ToString(numero_id) + "#" + Convert.ToString(txtCanal.Text) + "*" + "00" + "0000" + "^" + txtValor.Text;
                     QrCode qrCode = new QrCode();
                     qrEncoder.TryEncode(cadena, out qrCode);
                     GraphicsRenderer renderer = new GraphicsRenderer(new FixedCodeSize(400, QuietZoneModules.Zero), Brushes.Black, Brushes.White);
@@ -2589,8 +2596,9 @@ namespace ImpresionQR
             DateTime mihora = DateTime.Now;
             string lahora = mihora.ToString("yyyy-MM-dd");
             int credencial = 0, buscocredencial = 2;
+            int año = mihora.Year;
 
-            new Importar().Traigo_Configuracion_Evento(txtideventos);
+            //new Importar().Traigo_Configuracion_Evento(txtideventos);
 
 
 
@@ -2641,10 +2649,10 @@ namespace ImpresionQR
                 e.Graphics.DrawLine(mipen, 170, 115, 630, 114);
                 Rectangle rect1 = new Rectangle(190, 90, 420, 45);
                 //e.Graphics.DrawRectangle(Pens.Black, rect1);
-                e.Graphics.DrawString("CREDENCIAL ANUAL 2019", new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
+                e.Graphics.DrawString("CREDENCIAL ANUAL " + año , new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
                 Rectangle rect0 = new Rectangle(190, 130, 420, 45);
                 //  e.Graphics.DrawRectangle(Pens.Black, rect0);
-                e.Graphics.DrawString("SUPERLIGA 2019-COPAS CONMEBOL 2019", new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
+                e.Graphics.DrawString("SUPERLIGA " + año + "-COPAS CONMEBOL " + año, new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
                 Pen mipens = new Pen(Color.Black, 7);
                 e.Graphics.DrawLine(mipens, 170, 170, 630, 170);
 
@@ -2820,10 +2828,10 @@ namespace ImpresionQR
                 e.Graphics.DrawLine(mipen, 170, 115, 630, 114);
                 Rectangle rect1 = new Rectangle(190, 90, 420, 45);
                 //e.Graphics.DrawRectangle(Pens.Black, rect1);
-                e.Graphics.DrawString("CREDENCIAL ANUAL 2019", new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
+                e.Graphics.DrawString("CREDENCIAL ANUAL " + año, new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
                 Rectangle rect0 = new Rectangle(190, 130, 420, 45);
                 //  e.Graphics.DrawRectangle(Pens.Black, rect0);
-                e.Graphics.DrawString("SUPERLIGA 2019-COPAS CONMEBOL 2019", new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
+                e.Graphics.DrawString("SUPERLIGA " + año + "-COPAS CONMEBOL " + año, new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
                 Pen mipens = new Pen(Color.Black, 7);
                 e.Graphics.DrawLine(mipens, 170, 170, 630, 170);
 
@@ -2998,10 +3006,10 @@ namespace ImpresionQR
                 e.Graphics.DrawLine(mipen, 170, 115, 630, 114);
                 Rectangle rect1 = new Rectangle(190, 90, 420, 45);
                 //e.Graphics.DrawRectangle(Pens.Black, rect1);
-                e.Graphics.DrawString("CREDENCIAL ANUAL 2019", new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
+                e.Graphics.DrawString("CREDENCIAL ANUAL " + año, new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
                 Rectangle rect0 = new Rectangle(190, 130, 420, 45);
                 //  e.Graphics.DrawRectangle(Pens.Black, rect0);
-                e.Graphics.DrawString("SUPERLIGA 2019-COPAS CONMEBOL 2019", new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
+                e.Graphics.DrawString("SUPERLIGA " + año + "-COPAS CONMEBOL " + año, new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
                 Pen mipens = new Pen(Color.Black, 7);
                 e.Graphics.DrawLine(mipens, 170, 170, 630, 170);
 
@@ -3182,10 +3190,10 @@ namespace ImpresionQR
                 e.Graphics.DrawLine(mipen, 170, 115, 630, 114);
                 Rectangle rect1 = new Rectangle(170, 90, 420, 45);
                 //e.Graphics.DrawRectangle(Pens.Black, rect1);
-                e.Graphics.DrawString("CREDENCIAL ANUAL 2019", new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
+                e.Graphics.DrawString("CREDENCIAL ANUAL " + año, new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
                 Rectangle rect0 = new Rectangle(190, 130, 420, 45);
                 //  e.Graphics.DrawRectangle(Pens.Black, rect0);
-                e.Graphics.DrawString("SUPERLIGA 2019-COPAS CONMEBOL 2019", new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
+                e.Graphics.DrawString("SUPERLIGA " + año + "-COPAS CONMEBOL " + año, new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
                 Pen mipens = new Pen(Color.Black, 7);
                 e.Graphics.DrawLine(mipens, 170, 170, 630, 170);
 
@@ -5205,8 +5213,8 @@ namespace ImpresionQR
 
             conectar = Conexion.ObtenerConexion();
 
-            new Importar().Traigo_Configuracion_Evento(txtideventos);
-
+            //new Importar().Traigo_Configuracion_Evento(nrocred.Text);
+            int año = mihora.Year;
 
 
             ////// CABINA ////////
@@ -5232,10 +5240,10 @@ namespace ImpresionQR
                 e.Graphics.DrawLine(mipen, 170, 115, 630, 114);
                 Rectangle rect1 = new Rectangle(190, 90, 420, 45);
                 //e.Graphics.DrawRectangle(Pens.Black, rect1);
-                e.Graphics.DrawString("CREDENCIAL ANUAL 2019", new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
+                e.Graphics.DrawString("CREDENCIAL ANUAL " + año , new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
                 Rectangle rect0 = new Rectangle(190, 130, 420, 45);
                 //  e.Graphics.DrawRectangle(Pens.Black, rect0);
-                e.Graphics.DrawString("SUPERLIGA 2019-COPAS CONMEBOL 2019", new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
+                e.Graphics.DrawString("SUPERLIGA " + año + "-COPAS CONMEBOL " + año, new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
                 Pen mipens = new Pen(Color.Black, 7);
                 e.Graphics.DrawLine(mipens, 170, 170, 630, 170);
 
@@ -5371,10 +5379,10 @@ namespace ImpresionQR
                 e.Graphics.DrawLine(mipen, 170, 115, 630, 114);
                 Rectangle rect1 = new Rectangle(190, 90, 420, 45);
                 //e.Graphics.DrawRectangle(Pens.Black, rect1);
-                e.Graphics.DrawString("CREDENCIAL ANUAL 2019", new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
+                e.Graphics.DrawString("CREDENCIAL ANUAL " + año ,new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
                 Rectangle rect0 = new Rectangle(190, 130, 420, 45);
                 //  e.Graphics.DrawRectangle(Pens.Black, rect0);
-                e.Graphics.DrawString("SUPERLIGA 2019-COPAS CONMEBOL 2019", new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
+                e.Graphics.DrawString("SUPERLIGA " + año + "-COPAS CONMEBOL " + año, new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
                 Pen mipens = new Pen(Color.Black, 7);
                 e.Graphics.DrawLine(mipens, 170, 170, 630, 170);
 
@@ -5506,10 +5514,10 @@ namespace ImpresionQR
                 e.Graphics.DrawLine(mipen, 170, 115, 630, 114);
                 Rectangle rect1 = new Rectangle(190, 90, 420, 45);
                 //e.Graphics.DrawRectangle(Pens.Black, rect1);
-                e.Graphics.DrawString("CREDENCIAL ANUAL 2019", new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
+                e.Graphics.DrawString("CREDENCIAL ANUAL " + año, new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
                 Rectangle rect0 = new Rectangle(190, 130, 420, 45);
                 //  e.Graphics.DrawRectangle(Pens.Black, rect0);
-                e.Graphics.DrawString("SUPERLIGA 2019-COPAS CONMEBOL 2019", new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
+                e.Graphics.DrawString("SUPERLIGA " + año + "-COPAS CONMEBOL " + año, new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
                 Pen mipens = new Pen(Color.Black, 7);
                 e.Graphics.DrawLine(mipens, 170, 170, 630, 170);
 
@@ -5647,10 +5655,10 @@ namespace ImpresionQR
                 e.Graphics.DrawLine(mipen, 170, 115, 630, 114);
                 Rectangle rect1 = new Rectangle(170, 90, 420, 45);
                 //e.Graphics.DrawRectangle(Pens.Black, rect1);
-                e.Graphics.DrawString("CREDENCIAL ANUAL 2019", new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
+                e.Graphics.DrawString("CREDENCIAL ANUAL " + año, new Font("Arial Black", 17), Brushes.White, rect1, stringFormat);
                 Rectangle rect0 = new Rectangle(190, 130, 420, 45);
                 //  e.Graphics.DrawRectangle(Pens.Black, rect0);
-                e.Graphics.DrawString("SUPERLIGA 2019-COPAS CONMEBOL 2019", new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
+                e.Graphics.DrawString("SUPERLIGA " + año  +"-COPAS CONMEBOL " + año, new Font("Arial Black", 11), Brushes.Black, rect0, stringFormat);
                 Pen mipens = new Pen(Color.Black, 7);
                 e.Graphics.DrawLine(mipens, 170, 170, 630, 170);
 
@@ -5779,6 +5787,11 @@ namespace ImpresionQR
                 }
 
             }
+        }
+
+        private void panel3_Paint_1(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

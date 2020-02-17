@@ -37,7 +37,8 @@ namespace ImpresionQR
 
             conectar = Conexion.ObtenerConexion();
 
-            cmd = new MySqlCommand("Insert into eventos(Nombre_Evento, Campeonato, Fecha, url, Numero_Fecha, Rival, Id_Rival, Estado, FuenteEvento, SizeEvento, CampeonatoFuente, CampeonatoSize, MedioFuente, MedioSize, FechaNFuente, FechaNSize) values('" + evento.Text + "', '" + torneo.Text + "', '" + fecha + "', '" + url.Text + "', '" + numerofecha.Text + "', '" + rival.Text + "', " + id_rival + ", " + "4"  +  ", '" +  "Arial Black" + "', " + "14" + ", '" + "Arial Black" + "', " + "14" + ", '" + "Arial Black" + "', " + "14" + ", '" + "Arial Black" + "', " + "14" + ")" , conectar);
+            cmd = new MySqlCommand("Insert into eventos(Nombre_Evento, Campeonato, Fecha, url, Numero_Fecha, Rival, Id_Rival, Estado, FuenteEvento, SizeEvento, CampeonatoFuente, CampeonatoSize, MedioFuente, MedioSize, FechaNFuente, FechaNSize, RivalNegrita, RivalFuente, RivalSize, NombreNegrita, NombreFuente, NombreSize, UbicacionNegrita, UbicacionFuente, UbicacionSize, CampeonatoNegrita, MedioNegrita, FechaNNegrita) values" +
+                                         "('" + evento.Text + "', '" + torneo.Text + "', '" + fecha + "', '" + url.Text + "', '" + numerofecha.Text + "', '" + rival.Text + "', " + id_rival + ", " + "4"  +  ", '" +  "Arial Black" + "', " + "14" + ", '" + "Arial Black" + "', " + "14" + ", '" + "Arial Black" + "', " + "14" + ", '" + "Arial Black" + "', " + "14" + ", 1, '" + "Arial Black" + "', 14" + ",1, '" + "Arial Black" + "', 14" + ",1, '" + "Arial Black" + "', 14" + ", 1,1,1)", conectar);
             cmd.ExecuteNonQuery();
             conectar.Close();
 
@@ -477,7 +478,7 @@ namespace ImpresionQR
                 nombreboton = boton.Name;
                 fila = nombreboton.Substring(1, 1);
                 asiento = nombreboton.Substring(3, 2);
-                criterio = "SELECT Id_Impresiones, Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado FROM impresiones WHERE Fecha='" + fecha + "' AND Fila=" + fila + " AND Asiento=" + asiento;
+                criterio = "SELECT * FROM impresiones WHERE Fecha='" + fecha + "' AND Fila=" + fila + " AND Asiento=" + asiento;
                 cmd = new MySqlCommand(criterio, conectar);
                 dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -519,7 +520,7 @@ namespace ImpresionQR
                 nombreboton = boton.Name;
                 cabina = nombreboton.Substring(1, 2);
 
-                criterio = "SELECT Id_Impresiones, Torneo, Evento, Medio, Cantidad, Nombre, DNI, Credencial, Asiento, Fila, Cabina, Fecha, Tipo, Id_Evento, Estado FROM impresiones WHERE Fecha='" + fecha + "' AND Cabina=" + cabina;
+                criterio = "SELECT * FROM impresiones WHERE Fecha='" + fecha + "' AND Cabina=" + cabina;
                 cmd = new MySqlCommand(criterio, conectar);
                 dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -527,6 +528,87 @@ namespace ImpresionQR
                     boton.BackColor = System.Drawing.Color.Orange;
                     FrmLogin.total_cabinas_impresas++;
 
+
+                }
+                conectar.Close();
+
+
+            }
+            catch (Exception ex)
+
+            {
+                MessageBox.Show("No se encontro la Tabla: " + ex.ToString());
+            }
+
+
+
+        }
+
+        public void Busco_Lecturas_Pupitres(string fecha, Button boton)
+
+        {
+            string criterio;
+            string fila;
+            string asiento, nombreboton;
+
+            try
+            {
+                conectar = Conexion.ObtenerConexion();
+                nombreboton = boton.Name;
+                fila = nombreboton.Substring(1, 1);
+                asiento = nombreboton.Substring(3, 2);
+                criterio = "SELECT * FROM lecturas WHERE Fecha='" + fecha + "' AND Fila=" + fila + " AND Asiento=" + asiento;
+                cmd = new MySqlCommand(criterio, conectar);
+                dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    boton.BackColor = System.Drawing.Color.Green ;
+                    FrmLogin.total_pupitres_entrantes++;
+
+                } else
+                {
+                   // boton.BackColor = System.Drawing.Color.Red ;
+
+                }
+
+                conectar.Close();
+
+
+            }
+            catch (Exception ex)
+
+            {
+                MessageBox.Show("No se encontro la Tabla: " + ex.ToString());
+            }
+
+
+
+        }
+
+        public void Busco_Lecturas_Cabinas(string fecha, Button boton)
+
+        {
+            string criterio;
+            string cabina;
+            string nombreboton;
+
+            try
+            {
+                conectar = Conexion.ObtenerConexion();
+                nombreboton = boton.Name;
+                cabina = nombreboton.Substring(1, 2);
+
+                criterio = "SELECT * FROM lecturas WHERE Fecha='" + fecha + "' AND Cabina=" + cabina;
+                cmd = new MySqlCommand(criterio, conectar);
+                dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    boton.BackColor = System.Drawing.Color.Green;
+                    FrmLogin.total_cabinas_entrantes++;
+
+                } else
+                {
+                    //boton.BackColor = System.Drawing.Color.Red;
 
                 }
                 conectar.Close();

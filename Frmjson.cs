@@ -28,11 +28,7 @@ namespace ImpresionQR
 
         private void Frmjson_Load(object sender, EventArgs e)
         {
-            panel2.Visible = false;
-            panel3.Visible = false;
-            panel4.Visible = false;
-            panel5.Visible = false;
-            panel6.Visible = false;
+           
 
             FrmLogin.total_cabinas_impresas = 0;
             FrmLogin.total_pupitres_impresos = 0;
@@ -89,7 +85,8 @@ namespace ImpresionQR
             if (F4A46.BackColor != Color.White)
             {
 
-                FrmDatosLugar frm = new FrmDatosLugar("F4A46", fdesde, 2, URL.Text); frm.ShowDialog();
+                FrmDatosLugar frm = new FrmDatosLugar("F4A46", fdesde, 2, URL.Text);
+                frm.ShowDialog();
                 this.Show();
             }
         }
@@ -1132,13 +1129,7 @@ namespace ImpresionQR
                                 if (respuesta == "C01")
                                     C01.BackColor = Color.Green;
 
-                                panel2.Visible = false;
-                                panel5.Visible = false;
-                                panel6.Visible = false;
-                                panel3.Visible = true;
-                                panel4.Visible = true;
-                                panel7.Visible = true;
-                                panel8.Visible = true;
+                               
                                 totentrantescabinas.Text = Convert.ToString(FrmLogin.total_cabinas_entrantes) + " Cabinas Entrantes";
                                 totfaltantescabinas.Text = Convert.ToString(Convert.ToDouble(FrmLogin.total_cabinas_impresas - FrmLogin.total_cabinas_entrantes)) + " Cabinas Faltantes";
                                 totentrantespupitres.Text = Convert.ToString(FrmLogin.total_pupitres_entrantes) + " Pupitres Entrantes";
@@ -1522,14 +1513,7 @@ namespace ImpresionQR
                 d.Limpio(C02);
                 d.Limpio(C01);
 
-
-
-
-
-
-
-
-
+                                                                                           
 
 
 
@@ -1844,23 +1828,17 @@ namespace ImpresionQR
                 d.Busco_Impresos_Cabinas(fdesde, C03);
                 d.Busco_Impresos_Cabinas(fdesde, C02);
                 d.Busco_Impresos_Cabinas(fdesde, C01);
-                totimpresionescabinas.Text = FrmLogin.total_cabinas_impresas + " Cabinas Impresas";
-                totimpresionespupitres.Text = FrmLogin.total_pupitres_impresos + " Pupitres Impresos";
+                totimpresionescabinas.Text = Convert.ToString(FrmLogin.total_cabinas_impresas);
+                totimpresionespupitres.Text = Convert.ToString(FrmLogin.total_pupitres_impresos) ;
                 total_impresiones = Convert.ToDouble(FrmLogin.total_cabinas_impresas) + Convert.ToDouble(FrmLogin.total_pupitres_impresos);
-                totimpresiones.Text = "Total Impresiones " + total_impresiones;
-                panel2.Visible = true;
-                panel5.Visible = true;
-                panel6.Visible = true;
-                panel3.Visible = false;
-                panel4.Visible = false;
-                panel7.Visible = false;
-                panel8.Visible = false;
-
+                totimpresiones.Text = Convert.ToString(total_impresiones);
+               
 
                 cuadro.Visible = true;
                 new Importar().traigo_escudo_rival(txtidrival.Text, pictureBox3, pictureBox2, nombreequipo, cuadro );
-                button3.Enabled = true;
+                button20.Enabled = true;
                 System.Windows.Forms.Cursor.Current = Cursors.Default;
+                panel5.Visible = true;
 
 
             }
@@ -2199,13 +2177,7 @@ namespace ImpresionQR
                 d.Limpio(C03);
                 d.Limpio(C02);
                 d.Limpio(C01);
-                panel2.Visible = false;
-                panel3.Visible = false;
-                panel4.Visible = false;
-                panel5.Visible = false;
-                panel6.Visible = false;
-                panel7.Visible = false;
-                panel8.Visible = false;
+             
             //    button3.Enabled = false;
                 if (cbeventos.Items.Count > 0)
                     cbeventos.Items.Clear();
@@ -5730,9 +5702,9 @@ namespace ImpresionQR
             string criterio = "";
 
             System.Windows.Forms.Cursor.Current = Cursors.WaitCursor;
-            criterio = "Select a.Id_Evento, a.Nombre_Evento, a.Campeonato, a.Fecha, a.url, a.Numero_Fecha, a.Rival, a.Id_Rival, a.Estado, b.Descripcion From eventos AS a INNER JOIN Estados AS b ON a.Estado = b.Estado ORDER BY a.Fecha";
+            criterio = "Select a.Id_Evento, a.Nombre_Evento, a.Campeonato, a.Fecha, a.url, a.Numero_Fecha, a.Rival, a.Id_Rival, a.Estado, b.Descripcion From eventos AS a INNER JOIN Estados AS b ON a.Estado = b.Estado ORDER BY a.Fecha DESC";
             new Importar().muestro_eventos(dgvEventos, criterio);
-            groupBox1.Visible = true;
+            rivales.Visible = true;
             System.Windows.Forms.Cursor.Current = Cursors.Default;
         }
 
@@ -5743,7 +5715,7 @@ namespace ImpresionQR
             estado_evento.Text = Convert.ToString(this.dgvEventos.CurrentRow.Cells[5].Value);
             new Evento().Traigo_Datos_Evento(txttorneo, txtevento, URL , fecnumero, Id_evento, lafecha, textIdRival, estado_evento);
             pdesde.Text = Convert.ToDateTime(lafecha.Text).ToString("yyyy-MM-dd");
-            groupBox1.Visible = false;
+            rivales.Visible = false;
             button1.Enabled = true;
         }
 
@@ -5765,956 +5737,662 @@ namespace ImpresionQR
             FrmLogin.total_pupitres_faltantes = 0;
             FrmLogin.total_pupitres_entrantes = 0;
 
-
+            º
             Evento d = new Evento();
-            d.Limpio_Rojo(F7A28, fdesde, 2);
-            d.Limpio_Rojo(F7A27, fdesde, 2);
-            d.Limpio_Rojo(F7A26, fdesde, 2);
-            d.Limpio_Rojo(F7A25, fdesde, 2);
-            d.Limpio_Rojo(F7A24, fdesde, 2);
-            d.Limpio_Rojo(F7A23, fdesde, 2);
-            d.Limpio_Rojo(F7A22, fdesde, 2);
-            d.Limpio_Rojo(F7A21, fdesde, 2);
-            d.Limpio_Rojo(F7A20, fdesde, 2);
-            d.Limpio_Rojo(F7A19, fdesde, 2);
-            d.Limpio_Rojo(F7A18, fdesde, 2);
-            d.Limpio_Rojo(F7A17, fdesde, 2);
-            d.Limpio_Rojo(F7A16, fdesde, 2);
-            d.Limpio_Rojo(F7A15, fdesde, 2);
-            d.Limpio_Rojo(F7A14, fdesde, 2);
-            d.Limpio_Rojo(F7A13, fdesde, 2);
-            d.Limpio_Rojo(F7A12, fdesde, 2);
-            d.Limpio_Rojo(F7A11, fdesde, 2);
-            d.Limpio_Rojo(F7A10, fdesde, 2);
-            d.Limpio_Rojo(F7A09, fdesde, 2);
-            d.Limpio_Rojo(F7A08, fdesde, 2);
-            d.Limpio_Rojo(F7A07, fdesde, 2);
-            d.Limpio_Rojo(F7A06, fdesde, 2);
-            d.Limpio_Rojo(F7A05, fdesde, 2);
-            d.Limpio_Rojo(F7A04, fdesde, 2);
-            d.Limpio_Rojo(F7A03, fdesde, 2);
-            d.Limpio_Rojo(F7A02, fdesde, 2);
-            d.Limpio_Rojo(F7A01, fdesde, 2);
-            d.Limpio_Rojo(F7A28, fdesde, 2);
-            d.Limpio_Rojo(F7A27, fdesde, 2);
-            d.Limpio_Rojo(F7A26, fdesde, 2);
-            d.Limpio_Rojo(F7A25, fdesde, 2);
-            d.Limpio_Rojo(F7A24, fdesde, 2);
-            d.Limpio_Rojo(F7A23, fdesde, 2);
-            d.Limpio_Rojo(F7A22, fdesde, 2);
-            d.Limpio_Rojo(F7A21, fdesde, 2);
-            d.Limpio_Rojo(F7A20, fdesde, 2);
-            d.Limpio_Rojo(F7A19, fdesde, 2);
-            d.Limpio_Rojo(F7A18, fdesde, 2);
-            d.Limpio_Rojo(F7A17, fdesde, 2);
-            d.Limpio_Rojo(F7A16, fdesde, 2);
-            d.Limpio_Rojo(F7A15, fdesde, 2);
-            d.Limpio_Rojo(F7A14, fdesde, 2);
-            d.Limpio_Rojo(F7A13, fdesde, 2);
-            d.Limpio_Rojo(F7A12, fdesde, 2);
-            d.Limpio_Rojo(F7A11, fdesde, 2);
-            d.Limpio_Rojo(F7A10, fdesde, 2);
-            d.Limpio_Rojo(F7A09, fdesde, 2);
-            d.Limpio_Rojo(F7A08, fdesde, 2);
-            d.Limpio_Rojo(F7A07, fdesde, 2);
-            d.Limpio_Rojo(F7A06, fdesde, 2);
-            d.Limpio_Rojo(F7A05, fdesde, 2);
-            d.Limpio_Rojo(F7A04, fdesde, 2);
-            d.Limpio_Rojo(F7A03, fdesde, 2);
-            d.Limpio_Rojo(F7A02, fdesde, 2);
-            d.Limpio_Rojo(F7A01, fdesde, 2);
-            d.Limpio_Rojo(F6A24, fdesde, 2);
-            d.Limpio_Rojo(F6A23, fdesde, 2);
-            d.Limpio_Rojo(F6A22, fdesde, 2);
-            d.Limpio_Rojo(F6A22, fdesde, 2);
-            d.Limpio_Rojo(F6A20, fdesde, 2);
-            d.Limpio_Rojo(F6A19, fdesde, 2);
-            d.Limpio_Rojo(F6A18, fdesde, 2);
-            d.Limpio_Rojo(F6A17, fdesde, 2);
-            d.Limpio_Rojo(F6A16, fdesde, 2);
-            d.Limpio_Rojo(F6A15, fdesde, 2);
-            d.Limpio_Rojo(F6A14, fdesde, 2);
-            d.Limpio_Rojo(F6A13, fdesde, 2);
-            d.Limpio_Rojo(F6A12, fdesde, 2);
-            d.Limpio_Rojo(F6A11, fdesde, 2);
-            d.Limpio_Rojo(F6A10, fdesde, 2);
-            d.Limpio_Rojo(F6A09, fdesde, 2);
-            d.Limpio_Rojo(F6A08, fdesde, 2);
-            d.Limpio_Rojo(F6A07, fdesde, 2);
-            d.Limpio_Rojo(F6A06, fdesde, 2);
-            d.Limpio_Rojo(F6A05, fdesde, 2);
-            d.Limpio_Rojo(F6A04, fdesde, 2);
-            d.Limpio_Rojo(F6A03, fdesde, 2);
-            d.Limpio_Rojo(F6A02, fdesde, 2);
-            d.Limpio_Rojo(F6A01, fdesde, 2);
-            d.Limpio_Rojo(F5A18, fdesde, 2);
-            d.Limpio_Rojo(F5A17, fdesde, 2);
-            d.Limpio_Rojo(F5A16, fdesde, 2);
-            d.Limpio_Rojo(F5A15, fdesde, 2);
-            d.Limpio_Rojo(F5A14, fdesde, 2);
-            d.Limpio_Rojo(F5A13, fdesde, 2);
-            d.Limpio_Rojo(F5A12, fdesde, 2);
-            d.Limpio_Rojo(F5A11, fdesde, 2);
-            d.Limpio_Rojo(F5A10, fdesde, 2);
-            d.Limpio_Rojo(F5A09, fdesde, 2);
-            d.Limpio_Rojo(F5A08, fdesde, 2);
-            d.Limpio_Rojo(F5A07, fdesde, 2);
-            d.Limpio_Rojo(F5A06, fdesde, 2);
-            d.Limpio_Rojo(F5A05, fdesde, 2);
-            d.Limpio_Rojo(F5A04, fdesde, 2);
-            d.Limpio_Rojo(F5A03, fdesde, 2);
-            d.Limpio_Rojo(F5A02, fdesde, 2);
-            d.Limpio_Rojo(F5A01, fdesde, 2);
-            d.Limpio_Rojo(F4A53, fdesde, 2);
-            d.Limpio_Rojo(F4A52, fdesde, 2);
-            d.Limpio_Rojo(F4A51, fdesde, 2);
-            d.Limpio_Rojo(F4A50, fdesde, 2);
-            d.Limpio_Rojo(F4A49, fdesde, 2);
-            d.Limpio_Rojo(F4A48, fdesde, 2);
-            d.Limpio_Rojo(F4A47, fdesde, 2);
-            d.Limpio_Rojo(F4A46, fdesde, 2);
-            d.Limpio_Rojo(F4A45, fdesde, 2);
-            d.Limpio_Rojo(F4A44, fdesde, 2);
-            d.Limpio_Rojo(F4A43, fdesde, 2);
-            d.Limpio_Rojo(F4A42, fdesde, 2);
-            d.Limpio_Rojo(F4A41, fdesde, 2);
-            d.Limpio_Rojo(F4A40, fdesde, 2);
-            d.Limpio_Rojo(F4A39, fdesde, 2);
-            d.Limpio_Rojo(F4A38, fdesde, 2);
-            d.Limpio_Rojo(F4A37, fdesde, 2);
-            d.Limpio_Rojo(F4A36, fdesde, 2);
-            d.Limpio_Rojo(F4A35, fdesde, 2);
-            d.Limpio_Rojo(F4A34, fdesde, 2);
-            d.Limpio_Rojo(F4A33, fdesde, 2);
-            d.Limpio_Rojo(F4A32, fdesde, 2);
-            d.Limpio_Rojo(F4A31, fdesde, 2);
-            d.Limpio_Rojo(F4A30, fdesde, 2);
-            d.Limpio_Rojo(F4A29, fdesde, 2);
-            d.Limpio_Rojo(F4A28, fdesde, 2);
-            d.Limpio_Rojo(F4A27, fdesde, 2);
-            d.Limpio_Rojo(F4A26, fdesde, 2);
-            d.Limpio_Rojo(F4A25, fdesde, 2);
-            d.Limpio_Rojo(F4A24, fdesde, 2);
-            d.Limpio_Rojo(F4A23, fdesde, 2);
-            d.Limpio_Rojo(F4A22, fdesde, 2);
-            d.Limpio_Rojo(F4A21, fdesde, 2);
-            d.Limpio_Rojo(F4A20, fdesde, 2);
-            d.Limpio_Rojo(F4A19, fdesde, 2);
-            d.Limpio_Rojo(F4A18, fdesde, 2);
-            d.Limpio_Rojo(F4A17, fdesde, 2);
-            d.Limpio_Rojo(F4A16, fdesde, 2);
-            d.Limpio_Rojo(F4A15, fdesde, 2);
-            d.Limpio_Rojo(F4A14, fdesde, 2);
-            d.Limpio_Rojo(F4A13, fdesde, 2);
-            d.Limpio_Rojo(F4A12, fdesde, 2);
-            d.Limpio_Rojo(F4A11, fdesde, 2);
-            d.Limpio_Rojo(F4A10, fdesde, 2);
-            d.Limpio_Rojo(F4A09, fdesde, 2);
-            d.Limpio_Rojo(F4A08, fdesde, 2);
-            d.Limpio_Rojo(F4A07, fdesde, 2);
-            d.Limpio_Rojo(F4A06, fdesde, 2);
-            d.Limpio_Rojo(F4A05, fdesde, 2);
-            d.Limpio_Rojo(F4A04, fdesde, 2);
-            d.Limpio_Rojo(F4A03, fdesde, 2);
-            d.Limpio_Rojo(F4A02, fdesde, 2);
-            d.Limpio_Rojo(F4A01, fdesde, 2);
-            d.Limpio_Rojo(F3A52, fdesde, 2);
-            d.Limpio_Rojo(F3A51, fdesde, 2);
-            d.Limpio_Rojo(F3A50, fdesde, 2);
-            d.Limpio_Rojo(F3A49, fdesde, 2);
-            d.Limpio_Rojo(F3A48, fdesde, 2);
-            d.Limpio_Rojo(F3A47, fdesde, 2);
-            d.Limpio_Rojo(F3A46, fdesde, 2);
-            d.Limpio_Rojo(F3A45, fdesde, 2);
-            d.Limpio_Rojo(F3A44, fdesde, 2);
-            d.Limpio_Rojo(F3A43, fdesde, 2);
-            d.Limpio_Rojo(F3A42, fdesde, 2);
-            d.Limpio_Rojo(F3A41, fdesde, 2);
-            d.Limpio_Rojo(F3A40, fdesde, 2);
-            d.Limpio_Rojo(F3A39, fdesde, 2);
-            d.Limpio_Rojo(F3A38, fdesde, 2);
-            d.Limpio_Rojo(F3A37, fdesde, 2);
-            d.Limpio_Rojo(F3A36, fdesde, 2);
-            d.Limpio_Rojo(F3A35, fdesde, 2);
-            d.Limpio_Rojo(F3A34, fdesde, 2);
-            d.Limpio_Rojo(F3A33, fdesde, 2);
-            d.Limpio_Rojo(F3A32, fdesde, 2);
-            d.Limpio_Rojo(F3A31, fdesde, 2);
-            d.Limpio_Rojo(F3A30, fdesde, 2);
-            d.Limpio_Rojo(F3A29, fdesde, 2);
-            d.Limpio_Rojo(F3A28, fdesde, 2);
-            d.Limpio_Rojo(F3A27, fdesde, 2);
-            d.Limpio_Rojo(F3A26, fdesde, 2);
-            d.Limpio_Rojo(F3A25, fdesde, 2);
-            d.Limpio_Rojo(F3A24, fdesde, 2);
-            d.Limpio_Rojo(F3A23, fdesde, 2);
-            d.Limpio_Rojo(F3A22, fdesde, 2);
-            d.Limpio_Rojo(F3A21, fdesde, 2);
-            d.Limpio_Rojo(F3A20, fdesde, 2);
-            d.Limpio_Rojo(F3A19, fdesde, 2);
-            d.Limpio_Rojo(F3A18, fdesde, 2);
-            d.Limpio_Rojo(F3A17, fdesde, 2);
-            d.Limpio_Rojo(F3A16, fdesde, 2);
-            d.Limpio_Rojo(F3A15, fdesde, 2);
-            d.Limpio_Rojo(F3A14, fdesde, 2);
-            d.Limpio_Rojo(F3A13, fdesde, 2);
-            d.Limpio_Rojo(F3A12, fdesde, 2);
-            d.Limpio_Rojo(F3A11, fdesde, 2);
-            d.Limpio_Rojo(F3A10, fdesde, 2);
-            d.Limpio_Rojo(F3A09, fdesde, 2);
-            d.Limpio_Rojo(F3A08, fdesde, 2);
-            d.Limpio_Rojo(F3A07, fdesde, 2);
-            d.Limpio_Rojo(F3A06, fdesde, 2);
-            d.Limpio_Rojo(F3A05, fdesde, 2);
-            d.Limpio_Rojo(F3A04, fdesde, 2);
-            d.Limpio_Rojo(F3A03, fdesde, 2);
-            d.Limpio_Rojo(F3A02, fdesde, 2);
-            d.Limpio_Rojo(F3A01, fdesde, 2);
-            d.Limpio_Rojo(F2A52, fdesde, 2);
-            d.Limpio_Rojo(F2A51, fdesde, 2);
-            d.Limpio_Rojo(F2A50, fdesde, 2);
-            d.Limpio_Rojo(F2A49, fdesde, 2);
-            d.Limpio_Rojo(F2A48, fdesde, 2);
-            d.Limpio_Rojo(F2A47, fdesde, 2);
-            d.Limpio_Rojo(F2A46, fdesde, 2);
-            d.Limpio_Rojo(F2A45, fdesde, 2);
-            d.Limpio_Rojo(F2A44, fdesde, 2);
-            d.Limpio_Rojo(F2A43, fdesde, 2);
-            d.Limpio_Rojo(F2A42, fdesde, 2);
-            d.Limpio_Rojo(F2A41, fdesde, 2);
-            d.Limpio_Rojo(F2A40, fdesde, 2);
-            d.Limpio_Rojo(F2A39, fdesde, 2);
-            d.Limpio_Rojo(F2A38, fdesde, 2);
-            d.Limpio_Rojo(F2A37, fdesde, 2);
-            d.Limpio_Rojo(F2A36, fdesde, 2);
-            d.Limpio_Rojo(F2A35, fdesde, 2);
-            d.Limpio_Rojo(F2A34, fdesde, 2);
-            d.Limpio_Rojo(F2A33, fdesde, 2);
-            d.Limpio_Rojo(F2A32, fdesde, 2);
-            d.Limpio_Rojo(F2A31, fdesde, 2);
-            d.Limpio_Rojo(F2A30, fdesde, 2);
-            d.Limpio_Rojo(F2A29, fdesde, 2);
-            d.Limpio_Rojo(F2A28, fdesde, 2);
-            d.Limpio_Rojo(F2A27, fdesde, 2);
-            d.Limpio_Rojo(F2A26, fdesde, 2);
-            d.Limpio_Rojo(F2A25, fdesde, 2);
-            d.Limpio_Rojo(F2A24, fdesde, 2);
-            d.Limpio_Rojo(F2A23, fdesde, 2);
-            d.Limpio_Rojo(F2A22, fdesde, 2);
-            d.Limpio_Rojo(F2A21, fdesde, 2);
-            d.Limpio_Rojo(F2A20, fdesde, 2);
-            d.Limpio_Rojo(F2A19, fdesde, 2);
-            d.Limpio_Rojo(F2A18, fdesde, 2);
-            d.Limpio_Rojo(F2A17, fdesde, 2);
-            d.Limpio_Rojo(F2A16, fdesde, 2);
-            d.Limpio_Rojo(F2A15, fdesde, 2);
-            d.Limpio_Rojo(F2A14, fdesde, 2);
-            d.Limpio_Rojo(F2A13, fdesde, 2);
-            d.Limpio_Rojo(F2A12, fdesde, 2);
-            d.Limpio_Rojo(F2A11, fdesde, 2);
-            d.Limpio_Rojo(F2A10, fdesde, 2);
-            d.Limpio_Rojo(F2A09, fdesde, 2);
-            d.Limpio_Rojo(F2A08, fdesde, 2);
-            d.Limpio_Rojo(F2A07, fdesde, 2);
-            d.Limpio_Rojo(F2A06, fdesde, 2);
-            d.Limpio_Rojo(F2A05, fdesde, 2);
-            d.Limpio_Rojo(F2A04, fdesde, 2);
-            d.Limpio_Rojo(F2A03, fdesde, 2);
-            d.Limpio_Rojo(F2A02, fdesde, 2);
-            d.Limpio_Rojo(F2A01, fdesde, 2);
-            d.Limpio_Rojo(F1A52, fdesde, 2);
-            d.Limpio_Rojo(F1A51, fdesde, 2);
-            d.Limpio_Rojo(F1A50, fdesde, 2);
-            d.Limpio_Rojo(F1A49, fdesde, 2);
-            d.Limpio_Rojo(F1A48, fdesde, 2);
-            d.Limpio_Rojo(F1A47, fdesde, 2);
-            d.Limpio_Rojo(F1A46, fdesde, 2);
-            d.Limpio_Rojo(F1A45, fdesde, 2);
-            d.Limpio_Rojo(F1A44, fdesde, 2);
-            d.Limpio_Rojo(F1A43, fdesde, 2);
-            d.Limpio_Rojo(F1A42, fdesde, 2);
-            d.Limpio_Rojo(F1A41, fdesde, 2);
-            d.Limpio_Rojo(F1A40, fdesde, 2);
-            d.Limpio_Rojo(F1A39, fdesde, 2);
-            d.Limpio_Rojo(F1A38, fdesde, 2);
-            d.Limpio_Rojo(F1A37, fdesde, 2);
-            d.Limpio_Rojo(F1A36, fdesde, 2);
-            d.Limpio_Rojo(F1A35, fdesde, 2);
-            d.Limpio_Rojo(F1A34, fdesde, 2);
-            d.Limpio_Rojo(F1A33, fdesde, 2);
-            d.Limpio_Rojo(F1A32, fdesde, 2);
-            d.Limpio_Rojo(F1A31, fdesde, 2);
-            d.Limpio_Rojo(F1A30, fdesde, 2);
-            d.Limpio_Rojo(F1A29, fdesde, 2);
-            d.Limpio_Rojo(F1A28, fdesde, 2);
-            d.Limpio_Rojo(F1A27, fdesde, 2);
-            d.Limpio_Rojo(F1A26, fdesde, 2);
-            d.Limpio_Rojo(F1A25, fdesde, 2);
-            d.Limpio_Rojo(F1A24, fdesde, 2);
-            d.Limpio_Rojo(F1A23, fdesde, 2);
-            d.Limpio_Rojo(F1A22, fdesde, 2);
-            d.Limpio_Rojo(F1A21, fdesde, 2);
-            d.Limpio_Rojo(F1A20, fdesde, 2);
-            d.Limpio_Rojo(F1A19, fdesde, 2);
-            d.Limpio_Rojo(F1A18, fdesde, 2);
-            d.Limpio_Rojo(F1A17, fdesde, 2);
-            d.Limpio_Rojo(F1A16, fdesde, 2);
-            d.Limpio_Rojo(F1A15, fdesde, 2);
-            d.Limpio_Rojo(F1A14, fdesde, 2);
-            d.Limpio_Rojo(F1A13, fdesde, 2);
-            d.Limpio_Rojo(F1A12, fdesde, 2);
-            d.Limpio_Rojo(F1A11, fdesde, 2);
-            d.Limpio_Rojo(F1A10, fdesde, 2);
-            d.Limpio_Rojo(F1A09, fdesde, 2);
-            d.Limpio_Rojo(F1A08, fdesde, 2);
-            d.Limpio_Rojo(F1A07, fdesde, 2);
-            d.Limpio_Rojo(F1A06, fdesde, 2);
-            d.Limpio_Rojo(F1A05, fdesde, 2);
-            d.Limpio_Rojo(F1A04, fdesde, 2);
-            d.Limpio_Rojo(F1A03, fdesde, 2);
-            d.Limpio_Rojo(F1A02, fdesde, 2);
-            d.Limpio_Rojo(F1A01, fdesde, 2);
-            d.Limpio_Rojo(C17, fdesde, 1);
-            d.Limpio_Rojo(C16, fdesde, 1);
-            d.Limpio_Rojo(C15, fdesde, 1);
-            d.Limpio_Rojo(C14, fdesde, 1);
-            d.Limpio_Rojo(C13, fdesde, 1);
-            d.Limpio_Rojo(C12, fdesde, 1);
-            d.Limpio_Rojo(C11, fdesde, 1);
-            d.Limpio_Rojo(C10, fdesde, 1);
-            d.Limpio_Rojo(C09, fdesde, 1);
-            d.Limpio_Rojo(C08, fdesde, 1);
-            d.Limpio_Rojo(C07, fdesde, 1);
-            d.Limpio_Rojo(C06, fdesde, 1);
-            d.Limpio_Rojo(C05, fdesde, 1);
-            d.Limpio_Rojo(C04, fdesde, 1);
-            d.Limpio_Rojo(C03, fdesde, 1);
-            d.Limpio_Rojo(C02, fdesde, 1);
-            d.Limpio_Rojo(C01, fdesde, 1);
+            //d.Limpio_Rojo(F7A28, fdesde, 2);
+            //d.Limpio_Rojo(F7A27, fdesde, 2);
+            //d.Limpio_Rojo(F7A26, fdesde, 2);
+            //d.Limpio_Rojo(F7A25, fdesde, 2);
+            //d.Limpio_Rojo(F7A24, fdesde, 2);
+            //d.Limpio_Rojo(F7A23, fdesde, 2);
+            //d.Limpio_Rojo(F7A22, fdesde, 2);
+            //d.Limpio_Rojo(F7A21, fdesde, 2);
+            //d.Limpio_Rojo(F7A20, fdesde, 2);
+            //d.Limpio_Rojo(F7A19, fdesde, 2);
+            //d.Limpio_Rojo(F7A18, fdesde, 2);
+            //d.Limpio_Rojo(F7A17, fdesde, 2);
+            //d.Limpio_Rojo(F7A16, fdesde, 2);
+            //d.Limpio_Rojo(F7A15, fdesde, 2);
+            //d.Limpio_Rojo(F7A14, fdesde, 2);
+            //d.Limpio_Rojo(F7A13, fdesde, 2);
+            //d.Limpio_Rojo(F7A12, fdesde, 2);
+            //d.Limpio_Rojo(F7A11, fdesde, 2);
+            //d.Limpio_Rojo(F7A10, fdesde, 2);
+            //d.Limpio_Rojo(F7A09, fdesde, 2);
+            //d.Limpio_Rojo(F7A08, fdesde, 2);
+            //d.Limpio_Rojo(F7A07, fdesde, 2);
+            //d.Limpio_Rojo(F7A06, fdesde, 2);
+            //d.Limpio_Rojo(F7A05, fdesde, 2);
+            //d.Limpio_Rojo(F7A04, fdesde, 2);
+            //d.Limpio_Rojo(F7A03, fdesde, 2);
+            //d.Limpio_Rojo(F7A02, fdesde, 2);
+            //d.Limpio_Rojo(F7A01, fdesde, 2);
+            //d.Limpio_Rojo(F7A28, fdesde, 2);
+            //d.Limpio_Rojo(F7A27, fdesde, 2);
+            //d.Limpio_Rojo(F7A26, fdesde, 2);
+            //d.Limpio_Rojo(F7A25, fdesde, 2);
+            //d.Limpio_Rojo(F7A24, fdesde, 2);
+            //d.Limpio_Rojo(F7A23, fdesde, 2);
+            //d.Limpio_Rojo(F7A22, fdesde, 2);
+            //d.Limpio_Rojo(F7A21, fdesde, 2);
+            //d.Limpio_Rojo(F7A20, fdesde, 2);
+            //d.Limpio_Rojo(F7A19, fdesde, 2);
+            //d.Limpio_Rojo(F7A18, fdesde, 2);
+            //d.Limpio_Rojo(F7A17, fdesde, 2);
+            //d.Limpio_Rojo(F7A16, fdesde, 2);
+            //d.Limpio_Rojo(F7A15, fdesde, 2);
+            //d.Limpio_Rojo(F7A14, fdesde, 2);
+            //d.Limpio_Rojo(F7A13, fdesde, 2);
+            //d.Limpio_Rojo(F7A12, fdesde, 2);
+            //d.Limpio_Rojo(F7A11, fdesde, 2);
+            //d.Limpio_Rojo(F7A10, fdesde, 2);
+            //d.Limpio_Rojo(F7A09, fdesde, 2);
+            //d.Limpio_Rojo(F7A08, fdesde, 2);
+            //d.Limpio_Rojo(F7A07, fdesde, 2);
+            //d.Limpio_Rojo(F7A06, fdesde, 2);
+            //d.Limpio_Rojo(F7A05, fdesde, 2);
+            //d.Limpio_Rojo(F7A04, fdesde, 2);
+            //d.Limpio_Rojo(F7A03, fdesde, 2);
+            //d.Limpio_Rojo(F7A02, fdesde, 2);
+            //d.Limpio_Rojo(F7A01, fdesde, 2);
+            //d.Limpio_Rojo(F6A24, fdesde, 2);
+            //d.Limpio_Rojo(F6A23, fdesde, 2);
+            //d.Limpio_Rojo(F6A22, fdesde, 2);
+            //d.Limpio_Rojo(F6A22, fdesde, 2);
+            //d.Limpio_Rojo(F6A20, fdesde, 2);
+            //d.Limpio_Rojo(F6A19, fdesde, 2);
+            //d.Limpio_Rojo(F6A18, fdesde, 2);
+            //d.Limpio_Rojo(F6A17, fdesde, 2);
+            //d.Limpio_Rojo(F6A16, fdesde, 2);
+            //d.Limpio_Rojo(F6A15, fdesde, 2);
+            //d.Limpio_Rojo(F6A14, fdesde, 2);
+            //d.Limpio_Rojo(F6A13, fdesde, 2);
+            //d.Limpio_Rojo(F6A12, fdesde, 2);
+            //d.Limpio_Rojo(F6A11, fdesde, 2);
+            //d.Limpio_Rojo(F6A10, fdesde, 2);
+            //d.Limpio_Rojo(F6A09, fdesde, 2);
+            //d.Limpio_Rojo(F6A08, fdesde, 2);
+            //d.Limpio_Rojo(F6A07, fdesde, 2);
+            //d.Limpio_Rojo(F6A06, fdesde, 2);
+            //d.Limpio_Rojo(F6A05, fdesde, 2);
+            //d.Limpio_Rojo(F6A04, fdesde, 2);
+            //d.Limpio_Rojo(F6A03, fdesde, 2);
+            //d.Limpio_Rojo(F6A02, fdesde, 2);
+            //d.Limpio_Rojo(F6A01, fdesde, 2);
+            //d.Limpio_Rojo(F5A18, fdesde, 2);
+            //d.Limpio_Rojo(F5A17, fdesde, 2);
+            //d.Limpio_Rojo(F5A16, fdesde, 2);
+            //d.Limpio_Rojo(F5A15, fdesde, 2);
+            //d.Limpio_Rojo(F5A14, fdesde, 2);
+            //d.Limpio_Rojo(F5A13, fdesde, 2);
+            //d.Limpio_Rojo(F5A12, fdesde, 2);
+            //d.Limpio_Rojo(F5A11, fdesde, 2);
+            //d.Limpio_Rojo(F5A10, fdesde, 2);
+            //d.Limpio_Rojo(F5A09, fdesde, 2);
+            //d.Limpio_Rojo(F5A08, fdesde, 2);
+            //d.Limpio_Rojo(F5A07, fdesde, 2);
+            //d.Limpio_Rojo(F5A06, fdesde, 2);
+            //d.Limpio_Rojo(F5A05, fdesde, 2);
+            //d.Limpio_Rojo(F5A04, fdesde, 2);
+            //d.Limpio_Rojo(F5A03, fdesde, 2);
+            //d.Limpio_Rojo(F5A02, fdesde, 2);
+            //d.Limpio_Rojo(F5A01, fdesde, 2);
+            //d.Limpio_Rojo(F4A53, fdesde, 2);
+            //d.Limpio_Rojo(F4A52, fdesde, 2);
+            //d.Limpio_Rojo(F4A51, fdesde, 2);
+            //d.Limpio_Rojo(F4A50, fdesde, 2);
+            //d.Limpio_Rojo(F4A49, fdesde, 2);
+            //d.Limpio_Rojo(F4A48, fdesde, 2);
+            //d.Limpio_Rojo(F4A47, fdesde, 2);
+            //d.Limpio_Rojo(F4A46, fdesde, 2);
+            //d.Limpio_Rojo(F4A45, fdesde, 2);
+            //d.Limpio_Rojo(F4A44, fdesde, 2);
+            //d.Limpio_Rojo(F4A43, fdesde, 2);
+            //d.Limpio_Rojo(F4A42, fdesde, 2);
+            //d.Limpio_Rojo(F4A41, fdesde, 2);
+            //d.Limpio_Rojo(F4A40, fdesde, 2);
+            //d.Limpio_Rojo(F4A39, fdesde, 2);
+            //d.Limpio_Rojo(F4A38, fdesde, 2);
+            //d.Limpio_Rojo(F4A37, fdesde, 2);
+            //d.Limpio_Rojo(F4A36, fdesde, 2);
+            //d.Limpio_Rojo(F4A35, fdesde, 2);
+            //d.Limpio_Rojo(F4A34, fdesde, 2);
+            //d.Limpio_Rojo(F4A33, fdesde, 2);
+            //d.Limpio_Rojo(F4A32, fdesde, 2);
+            //d.Limpio_Rojo(F4A31, fdesde, 2);
+            //d.Limpio_Rojo(F4A30, fdesde, 2);
+            //d.Limpio_Rojo(F4A29, fdesde, 2);
+            //d.Limpio_Rojo(F4A28, fdesde, 2);
+            //d.Limpio_Rojo(F4A27, fdesde, 2);
+            //d.Limpio_Rojo(F4A26, fdesde, 2);
+            //d.Limpio_Rojo(F4A25, fdesde, 2);
+            //d.Limpio_Rojo(F4A24, fdesde, 2);
+            //d.Limpio_Rojo(F4A23, fdesde, 2);
+            //d.Limpio_Rojo(F4A22, fdesde, 2);
+            //d.Limpio_Rojo(F4A21, fdesde, 2);
+            //d.Limpio_Rojo(F4A20, fdesde, 2);
+            //d.Limpio_Rojo(F4A19, fdesde, 2);
+            //d.Limpio_Rojo(F4A18, fdesde, 2);
+            //d.Limpio_Rojo(F4A17, fdesde, 2);
+            //d.Limpio_Rojo(F4A16, fdesde, 2);
+            //d.Limpio_Rojo(F4A15, fdesde, 2);
+            //d.Limpio_Rojo(F4A14, fdesde, 2);
+            //d.Limpio_Rojo(F4A13, fdesde, 2);
+            //d.Limpio_Rojo(F4A12, fdesde, 2);
+            //d.Limpio_Rojo(F4A11, fdesde, 2);
+            //d.Limpio_Rojo(F4A10, fdesde, 2);
+            //d.Limpio_Rojo(F4A09, fdesde, 2);
+            //d.Limpio_Rojo(F4A08, fdesde, 2);
+            //d.Limpio_Rojo(F4A07, fdesde, 2);
+            //d.Limpio_Rojo(F4A06, fdesde, 2);
+            //d.Limpio_Rojo(F4A05, fdesde, 2);
+            //d.Limpio_Rojo(F4A04, fdesde, 2);
+            //d.Limpio_Rojo(F4A03, fdesde, 2);
+            //d.Limpio_Rojo(F4A02, fdesde, 2);
+            //d.Limpio_Rojo(F4A01, fdesde, 2);
+            //d.Limpio_Rojo(F3A52, fdesde, 2);
+            //d.Limpio_Rojo(F3A51, fdesde, 2);
+            //d.Limpio_Rojo(F3A50, fdesde, 2);
+            //d.Limpio_Rojo(F3A49, fdesde, 2);
+            //d.Limpio_Rojo(F3A48, fdesde, 2);
+            //d.Limpio_Rojo(F3A47, fdesde, 2);
+            //d.Limpio_Rojo(F3A46, fdesde, 2);
+            //d.Limpio_Rojo(F3A45, fdesde, 2);
+            //d.Limpio_Rojo(F3A44, fdesde, 2);
+            //d.Limpio_Rojo(F3A43, fdesde, 2);
+            //d.Limpio_Rojo(F3A42, fdesde, 2);
+            //d.Limpio_Rojo(F3A41, fdesde, 2);
+            //d.Limpio_Rojo(F3A40, fdesde, 2);
+            //d.Limpio_Rojo(F3A39, fdesde, 2);
+            //d.Limpio_Rojo(F3A38, fdesde, 2);
+            //d.Limpio_Rojo(F3A37, fdesde, 2);
+            //d.Limpio_Rojo(F3A36, fdesde, 2);
+            //d.Limpio_Rojo(F3A35, fdesde, 2);
+            //d.Limpio_Rojo(F3A34, fdesde, 2);
+            //d.Limpio_Rojo(F3A33, fdesde, 2);
+            //d.Limpio_Rojo(F3A32, fdesde, 2);
+            //d.Limpio_Rojo(F3A31, fdesde, 2);
+            //d.Limpio_Rojo(F3A30, fdesde, 2);
+            //d.Limpio_Rojo(F3A29, fdesde, 2);
+            //d.Limpio_Rojo(F3A28, fdesde, 2);
+            //d.Limpio_Rojo(F3A27, fdesde, 2);
+            //d.Limpio_Rojo(F3A26, fdesde, 2);
+            //d.Limpio_Rojo(F3A25, fdesde, 2);
+            //d.Limpio_Rojo(F3A24, fdesde, 2);
+            //d.Limpio_Rojo(F3A23, fdesde, 2);
+            //d.Limpio_Rojo(F3A22, fdesde, 2);
+            //d.Limpio_Rojo(F3A21, fdesde, 2);
+            //d.Limpio_Rojo(F3A20, fdesde, 2);
+            //d.Limpio_Rojo(F3A19, fdesde, 2);
+            //d.Limpio_Rojo(F3A18, fdesde, 2);
+            //d.Limpio_Rojo(F3A17, fdesde, 2);
+            //d.Limpio_Rojo(F3A16, fdesde, 2);
+            //d.Limpio_Rojo(F3A15, fdesde, 2);
+            //d.Limpio_Rojo(F3A14, fdesde, 2);
+            //d.Limpio_Rojo(F3A13, fdesde, 2);
+            //d.Limpio_Rojo(F3A12, fdesde, 2);
+            //d.Limpio_Rojo(F3A11, fdesde, 2);
+            //d.Limpio_Rojo(F3A10, fdesde, 2);
+            //d.Limpio_Rojo(F3A09, fdesde, 2);
+            //d.Limpio_Rojo(F3A08, fdesde, 2);
+            //d.Limpio_Rojo(F3A07, fdesde, 2);
+            //d.Limpio_Rojo(F3A06, fdesde, 2);
+            //d.Limpio_Rojo(F3A05, fdesde, 2);
+            //d.Limpio_Rojo(F3A04, fdesde, 2);
+            //d.Limpio_Rojo(F3A03, fdesde, 2);
+            //d.Limpio_Rojo(F3A02, fdesde, 2);
+            //d.Limpio_Rojo(F3A01, fdesde, 2);
+            //d.Limpio_Rojo(F2A52, fdesde, 2);
+            //d.Limpio_Rojo(F2A51, fdesde, 2);
+            //d.Limpio_Rojo(F2A50, fdesde, 2);
+            //d.Limpio_Rojo(F2A49, fdesde, 2);
+            //d.Limpio_Rojo(F2A48, fdesde, 2);
+            //d.Limpio_Rojo(F2A47, fdesde, 2);
+            //d.Limpio_Rojo(F2A46, fdesde, 2);
+            //d.Limpio_Rojo(F2A45, fdesde, 2);
+            //d.Limpio_Rojo(F2A44, fdesde, 2);
+            //d.Limpio_Rojo(F2A43, fdesde, 2);
+            //d.Limpio_Rojo(F2A42, fdesde, 2);
+            //d.Limpio_Rojo(F2A41, fdesde, 2);
+            //d.Limpio_Rojo(F2A40, fdesde, 2);
+            //d.Limpio_Rojo(F2A39, fdesde, 2);
+            //d.Limpio_Rojo(F2A38, fdesde, 2);
+            //d.Limpio_Rojo(F2A37, fdesde, 2);
+            //d.Limpio_Rojo(F2A36, fdesde, 2);
+            //d.Limpio_Rojo(F2A35, fdesde, 2);
+            //d.Limpio_Rojo(F2A34, fdesde, 2);
+            //d.Limpio_Rojo(F2A33, fdesde, 2);
+            //d.Limpio_Rojo(F2A32, fdesde, 2);
+            //d.Limpio_Rojo(F2A31, fdesde, 2);
+            //d.Limpio_Rojo(F2A30, fdesde, 2);
+            //d.Limpio_Rojo(F2A29, fdesde, 2);
+            //d.Limpio_Rojo(F2A28, fdesde, 2);
+            //d.Limpio_Rojo(F2A27, fdesde, 2);
+            //d.Limpio_Rojo(F2A26, fdesde, 2);
+            //d.Limpio_Rojo(F2A25, fdesde, 2);
+            //d.Limpio_Rojo(F2A24, fdesde, 2);
+            //d.Limpio_Rojo(F2A23, fdesde, 2);
+            //d.Limpio_Rojo(F2A22, fdesde, 2);
+            //d.Limpio_Rojo(F2A21, fdesde, 2);
+            //d.Limpio_Rojo(F2A20, fdesde, 2);
+            //d.Limpio_Rojo(F2A19, fdesde, 2);
+            //d.Limpio_Rojo(F2A18, fdesde, 2);
+            //d.Limpio_Rojo(F2A17, fdesde, 2);
+            //d.Limpio_Rojo(F2A16, fdesde, 2);
+            //d.Limpio_Rojo(F2A15, fdesde, 2);
+            //d.Limpio_Rojo(F2A14, fdesde, 2);
+            //d.Limpio_Rojo(F2A13, fdesde, 2);
+            //d.Limpio_Rojo(F2A12, fdesde, 2);
+            //d.Limpio_Rojo(F2A11, fdesde, 2);
+            //d.Limpio_Rojo(F2A10, fdesde, 2);
+            //d.Limpio_Rojo(F2A09, fdesde, 2);
+            //d.Limpio_Rojo(F2A08, fdesde, 2);
+            //d.Limpio_Rojo(F2A07, fdesde, 2);
+            //d.Limpio_Rojo(F2A06, fdesde, 2);
+            //d.Limpio_Rojo(F2A05, fdesde, 2);
+            //d.Limpio_Rojo(F2A04, fdesde, 2);
+            //d.Limpio_Rojo(F2A03, fdesde, 2);
+            //d.Limpio_Rojo(F2A02, fdesde, 2);
+            //d.Limpio_Rojo(F2A01, fdesde, 2);
+            //d.Limpio_Rojo(F1A52, fdesde, 2);
+            //d.Limpio_Rojo(F1A51, fdesde, 2);
+            //d.Limpio_Rojo(F1A50, fdesde, 2);
+            //d.Limpio_Rojo(F1A49, fdesde, 2);
+            //d.Limpio_Rojo(F1A48, fdesde, 2);
+            //d.Limpio_Rojo(F1A47, fdesde, 2);
+            //d.Limpio_Rojo(F1A46, fdesde, 2);
+            //d.Limpio_Rojo(F1A45, fdesde, 2);
+            //d.Limpio_Rojo(F1A44, fdesde, 2);
+            //d.Limpio_Rojo(F1A43, fdesde, 2);
+            //d.Limpio_Rojo(F1A42, fdesde, 2);
+            //d.Limpio_Rojo(F1A41, fdesde, 2);
+            //d.Limpio_Rojo(F1A40, fdesde, 2);
+            //d.Limpio_Rojo(F1A39, fdesde, 2);
+            //d.Limpio_Rojo(F1A38, fdesde, 2);
+            //d.Limpio_Rojo(F1A37, fdesde, 2);
+            //d.Limpio_Rojo(F1A36, fdesde, 2);
+            //d.Limpio_Rojo(F1A35, fdesde, 2);
+            //d.Limpio_Rojo(F1A34, fdesde, 2);
+            //d.Limpio_Rojo(F1A33, fdesde, 2);
+            //d.Limpio_Rojo(F1A32, fdesde, 2);
+            //d.Limpio_Rojo(F1A31, fdesde, 2);
+            //d.Limpio_Rojo(F1A30, fdesde, 2);
+            //d.Limpio_Rojo(F1A29, fdesde, 2);
+            //d.Limpio_Rojo(F1A28, fdesde, 2);
+            //d.Limpio_Rojo(F1A27, fdesde, 2);
+            //d.Limpio_Rojo(F1A26, fdesde, 2);
+            //d.Limpio_Rojo(F1A25, fdesde, 2);
+            //d.Limpio_Rojo(F1A24, fdesde, 2);
+            //d.Limpio_Rojo(F1A23, fdesde, 2);
+            //d.Limpio_Rojo(F1A22, fdesde, 2);
+            //d.Limpio_Rojo(F1A21, fdesde, 2);
+            //d.Limpio_Rojo(F1A20, fdesde, 2);
+            //d.Limpio_Rojo(F1A19, fdesde, 2);
+            //d.Limpio_Rojo(F1A18, fdesde, 2);
+            //d.Limpio_Rojo(F1A17, fdesde, 2);
+            //d.Limpio_Rojo(F1A16, fdesde, 2);
+            //d.Limpio_Rojo(F1A15, fdesde, 2);
+            //d.Limpio_Rojo(F1A14, fdesde, 2);
+            //d.Limpio_Rojo(F1A13, fdesde, 2);
+            //d.Limpio_Rojo(F1A12, fdesde, 2);
+            //d.Limpio_Rojo(F1A11, fdesde, 2);
+            //d.Limpio_Rojo(F1A10, fdesde, 2);
+            //d.Limpio_Rojo(F1A09, fdesde, 2);
+            //d.Limpio_Rojo(F1A08, fdesde, 2);
+            //d.Limpio_Rojo(F1A07, fdesde, 2);
+            //d.Limpio_Rojo(F1A06, fdesde, 2);
+            //d.Limpio_Rojo(F1A05, fdesde, 2);
+            //d.Limpio_Rojo(F1A04, fdesde, 2);
+            //d.Limpio_Rojo(F1A03, fdesde, 2);
+            //d.Limpio_Rojo(F1A02, fdesde, 2);
+            //d.Limpio_Rojo(F1A01, fdesde, 2);
+            //d.Limpio_Rojo(C17, fdesde, 1);
+            //d.Limpio_Rojo(C16, fdesde, 1);
+            //d.Limpio_Rojo(C15, fdesde, 1);
+            //d.Limpio_Rojo(C14, fdesde, 1);
+            //d.Limpio_Rojo(C13, fdesde, 1);
+            //d.Limpio_Rojo(C12, fdesde, 1);
+            //d.Limpio_Rojo(C11, fdesde, 1);
+            //d.Limpio_Rojo(C10, fdesde, 1);
+            //d.Limpio_Rojo(C09, fdesde, 1);
+            //d.Limpio_Rojo(C08, fdesde, 1);
+            //d.Limpio_Rojo(C07, fdesde, 1);
+            //d.Limpio_Rojo(C06, fdesde, 1);
+            //d.Limpio_Rojo(C05, fdesde, 1);
+            //d.Limpio_Rojo(C04, fdesde, 1);
+            //d.Limpio_Rojo(C03, fdesde, 1);
+            //d.Limpio_Rojo(C02, fdesde, 1);
+            //d.Limpio_Rojo(C01, fdesde, 1);
 
-            string respuesta = "", ruta = "";
+            //string respuesta = "", ruta = "";
+
+            // FILA 7
+            d.Busco_Lecturas_Pupitres(fdesde, F7A28);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A27);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A26);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A25);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A24);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A23);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A22);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A21);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A20);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A19);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A18);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A17);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A16);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A15);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A14);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A13);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A12);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A11);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A10);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A09);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A08);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A07);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A06);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A05);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A04);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A03);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A02);
+            d.Busco_Lecturas_Pupitres(fdesde, F7A01);
+            // FILA 6
+            d.Busco_Lecturas_Pupitres(fdesde, F6A24);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A23);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A22);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A22);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A20);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A19);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A18);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A17);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A16);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A15);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A14);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A13);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A12);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A11);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A10);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A09);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A08);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A07);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A06);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A05);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A04);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A03);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A02);
+            d.Busco_Lecturas_Pupitres(fdesde, F6A01);
+            //FILA 5
+            d.Busco_Lecturas_Pupitres(fdesde, F5A18);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A17);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A16);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A15);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A14);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A13);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A12);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A11);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A10);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A09);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A08);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A07);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A06);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A05);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A04);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A03);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A02);
+            d.Busco_Lecturas_Pupitres(fdesde, F5A01);
+
+            //FILA 4
+            d.Busco_Lecturas_Pupitres(fdesde, F4A53);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A52);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A51);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A50);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A49);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A48);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A47);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A46);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A45);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A44);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A43);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A42);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A41);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A40);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A39);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A38);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A37);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A36);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A35);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A34);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A33);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A32);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A31);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A30);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A29);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A28);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A27);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A26);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A25);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A24);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A23);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A22);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A21);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A20);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A19);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A18);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A17);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A16);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A15);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A14);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A13);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A12);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A11);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A10);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A09);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A08);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A07);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A06);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A05);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A04);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A03);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A02);
+            d.Busco_Lecturas_Pupitres(fdesde, F4A01);
+
+            //FILA 3
+            d.Busco_Lecturas_Pupitres(fdesde, F3A52);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A51);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A50);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A49);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A48);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A47);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A46);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A45);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A44);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A43);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A42);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A41);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A40);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A39);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A38);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A37);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A36);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A35);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A34);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A33);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A32);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A31);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A30);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A29);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A28);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A27);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A26);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A25);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A24);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A23);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A22);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A21);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A20);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A19);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A18);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A17);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A16);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A15);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A14);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A13);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A12);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A11);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A10);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A09);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A08);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A07);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A06);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A05);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A04);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A03);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A02);
+            d.Busco_Lecturas_Pupitres(fdesde, F3A01);
 
 
-            conectar = Conexion.ObtenerConexion();
-            cmd = new MySqlCommand("Select * from lecturas where evento='" + "RIVER PLATE VS ALDOSIVI" + "'", conectar);
-            dr = cmd.ExecuteReader();
+            //FILA 2
+            d.Busco_Lecturas_Pupitres(fdesde, F2A52);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A51);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A50);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A49);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A48);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A47);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A46);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A45);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A44);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A43);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A42);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A41);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A40);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A39);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A38);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A37);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A36);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A35);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A34);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A33);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A32);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A31);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A30);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A29);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A28);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A27);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A26);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A25);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A24);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A23);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A22);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A21);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A20);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A19);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A18);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A17);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A16);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A15);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A14);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A13);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A12);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A11);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A10);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A09);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A08);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A07);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A06);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A05);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A04);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A03);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A02);
+            d.Busco_Lecturas_Pupitres(fdesde, F2A01);
 
-            
-                    while (dr.Read())
-                    {
+            //FILA 1
+            d.Busco_Lecturas_Pupitres(fdesde, F1A52);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A51);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A50);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A49);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A48);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A47);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A46);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A45);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A44);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A43);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A42);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A41);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A40);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A39);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A38);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A37);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A36);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A35);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A34);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A33);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A32);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A31);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A30);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A29);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A28);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A27);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A26);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A25);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A24);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A23);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A22);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A21);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A20);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A19);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A18);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A17);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A16);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A15);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A14);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A13);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A12);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A11);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A10);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A09);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A08);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A07);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A06);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A05);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A04);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A03);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A02);
+            d.Busco_Lecturas_Pupitres(fdesde, F1A01);
 
-                         Id_impresion = dr.GetString(4);
-                         respuesta = d.Busco_Presentes(Id_impresion);
 
-                                if (respuesta == "F7A28")
-                                    F7A28.BackColor = Color.Green;
-                                if (respuesta == "F7A27")
-                                    F7A27.BackColor = Color.Green;
-                                if (respuesta == "F7A26")
-                                    F7A26.BackColor = Color.Green;
-                                if (respuesta == "F7A25")
-                                    F7A25.BackColor = Color.Green;
-                                if (respuesta == "F7A24")
-                                    F7A24.BackColor = Color.Green;
-                                if (respuesta == "F7A23")
-                                    F7A23.BackColor = Color.Green;
-                                if (respuesta == "F7A22")
-                                    F7A22.BackColor = Color.Green;
-                                if (respuesta == "F7A21")
-                                    F7A21.BackColor = Color.Green;
-                                if (respuesta == "F7A20")
-                                    F7A20.BackColor = Color.Green;
-                                if (respuesta == "F7A19")
-                                    F7A19.BackColor = Color.Green;
-                                if (respuesta == "F7A18")
-                                    F7A18.BackColor = Color.Green;
-                                if (respuesta == "F7A17")
-                                    F7A17.BackColor = Color.Green;
-                                if (respuesta == "F7A16")
-                                    F7A16.BackColor = Color.Green;
-                                if (respuesta == "F7A15")
-                                    F7A15.BackColor = Color.Green;
-                                if (respuesta == "F7A14")
-                                    F7A14.BackColor = Color.Green;
-                                if (respuesta == "F7A13")
-                                    F7A13.BackColor = Color.Green;
-                                if (respuesta == "F7A12")
-                                    F7A12.BackColor = Color.Green;
-                                if (respuesta == "F7A11")
-                                    F7A11.BackColor = Color.Green;
-                                if (respuesta == "F7A10")
-                                    F7A10.BackColor = Color.Green;
-                                if (respuesta == "F7A09")
-                                    F7A09.BackColor = Color.Green;
-                                if (respuesta == "F7A08")
-                                    F7A08.BackColor = Color.Green;
-                                if (respuesta == "F7A07")
-                                    F7A07.BackColor = Color.Green;
-                                if (respuesta == "F7A06")
-                                    F7A06.BackColor = Color.Green;
-                                if (respuesta == "F7A05")
-                                    F7A05.BackColor = Color.Green;
-                                if (respuesta == "F7A04")
-                                    F7A04.BackColor = Color.Green;
-                                if (respuesta == "F7A03")
-                                    F7A03.BackColor = Color.Green;
-                                if (respuesta == "F7A02")
-                                    F7A02.BackColor = Color.Green;
-                                if (respuesta == "F7A01")
-                                    F7A01.BackColor = Color.Green;
-                                if (respuesta == "F6A24")
-                                    F6A24.BackColor = Color.Green;
-                                if (respuesta == "F6A23")
-                                    F6A23.BackColor = Color.Green;
-                                if (respuesta == "F6A22")
-                                    F6A22.BackColor = Color.Green;
-                                if (respuesta == "F6A21")
-                                    F6A21.BackColor = Color.Green;
-                                if (respuesta == "F6A20")
-                                    F6A20.BackColor = Color.Green;
-                                if (respuesta == "F6A19")
-                                    F6A19.BackColor = Color.Green;
-                                if (respuesta == "F6A18")
-                                    F6A18.BackColor = Color.Green;
-                                if (respuesta == "F6A17")
-                                    F6A17.BackColor = Color.Green;
-                                if (respuesta == "F6A16")
-                                    F6A16.BackColor = Color.Green;
-                                if (respuesta == "F6A15")
-                                    F6A15.BackColor = Color.Green;
-                                if (respuesta == "F6A14")
-                                    F6A14.BackColor = Color.Green;
-                                if (respuesta == "F6A13")
-                                    F6A13.BackColor = Color.Green;
-                                if (respuesta == "F6A12")
-                                    F6A12.BackColor = Color.Green;
-                                if (respuesta == "F6A11")
-                                    F6A11.BackColor = Color.Green;
-                                if (respuesta == "F6A10")
-                                    F6A10.BackColor = Color.Green;
-                                if (respuesta == "F6A09")
-                                    F6A09.BackColor = Color.Green;
-                                if (respuesta == "F6A08")
-                                    F6A08.BackColor = Color.Green;
-                                if (respuesta == "F6A07")
-                                    F6A07.BackColor = Color.Green;
-                                if (respuesta == "F6A06")
-                                    F6A06.BackColor = Color.Green;
-                                if (respuesta == "F6A05")
-                                    F6A05.BackColor = Color.Green;
-                                if (respuesta == "F6A04")
-                                    F6A04.BackColor = Color.Green;
-                                if (respuesta == "F6A03")
-                                    F6A03.BackColor = Color.Green;
-                                if (respuesta == "F6A02")
-                                    F6A02.BackColor = Color.Green;
-                                if (respuesta == "F6A01")
-                                    F6A01.BackColor = Color.Green;
-                                if (respuesta == "F5A18")
-                                    F5A18.BackColor = Color.Green;
-                                if (respuesta == "F5A17")
-                                    F5A17.BackColor = Color.Green;
-                                if (respuesta == "F5A16")
-                                    F5A16.BackColor = Color.Green;
-                                if (respuesta == "F5A15")
-                                    F5A15.BackColor = Color.Green;
-                                if (respuesta == "F5A14")
-                                    F5A14.BackColor = Color.Green;
-                                if (respuesta == "F5A13")
-                                    F5A13.BackColor = Color.Green;
-                                if (respuesta == "F5A12")
-                                    F5A12.BackColor = Color.Green;
-                                if (respuesta == "F5A11")
-                                    F5A11.BackColor = Color.Green;
-                                if (respuesta == "F5A10")
-                                    F5A10.BackColor = Color.Green;
-                                if (respuesta == "F5A09")
-                                    F5A09.BackColor = Color.Green;
-                                if (respuesta == "F5A08")
-                                    F5A08.BackColor = Color.Green;
-                                if (respuesta == "F5A07")
-                                    F5A07.BackColor = Color.Green;
-                                if (respuesta == "F5A06")
-                                    F5A06.BackColor = Color.Green;
-                                if (respuesta == "F5A05")
-                                    F5A05.BackColor = Color.Green;
-                                if (respuesta == "F5A04")
-                                    F5A04.BackColor = Color.Green;
-                                if (respuesta == "F5A03")
-                                    F5A03.BackColor = Color.Green;
-                                if (respuesta == "F5A02")
-                                    F5A02.BackColor = Color.Green;
-                                if (respuesta == "F5A01")
-                                    F5A01.BackColor = Color.Green;
-                                if (respuesta == "F4A53")
-                                    F4A53.BackColor = Color.Green;
-                                if (respuesta == "F4A52")
-                                    F4A52.BackColor = Color.Green;
-                                if (respuesta == "F4A51")
-                                    F4A51.BackColor = Color.Green;
-                                if (respuesta == "F4A50")
-                                    F4A50.BackColor = Color.Green;
-                                if (respuesta == "F4A49")
-                                    F4A49.BackColor = Color.Green;
-                                if (respuesta == "F4A48")
-                                    F4A48.BackColor = Color.Green;
-                                if (respuesta == "F4A47")
-                                    F4A47.BackColor = Color.Green;
-                                if (respuesta == "F4A46")
-                                    F4A46.BackColor = Color.Green;
-                                if (respuesta == "F4A45")
-                                    F4A45.BackColor = Color.Green;
-                                if (respuesta == "F4A44")
-                                    F4A44.BackColor = Color.Green;
-                                if (respuesta == "F4A43")
-                                    F4A43.BackColor = Color.Green;
-                                if (respuesta == "F4A42")
-                                    F4A42.BackColor = Color.Green;
-                                if (respuesta == "F4A41")
-                                    F4A41.BackColor = Color.Green;
-                                if (respuesta == "F4A40")
-                                    F4A40.BackColor = Color.Green;
-                                if (respuesta == "F4A39")
-                                    F4A39.BackColor = Color.Green;
-                                if (respuesta == "F4A38")
-                                    F4A38.BackColor = Color.Green;
-                                if (respuesta == "F4A37")
-                                    F4A37.BackColor = Color.Green;
-                                if (respuesta == "F4A36")
-                                    F4A36.BackColor = Color.Green;
-                                if (respuesta == "F4A35")
-                                    F4A35.BackColor = Color.Green;
-                                if (respuesta == "F4A34")
-                                    F4A34.BackColor = Color.Green;
-                                if (respuesta == "F4A33")
-                                    F4A33.BackColor = Color.Green;
-                                if (respuesta == "F4A32")
-                                    F4A32.BackColor = Color.Green;
-                                if (respuesta == "F4A31")
-                                    F4A31.BackColor = Color.Green;
-                                if (respuesta == "F4A30")
-                                    F4A30.BackColor = Color.Green;
-                                if (respuesta == "F4A29")
-                                    F4A29.BackColor = Color.Green;
-                                if (respuesta == "F4A28")
-                                    F4A28.BackColor = Color.Green;
-                                if (respuesta == "F4A27")
-                                    F4A27.BackColor = Color.Green;
-                                if (respuesta == "F4A26")
-                                    F4A26.BackColor = Color.Green;
-                                if (respuesta == "F4A25")
-                                    F4A25.BackColor = Color.Green;
-                                if (respuesta == "F4A24")
-                                    F4A24.BackColor = Color.Green;
-                                if (respuesta == "F4A23")
-                                    F4A23.BackColor = Color.Green;
-                                if (respuesta == "F4A22")
-                                    F4A22.BackColor = Color.Green;
-                                if (respuesta == "F4A21")
-                                    F4A21.BackColor = Color.Green;
-                                if (respuesta == "F4A20")
-                                    F4A20.BackColor = Color.Green;
-                                if (respuesta == "F4A19")
-                                    F4A19.BackColor = Color.Green;
-                                if (respuesta == "F4A18")
-                                    F4A18.BackColor = Color.Green;
-                                if (respuesta == "F4A17")
-                                    F4A17.BackColor = Color.Green;
-                                if (respuesta == "F4A16")
-                                    F4A16.BackColor = Color.Green;
-                                if (respuesta == "F4A15")
-                                    F4A15.BackColor = Color.Green;
-                                if (respuesta == "F4A14")
-                                    F4A14.BackColor = Color.Green;
-                                if (respuesta == "F4A13")
-                                    F4A13.BackColor = Color.Green;
-                                if (respuesta == "F4A12")
-                                    F4A12.BackColor = Color.Green;
-                                if (respuesta == "F4A11")
-                                    F4A11.BackColor = Color.Green;
-                                if (respuesta == "F4A10")
-                                    F4A10.BackColor = Color.Green;
-                                if (respuesta == "F4A09")
-                                    F4A09.BackColor = Color.Green;
-                                if (respuesta == "F4A08")
-                                    F4A08.BackColor = Color.Green;
-                                if (respuesta == "F4A07")
-                                    F4A07.BackColor = Color.Green;
-                                if (respuesta == "F4A06")
-                                    F4A06.BackColor = Color.Green;
-                                if (respuesta == "F4A05")
-                                    F4A05.BackColor = Color.Green;
-                                if (respuesta == "F4A04")
-                                    F4A04.BackColor = Color.Green;
-                                if (respuesta == "F4A03")
-                                    F4A03.BackColor = Color.Green;
-                                if (respuesta == "F4A02")
-                                    F4A02.BackColor = Color.Green;
-                                if (respuesta == "F4A01")
-                                    F4A01.BackColor = Color.Green;
-                                if (respuesta == "F3A52")
-                                    F3A52.BackColor = Color.Green;
-                                if (respuesta == "F3A51")
-                                    F3A51.BackColor = Color.Green;
-                                if (respuesta == "F3A50")
-                                    F3A50.BackColor = Color.Green;
-                                if (respuesta == "F3A49")
-                                    F3A49.BackColor = Color.Green;
-                                if (respuesta == "F3A48")
-                                    F3A48.BackColor = Color.Green;
-                                if (respuesta == "F3A47")
-                                    F3A47.BackColor = Color.Green;
-                                if (respuesta == "F3A46")
-                                    F3A46.BackColor = Color.Green;
-                                if (respuesta == "F3A45")
-                                    F3A45.BackColor = Color.Green;
-                                if (respuesta == "F3A44")
-                                    F3A44.BackColor = Color.Green;
-                                if (respuesta == "F3A43")
-                                    F3A43.BackColor = Color.Green;
-                                if (respuesta == "F3A42")
-                                    F3A42.BackColor = Color.Green;
-                                if (respuesta == "F3A41")
-                                    F3A41.BackColor = Color.Green;
-                                if (respuesta == "F3A40")
-                                    F3A40.BackColor = Color.Green;
-                                if (respuesta == "F3A39")
-                                    F3A39.BackColor = Color.Green;
-                                if (respuesta == "F3A38")
-                                    F3A38.BackColor = Color.Green;
-                                if (respuesta == "F3A37")
-                                    F3A37.BackColor = Color.Green;
-                                if (respuesta == "F3A36")
-                                    F3A36.BackColor = Color.Green;
-                                if (respuesta == "F3A35")
-                                    F3A35.BackColor = Color.Green;
-                                if (respuesta == "F3A34")
-                                    F3A34.BackColor = Color.Green;
-                                if (respuesta == "F3A33")
-                                    F3A33.BackColor = Color.Green;
-                                if (respuesta == "F3A32")
-                                    F3A32.BackColor = Color.Green;
-                                if (respuesta == "F3A31")
-                                    F3A31.BackColor = Color.Green;
-                                if (respuesta == "F3A30")
-                                    F3A30.BackColor = Color.Green;
-                                if (respuesta == "F3A29")
-                                    F3A29.BackColor = Color.Green;
-                                if (respuesta == "F3A28")
-                                    F3A28.BackColor = Color.Green;
-                                if (respuesta == "F3A27")
-                                    F3A27.BackColor = Color.Green;
-                                if (respuesta == "F3A26")
-                                    F3A26.BackColor = Color.Green;
-                                if (respuesta == "F3A25")
-                                    F3A25.BackColor = Color.Green;
-                                if (respuesta == "F3A24")
-                                    F3A24.BackColor = Color.Green;
-                                if (respuesta == "F3A23")
-                                    F3A23.BackColor = Color.Green;
-                                if (respuesta == "F3A22")
-                                    F3A22.BackColor = Color.Green;
-                                if (respuesta == "F3A21")
-                                    F3A21.BackColor = Color.Green;
-                                if (respuesta == "F3A20")
-                                    F3A20.BackColor = Color.Green;
-                                if (respuesta == "F3A19")
-                                    F3A19.BackColor = Color.Green;
-                                if (respuesta == "F3A18")
-                                    F3A18.BackColor = Color.Green;
-                                if (respuesta == "F3A17")
-                                    F3A17.BackColor = Color.Green;
-                                if (respuesta == "F3A16")
-                                    F3A16.BackColor = Color.Green;
-                                if (respuesta == "F3A15")
-                                    F3A15.BackColor = Color.Green;
-                                if (respuesta == "F3A14")
-                                    F3A14.BackColor = Color.Green;
-                                if (respuesta == "F3A13")
-                                    F3A13.BackColor = Color.Green;
-                                if (respuesta == "F3A12")
-                                    F3A12.BackColor = Color.Green;
-                                if (respuesta == "F3A11")
-                                    F3A11.BackColor = Color.Green;
-                                if (respuesta == "F3A10")
-                                    F3A10.BackColor = Color.Green;
-                                if (respuesta == "F3A09")
-                                    F3A09.BackColor = Color.Green;
-                                if (respuesta == "F3A08")
-                                    F3A08.BackColor = Color.Green;
-                                if (respuesta == "F3A07")
-                                    F3A07.BackColor = Color.Green;
-                                if (respuesta == "F3A06")
-                                    F3A06.BackColor = Color.Green;
-                                if (respuesta == "F3A05")
-                                    F3A05.BackColor = Color.Green;
-                                if (respuesta == "F3A04")
-                                    F3A04.BackColor = Color.Green;
-                                if (respuesta == "F3A03")
-                                    F3A03.BackColor = Color.Green;
-                                if (respuesta == "F3A02")
-                                    F3A02.BackColor = Color.Green;
-                                if (respuesta == "F3A01")
-                                    F3A01.BackColor = Color.Green;
-                                if (respuesta == "F2A52")
-                                    F2A52.BackColor = Color.Green;
-                                if (respuesta == "F2A51")
-                                    F2A51.BackColor = Color.Green;
-                                if (respuesta == "F2A50")
-                                    F2A50.BackColor = Color.Green;
-                                if (respuesta == "F2A49")
-                                    F2A49.BackColor = Color.Green;
-                                if (respuesta == "F2A48")
-                                    F2A48.BackColor = Color.Green;
-                                if (respuesta == "F2A47")
-                                    F2A47.BackColor = Color.Green;
-                                if (respuesta == "F2A46")
-                                    F2A46.BackColor = Color.Green;
-                                if (respuesta == "F2A45")
-                                    F2A45.BackColor = Color.Green;
-                                if (respuesta == "F2A44")
-                                    F2A44.BackColor = Color.Green;
-                                if (respuesta == "F2A43")
-                                    F2A43.BackColor = Color.Green;
-                                if (respuesta == "F2A42")
-                                    F2A42.BackColor = Color.Green;
-                                if (respuesta == "F2A41")
-                                    F2A41.BackColor = Color.Green;
-                                if (respuesta == "F2A40")
-                                    F2A40.BackColor = Color.Green;
-                                if (respuesta == "F2A39")
-                                    F2A39.BackColor = Color.Green;
-                                if (respuesta == "F2A38")
-                                    F2A38.BackColor = Color.Green;
-                                if (respuesta == "F2A37")
-                                    F2A37.BackColor = Color.Green;
-                                if (respuesta == "F2A36")
-                                    F2A36.BackColor = Color.Green;
-                                if (respuesta == "F2A35")
-                                    F2A35.BackColor = Color.Green;
-                                if (respuesta == "F2A34")
-                                    F2A34.BackColor = Color.Green;
-                                if (respuesta == "F2A33")
-                                    F2A33.BackColor = Color.Green;
-                                if (respuesta == "F2A32")
-                                    F2A32.BackColor = Color.Green;
-                                if (respuesta == "F2A31")
-                                    F2A31.BackColor = Color.Green;
-                                if (respuesta == "F2A30")
-                                    F2A30.BackColor = Color.Green;
-                                if (respuesta == "F2A29")
-                                    F2A29.BackColor = Color.Green;
-                                if (respuesta == "F2A28")
-                                    F2A28.BackColor = Color.Green;
-                                if (respuesta == "F2A27")
-                                    F2A27.BackColor = Color.Green;
-                                if (respuesta == "F2A26")
-                                    F2A26.BackColor = Color.Green;
-                                if (respuesta == "F2A25")
-                                    F2A25.BackColor = Color.Green;
-                                if (respuesta == "F2A24")
-                                    F2A24.BackColor = Color.Green;
-                                if (respuesta == "F2A23")
-                                    F2A23.BackColor = Color.Green;
-                                if (respuesta == "F2A22")
-                                    F2A22.BackColor = Color.Green;
-                                if (respuesta == "F2A21")
-                                    F2A21.BackColor = Color.Green;
-                                if (respuesta == "F2A20")
-                                    F2A20.BackColor = Color.Green;
-                                if (respuesta == "F2A19")
-                                    F2A19.BackColor = Color.Green;
-                                if (respuesta == "F2A18")
-                                    F2A18.BackColor = Color.Green;
-                                if (respuesta == "F2A17")
-                                    F2A17.BackColor = Color.Green;
-                                if (respuesta == "F2A16")
-                                    F2A16.BackColor = Color.Green;
-                                if (respuesta == "F2A15")
-                                    F2A15.BackColor = Color.Green;
-                                if (respuesta == "F2A14")
-                                    F2A14.BackColor = Color.Green;
-                                if (respuesta == "F2A13")
-                                    F2A13.BackColor = Color.Green;
-                                if (respuesta == "F2A12")
-                                    F2A12.BackColor = Color.Green;
-                                if (respuesta == "F2A11")
-                                    F2A11.BackColor = Color.Green;
-                                if (respuesta == "F2A10")
-                                    F2A10.BackColor = Color.Green;
-                                if (respuesta == "F2A09")
-                                    F2A09.BackColor = Color.Green;
-                                if (respuesta == "F2A08")
-                                    F2A08.BackColor = Color.Green;
-                                if (respuesta == "F2A07")
-                                    F2A07.BackColor = Color.Green;
-                                if (respuesta == "F2A06")
-                                    F2A06.BackColor = Color.Green;
-                                if (respuesta == "F2A05")
-                                    F2A05.BackColor = Color.Green;
-                                if (respuesta == "F2A04")
-                                    F2A04.BackColor = Color.Green;
-                                if (respuesta == "F2A03")
-                                    F2A03.BackColor = Color.Green;
-                                if (respuesta == "F2A02")
-                                    F2A02.BackColor = Color.Green;
-                                if (respuesta == "F2A01")
-                                    F2A01.BackColor = Color.Green;
-                                if (respuesta == "F1A52")
-                                    F1A52.BackColor = Color.Green;
-                                if (respuesta == "F1A51")
-                                    F1A51.BackColor = Color.Green;
-                                if (respuesta == "F1A50")
-                                    F1A50.BackColor = Color.Green;
-                                if (respuesta == "F1A49")
-                                    F1A49.BackColor = Color.Green;
-                                if (respuesta == "F1A48")
-                                    F1A48.BackColor = Color.Green;
-                                if (respuesta == "F1A47")
-                                    F1A47.BackColor = Color.Green;
-                                if (respuesta == "F1A46")
-                                    F1A46.BackColor = Color.Green;
-                                if (respuesta == "F1A45")
-                                    F1A45.BackColor = Color.Green;
-                                if (respuesta == "F1A44")
-                                    F1A44.BackColor = Color.Green;
-                                if (respuesta == "F1A43")
-                                    F1A43.BackColor = Color.Green;
-                                if (respuesta == "F1A42")
-                                    F1A42.BackColor = Color.Green;
-                                if (respuesta == "F1A41")
-                                    F1A41.BackColor = Color.Green;
-                                if (respuesta == "F1A40")
-                                    F1A40.BackColor = Color.Green;
-                                if (respuesta == "F1A39")
-                                    F1A39.BackColor = Color.Green;
-                                if (respuesta == "F1A38")
-                                    F1A38.BackColor = Color.Green;
-                                if (respuesta == "F1A37")
-                                    F1A37.BackColor = Color.Green;
-                                if (respuesta == "F1A36")
-                                    F1A36.BackColor = Color.Green;
-                                if (respuesta == "F1A35")
-                                    F1A35.BackColor = Color.Green;
-                                if (respuesta == "F1A34")
-                                    F1A34.BackColor = Color.Green;
-                                if (respuesta == "F1A33")
-                                    F1A33.BackColor = Color.Green;
-                                if (respuesta == "F1A32")
-                                    F1A32.BackColor = Color.Green;
-                                if (respuesta == "F1A31")
-                                    F1A31.BackColor = Color.Green;
-                                if (respuesta == "F1A30")
-                                    F1A30.BackColor = Color.Green;
-                                if (respuesta == "F1A29")
-                                    F1A29.BackColor = Color.Green;
-                                if (respuesta == "F1A28")
-                                    F1A28.BackColor = Color.Green;
-                                if (respuesta == "F1A27")
-                                    F1A27.BackColor = Color.Green;
-                                if (respuesta == "F1A26")
-                                    F1A26.BackColor = Color.Green;
-                                if (respuesta == "F1A25")
-                                    F1A25.BackColor = Color.Green;
-                                if (respuesta == "F1A24")
-                                    F1A24.BackColor = Color.Green;
-                                if (respuesta == "F1A23")
-                                    F1A23.BackColor = Color.Green;
-                                if (respuesta == "F1A22")
-                                    F1A22.BackColor = Color.Green;
-                                if (respuesta == "F1A21")
-                                    F1A21.BackColor = Color.Green;
-                                if (respuesta == "F1A20")
-                                    F1A20.BackColor = Color.Green;
-                                if (respuesta == "F1A19")
-                                    F1A19.BackColor = Color.Green;
-                                if (respuesta == "F1A18")
-                                    F1A18.BackColor = Color.Green;
-                                if (respuesta == "F1A17")
-                                    F1A17.BackColor = Color.Green;
-                                if (respuesta == "F1A16")
-                                    F1A16.BackColor = Color.Green;
-                                if (respuesta == "F1A15")
-                                    F1A15.BackColor = Color.Green;
-                                if (respuesta == "F1A14")
-                                    F1A14.BackColor = Color.Green;
-                                if (respuesta == "F1A13")
-                                    F1A13.BackColor = Color.Green;
-                                if (respuesta == "F1A12")
-                                    F1A12.BackColor = Color.Green;
-                                if (respuesta == "F1A11")
-                                    F1A11.BackColor = Color.Green;
-                                if (respuesta == "F1A10")
-                                    F1A10.BackColor = Color.Green;
-                                if (respuesta == "F1A09")
-                                    F1A09.BackColor = Color.Green;
-                                if (respuesta == "F1A08")
-                                    F1A08.BackColor = Color.Green;
-                                if (respuesta == "F1A07")
-                                    F1A07.BackColor = Color.Green;
-                                if (respuesta == "F1A06")
-                                    F1A06.BackColor = Color.Green;
-                                if (respuesta == "F1A05")
-                                    F1A05.BackColor = Color.Green;
-                                if (respuesta == "F1A04")
-                                    F1A04.BackColor = Color.Green;
-                                if (respuesta == "F1A03")
-                                    F1A03.BackColor = Color.Green;
-                                if (respuesta == "F1A02")
-                                    F1A02.BackColor = Color.Green;
-                                if (respuesta == "F1A01")
-                                    F1A01.BackColor = Color.Green;
-                                if (respuesta == "C17")
-                                    C17.BackColor = Color.Green;
-                                if (respuesta == "C16")
-                                    C16.BackColor = Color.Green;
-                                if (respuesta == "C15")
-                                    C15.BackColor = Color.Green;
-                                if (respuesta == "C14")
-                                    C14.BackColor = Color.Green;
-                                if (respuesta == "C13")
-                                    C13.BackColor = Color.Green;
-                                if (respuesta == "C12")
-                                    C12.BackColor = Color.Green;
-                                if (respuesta == "C11")
-                                    C11.BackColor = Color.Green;
-                                if (respuesta == "C10")
-                                    C10.BackColor = Color.Green;
-                                if (respuesta == "C09")
-                                    C09.BackColor = Color.Green;
-                                if (respuesta == "C08")
-                                    C08.BackColor = Color.Green;
-                                if (respuesta == "C07")
-                                    C07.BackColor = Color.Green;
-                                if (respuesta == "C06")
-                                    C06.BackColor = Color.Green;
-                                if (respuesta == "C05")
-                                    C05.BackColor = Color.Green;
-                                if (respuesta == "C04")
-                                    C04.BackColor = Color.Green;
-                                if (respuesta == "C03")
-                                    C03.BackColor = Color.Green;
-                                if (respuesta == "C02")
-                                    C02.BackColor = Color.Green;
-                                if (respuesta == "C01")
-                                    C01.BackColor = Color.Green;
+            // CABINAS
+            d.Busco_Lecturas_Cabinas(fdesde, C17);
+            d.Busco_Lecturas_Cabinas(fdesde, C16);
+            d.Busco_Lecturas_Cabinas(fdesde, C15);
+            d.Busco_Lecturas_Cabinas(fdesde, C14);
+            d.Busco_Lecturas_Cabinas(fdesde, C13);
+            d.Busco_Lecturas_Cabinas(fdesde, C12);
+            d.Busco_Lecturas_Cabinas(fdesde, C11);
+            d.Busco_Lecturas_Cabinas(fdesde, C10);
+            d.Busco_Lecturas_Cabinas(fdesde, C09);
+            d.Busco_Lecturas_Cabinas(fdesde, C08);
+            d.Busco_Lecturas_Cabinas(fdesde, C07);
+            d.Busco_Lecturas_Cabinas(fdesde, C06);
+            d.Busco_Lecturas_Cabinas(fdesde, C05);
+            d.Busco_Lecturas_Cabinas(fdesde, C04);
+            d.Busco_Lecturas_Cabinas(fdesde, C03);
+            d.Busco_Lecturas_Cabinas(fdesde, C02);
+            d.Busco_Lecturas_Cabinas(fdesde, C01);
 
-                                panel2.Visible = false;
-                                panel5.Visible = false;
-                                panel6.Visible = false;
-                                panel3.Visible = true;
-                                panel4.Visible = true;
-                                panel7.Visible = true;
-                                panel8.Visible = true;
-                                totentrantescabinas.Text = Convert.ToString(FrmLogin.total_cabinas_entrantes) + " Cabinas Entrantes";
-                                totfaltantescabinas.Text = Convert.ToString(Convert.ToDouble(FrmLogin.total_cabinas_impresas - FrmLogin.total_cabinas_entrantes)) + " Cabinas Faltantes";
-                                totentrantespupitres.Text = Convert.ToString(FrmLogin.total_pupitres_entrantes) + " Pupitres Entrantes";
-                                totfaltantespupitres.Text = Convert.ToString(Convert.ToDouble(FrmLogin.total_pupitres_impresos - FrmLogin.total_pupitres_entrantes)) + " Pupitres Faltantes";
+
+                                                                                   
+
+                               
+                                panel5.Visible = true;
+                               
+                                totentrantescabinas.Text = Convert.ToString(FrmLogin.total_cabinas_entrantes);
+                                totfaltantescabinas.Text = Convert.ToString(Convert.ToDouble(FrmLogin.total_cabinas_impresas - FrmLogin.total_cabinas_entrantes));
+                                totentrantespupitres.Text = Convert.ToString(FrmLogin.total_pupitres_entrantes);
+                                totfaltantespupitres.Text = Convert.ToString(Convert.ToDouble(FrmLogin.total_pupitres_impresos - FrmLogin.total_pupitres_entrantes));
 
 
 
 
-                            }
+                            
                                          
 
             
@@ -6730,6 +6408,27 @@ namespace ImpresionQR
         }
 
         private void button14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void URL_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            rivales.Visible=false;
+
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
         {
 
         }
